@@ -99,7 +99,7 @@ export function BusinessForm({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-5 py-4 space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="px-5 py-4 space-y-4">
           <div>
             <label htmlFor="business-name" className="block text-sm font-medium text-gray-700 mb-1.5">
               Name <span className="text-red-500" aria-hidden="true">*</span>

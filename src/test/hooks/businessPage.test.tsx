@@ -1,7 +1,6 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor, fireEvent, within } from '@testing-library/react';
-import type { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { ServiceProvider } from '@/hooks/common/ServiceProvider';
 import BusinessPage from '@/pages/BusinessPage';
@@ -132,7 +131,7 @@ describe('BusinessPage — create', () => {
 
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText(/Name/), { target: { value: 'New Shop' } });
-    fireEvent.click(within(dialog).getByText('Create Business'));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create Business' }));
 
     await waitFor(() => {
       expect(repo.create).toHaveBeenCalled();
@@ -151,7 +150,7 @@ describe('BusinessPage — create', () => {
     await waitFor(() => expect(screen.getByRole('dialog')).toBeDefined());
 
     const dialog = screen.getByRole('dialog');
-    fireEvent.click(within(dialog).getByText('Create Business'));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create Business' }));
 
     await waitFor(() => expect(screen.getByText('Business name is required.')).toBeDefined());
   });
@@ -170,7 +169,7 @@ describe('BusinessPage — create', () => {
 
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText(/Name/), { target: { value: 'New Shop' } });
-    fireEvent.click(within(dialog).getByText('Create Business'));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create Business' }));
 
     await waitFor(() => expect(screen.getByText('Create failed')).toBeDefined());
   });
@@ -228,7 +227,7 @@ describe('BusinessPage — delete', () => {
     fireEvent.click(screen.getByLabelText('Delete Test Shop'));
     await waitFor(() => expect(screen.getByRole('dialog')).toBeDefined());
 
-    fireEvent.click(within(screen.getByRole('dialog')).getByText('Delete'));
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Delete' }));
 
     await waitFor(() => expect(repo.remove).toHaveBeenCalledWith('biz-1'));
   });
@@ -264,7 +263,7 @@ describe('BusinessPage — delete', () => {
     fireEvent.click(screen.getByLabelText('Delete Test Shop'));
     await waitFor(() => expect(screen.getByRole('dialog')).toBeDefined());
 
-    fireEvent.click(within(screen.getByRole('dialog')).getByText('Delete'));
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Delete' }));
 
     await waitFor(() => expect(screen.getByText('Delete failed')).toBeDefined());
   });
@@ -290,7 +289,7 @@ describe('BusinessPage — refresh after mutation', () => {
 
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText(/Name/), { target: { value: 'New Shop' } });
-    fireEvent.click(within(dialog).getByText('Create Business'));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create Business' }));
 
     await waitFor(() => expect(screen.getByText('Test Shop')).toBeDefined());
     expect(callCount).toBe(2);
@@ -312,7 +311,7 @@ describe('BusinessPage — refresh after mutation', () => {
 
     fireEvent.click(screen.getByLabelText('Delete Test Shop'));
     await waitFor(() => expect(screen.getByRole('dialog')).toBeDefined());
-    fireEvent.click(within(screen.getByRole('dialog')).getByText('Delete'));
+    fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Delete' }));
 
     await waitFor(() => expect(screen.getByText('No businesses yet')).toBeDefined());
     expect(callCount).toBe(2);
