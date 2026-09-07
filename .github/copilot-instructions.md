@@ -4,13 +4,14 @@
 
 The canonical AI instruction file is `AGENTS.md` at the repository root. Follow it as the primary source of truth for all AI development instructions on this project.
 
-## Quick Start
+## Mandatory Startup Protocol
 
-1. Read `AGENTS.md` for the full instruction set
-2. Read `docs/ai/AI_START_HERE.md` for quick orientation
-3. Read `docs/ai/AI_HANDOFF.md` for the latest handoff state
-4. Read `docs/ai/AI_STATE.json` for machine-readable project state
-5. Inspect the actual source code before making changes
+1. Read `AGENTS.md`
+2. Read `docs/ai/AI_START_HERE.md`
+3. Read `docs/ai/AI_STATE.json`
+4. Read `docs/ai/AI_HANDOFF.md`
+5. Read `docs/ai/NEXT_TASK_PROMPT.md`
+6. Inspect the actual source code before making changes
 
 ## Key Rules
 
@@ -22,7 +23,12 @@ The canonical AI instruction file is `AGENTS.md` at the repository root. Follow 
 - No network calls — the app is offline-first
 - Run `npm run typecheck`, `npm run test`, `npm run build` before declaring complete
 - Update `docs/ai/` handoff documentation after completing work
+- Do not ask a human or ChatGPT for the next task — determine it yourself from the repository
 
 ## AI Documentation System
 
-All AI continuation documentation lives in `docs/ai/`. See `AGENTS.md` section E for the full file listing and section F for the mandatory reading order.
+All AI continuation documentation lives in `docs/ai/`. The key files are:
+- `AI_STATE.json` — machine-readable project state
+- `NEXT_TASK_PROMPT.md` — exact instructions for the next Coding AI
+- `AI_HANDOFF.md` — latest handoff from the previous AI
+- `AI_CONTINUATION_PROTOCOL.md` — 9-phase continuation cycle

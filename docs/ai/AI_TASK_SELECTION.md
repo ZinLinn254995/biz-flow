@@ -21,15 +21,19 @@
 
 1. **Check for P0 issues first.** Read `docs/ai/KNOWN_ISSUES.md` and look for any issue with severity "high" or "critical" that affects data integrity or security. If one exists and is not being addressed by the current recommended task, address it first.
 
-2. **Check `docs/ai/AI_STATE.json` → `nextRecommendedTasks`.** This contains the current recommendation with priority and complexity.
+2. **Check `docs/ai/AI_STATE.json` → `nextTask`.** This contains the current recommendation with priority and complexity.
 
-3. **Check `docs/ai/ROADMAP.md` → "Next Tasks" section.** This contains the planned next tasks.
+3. **Check `docs/ai/NEXT_TASK_PROMPT.md`.** This contains the exact instructions for the next task. If it explicitly defines a valid next task, follow it.
 
-4. **Verify the recommended task is still needed.** Read the relevant source code to confirm the issue still exists. If the issue has already been resolved (by a previous AI agent or by accident), skip to the next task.
+4. **If `NEXT_TASK_PROMPT.md` is stale or contradictory**, inspect the actual repository and recalculate the correct next task using the priority framework above.
 
-5. **Consider task combinations.** Some tasks can be safely combined (noted in `canCombineWith` field). Prefer combining naturally-related tasks for token efficiency.
+5. **Check `docs/ai/ROADMAP.md` → "Next Tasks" section.** This contains the planned next tasks.
 
-6. **Choose the task.** Select the highest-priority task that is still needed and safe to implement.
+6. **Verify the recommended task is still needed.** Read the relevant source code to confirm the issue still exists. If the issue has already been resolved (by a previous AI agent or by accident), skip to the next task.
+
+7. **Consider task combinations.** Some tasks can be safely combined (noted in `canCombineWith` field in `AI_STATE.json`). Prefer combining naturally-related tasks for token efficiency.
+
+8. **Choose the task.** Select the highest-priority task that is still needed and safe to implement.
 
 ---
 
@@ -47,6 +51,22 @@ When you deviate, you MUST explain why in your handoff report.
 
 ---
 
+## Task Duplication Prevention
+
+Before starting any task, compare:
+- **Current source code** — does the work already exist in the code?
+- **`AI_STATE.json` → `progress.completedMilestones`** — is the task listed as complete?
+- **`CURRENT_STATE.md` → completed tasks table** — is the task listed?
+- **`ROADMAP.md` → completed section** — is the task in the completed section?
+- **`CHANGELOG.md` → recent entries** — was the task recently completed?
+
+If the requested task is already complete: DO NOT implement it again. Instead:
+1. Verify completion by inspecting the actual source code
+2. Mark the state correctly in `AI_STATE.json`
+3. Select the next unfinished task using the priority framework
+
+---
+
 ## Current Recommendation (as of P2P18)
 
 | Task | Priority | Complexity | Can Combine With | Status |
@@ -55,6 +75,9 @@ When you deviate, you MUST explain why in your handoff report.
 | P2P20 — Dead Code Cleanup | P1 | LOW | P2P19 | Recommended next (combine) |
 | P2P21 — Categories & Accounts Search | P2 | LOW | P2P22 | After P2P19+P2P20 |
 | P2P22 — Sale Total Validation | P2 | LOW | P2P21 | After P2P19+P2P20 |
+| P2P23 — Account Balance Updates | P2 | MEDIUM | None | After P2P21+P2P22 |
+| P2P24 — Budget Tracking | P2 | HIGH | None | After P2P23 |
+| P2P25 — Analytics Page | P3 | HIGH | None | After P2P24 |
 
 **Rationale:** P2P19 addresses ISSUE-001 (non-atomic stock operations) and ISSUE-002 (no concurrency protection), which are the highest-severity known issues. P2P20 is low-risk dead code cleanup that can be done in the same pass for token efficiency.
 

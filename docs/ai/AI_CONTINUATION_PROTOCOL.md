@@ -1,6 +1,6 @@
 # BizFlow — AI Continuation Protocol
 
-> This document defines exactly how ANY future Coding AI should continue the BizFlow project. Follow these 9 phases in order.
+> This document defines exactly how ANY future Coding AI should continue the BizFlow project. Follow these 9 phases in order. Do not skip phases.
 
 ---
 
@@ -10,15 +10,17 @@ Read the required AI documentation in this order:
 
 1. `AGENTS.md` (repository root) — canonical instructions
 2. `docs/ai/AI_START_HERE.md` — quick orientation
-3. `docs/ai/AI_HANDOFF.md` — latest handoff from previous AI
-4. `docs/ai/CURRENT_STATE.md` — detailed current state
-5. `docs/ai/AI_STATE.json` — machine-readable state
-6. `docs/ai/PROJECT_CONTEXT.md` — project identity and domain model
-7. `docs/ai/ARCHITECTURE.md` — technical architecture
-8. `docs/ai/ROADMAP.md` — roadmap and next tasks
-9. `docs/ai/DECISIONS.md` — architecture decisions
-10. `docs/ai/KNOWN_ISSUES.md` — known issues and risks
-11. `docs/ai/AI_TASK_SELECTION.md` — task selection rules
+3. `docs/ai/AI_STATE.json` — machine-readable state
+4. `docs/ai/AI_HANDOFF.md` — latest handoff from previous AI
+5. `docs/ai/CURRENT_STATE.md` — detailed current state
+6. `docs/ai/NEXT_TASK_PROMPT.md` — exact next task instructions
+7. `docs/ai/PROJECT_CONTEXT.md` — project identity and domain model
+8. `docs/ai/ARCHITECTURE.md` — technical architecture
+9. `docs/ai/ROADMAP.md` — roadmap and next tasks
+10. `docs/ai/DECISIONS.md` — architecture decisions
+11. `docs/ai/KNOWN_ISSUES.md` — known issues and risks
+12. `docs/ai/AI_TASK_SELECTION.md` — task selection rules
+13. `docs/ai/QUALITY_GATE.md` — quality checklist
 
 Do not skip any file. Each contains information needed to continue safely.
 
@@ -28,20 +30,19 @@ Do not skip any file. Each contains information needed to continue safely.
 
 Inspect the actual source code. Do not trust documentation blindly.
 
-1. Verify the current milestone by checking `docs/ai/AI_STATE.json` and `docs/ai/CURRENT_STATE.md`
-2. Verify test count by running `npm run test`
-3. Verify TypeScript by running `npm run typecheck`
-4. Verify build by running `npm run build`
+1. Verify the current milestone by checking `AI_STATE.json` and `CURRENT_STATE.md`
+2. Run `npm run test` — verify the test count matches documentation
+3. Run `npm run typecheck` — verify it passes
+4. Run `npm run build` — verify it passes
 5. Verify the architecture by checking that UI files do not import repositories/services/Dexie
 6. Verify that the routes in `src/routes/AppRoutes.tsx` match the documented routes
 7. Verify that the database tables in `src/db/database.ts` match the documented tables
 
 **If documentation says something is complete but the code does not support it:**
-1. Report the discrepancy
+1. Report the discrepancy in your handoff
 2. Do not assume it is complete
-3. Inspect tests
-4. Determine the actual state
-5. Update the documentation only after verification
+3. Inspect tests to determine the actual state
+4. Update the documentation only after verification
 
 ---
 
@@ -77,9 +78,25 @@ Use `docs/ai/AI_TASK_SELECTION.md` for the priority framework. In summary:
 
 **Do not blindly follow P2P numbering.** If P2P19 is listed as next but a critical data corruption bug is discovered, address the critical issue first. Explain why you deviated from the roadmap.
 
-Check `docs/ai/AI_STATE.json` → `nextRecommendedTasks` for the current recommendation.
+Check `docs/ai/AI_STATE.json` → `nextTask` for the current recommendation.
+Check `docs/ai/NEXT_TASK_PROMPT.md` for the exact next task instructions.
 
-Check `docs/ai/KNOWN_ISSUES.md` for severity-ranked issues.
+**If `NEXT_TASK_PROMPT.md` explicitly defines a valid next task, follow it.**
+**If it is stale or contradictory, inspect the actual repository and recalculate the correct next task.**
+
+### Task Duplication Prevention
+
+Before starting any task, compare:
+- Current source code (does the work already exist?)
+- `AI_STATE.json` → `progress.completedMilestones`
+- `CURRENT_STATE.md` → completed tasks table
+- `ROADMAP.md` → completed section
+- `CHANGELOG.md` → recent entries
+
+If the requested task is already complete: DO NOT implement it again. Instead:
+1. Verify completion
+2. Mark the state correctly
+3. Select the next unfinished task
 
 ---
 
@@ -141,10 +158,10 @@ Run verification after implementation:
    ```bash
    npx vitest run src/test/hooks/*UiConstraints.test.ts src/test/hooks/hookConstraints.test.ts src/test/hooks/serviceConstraints.test.ts
    ```
+6. **Dangling imports check:** Verify no imports reference deleted or renamed files
+7. **Routes check:** Verify all routes in `AppRoutes.tsx` resolve to existing pages
 
-All must pass before declaring the task complete.
-
-Complete the `docs/ai/QUALITY_GATE.md` checklist.
+All must pass before declaring the task complete. Complete the `docs/ai/QUALITY_GATE.md` checklist.
 
 ---
 
@@ -152,13 +169,15 @@ Complete the `docs/ai/QUALITY_GATE.md` checklist.
 
 Update the AI handoff documentation after verification passes:
 
-1. `docs/ai/AI_HANDOFF.md` — Update milestone, status, next task, handoff metadata
+1. `docs/ai/AI_STATE.json` — Update milestone, tests, next task, known issues, progress
 2. `docs/ai/CURRENT_STATE.md` — Update completed tasks, test status, technical debt
-3. `docs/ai/AI_STATE.json` — Update machine-readable state (milestone, tests, risks, next tasks)
-4. `docs/ai/CHANGELOG.md` — Append new milestone entry (do not rewrite history)
-5. `docs/ai/KNOWN_ISSUES.md` — Mark resolved issues, add any new issues discovered
-6. `docs/ai/NEXT_TASK_PROMPT.md` — Update with the next task's implementation prompt
+3. `docs/ai/AI_HANDOFF.md` — Update last completed task, next task, recent changes, next AI instructions
+4. `docs/ai/NEXT_TASK_PROMPT.md` — Replace with the NEXT task's exact instructions (not a placeholder)
+5. `docs/ai/CHANGELOG.md` — Append new milestone entry (do not rewrite history)
+6. `docs/ai/KNOWN_ISSUES.md` — Mark resolved issues, add any new issues discovered
 7. `docs/ai/ROADMAP.md` — Move completed task to "Completed", update "Next" section
+
+**The AI must generate the next task automatically.** Do NOT leave "TODO: decide next task" or "Ask ChatGPT what to do next." That is forbidden.
 
 Only update files where the completed work requires changes. Do not rewrite unchanged documentation.
 
@@ -170,6 +189,7 @@ Produce a structured final handoff report using `docs/ai/HANDOFF_TEMPLATE.md`.
 
 The report must contain:
 - Task completed (ID and name)
+- Status (COMPLETE / BLOCKED / PARTIAL)
 - Files changed (created, modified, deleted)
 - Behavior changes (if any)
 - Architecture impact (if any)
@@ -182,6 +202,56 @@ The report must contain:
 - Remaining risks
 - Current project state (milestone, test count, build status)
 - Next recommended task
-- Next Coding AI prompt (copy-pastable into another AI tool)
+- Next Coding AI task (actionable, copy-pastable)
 
 This report is what the next AI agent will read. Make it accurate and complete.
+
+---
+
+## FAILURE RECOVERY
+
+If implementation fails:
+
+1. **Do NOT update the project as COMPLETE.**
+2. Record the failure in `AI_HANDOFF.md` and `CHANGELOG.md`.
+3. Diagnose the root cause — read the error, check assumptions, try a focused fix.
+4. Fix the implementation.
+5. Re-run verification: `npm run typecheck && npm run test && npm run build`.
+6. Only then mark the task complete.
+
+If the task cannot safely be completed:
+- Mark it **BLOCKED** in `AI_STATE.json` and `AI_HANDOFF.md`.
+- Document why it is blocked and what the next Coding AI must inspect.
+- Do NOT invent a fake completion.
+- Generate a BLOCKED handoff using `HANDOFF_TEMPLATE.md`.
+
+---
+
+## AI-TO-AI HANDOFF EXAMPLE
+
+```
+AI #1:
+  Current: P2P18 COMPLETE
+  Reads: AGENTS.md → AI_STATE.json → NEXT_TASK_PROMPT.md
+  Implements: P2P19 (stock atomicity)
+  Verifies: typecheck PASS, tests PASS, build PASS
+  Updates: AI_STATE.json, CURRENT_STATE.md, AI_HANDOFF.md, NEXT_TASK_PROMPT.md, CHANGELOG.md, ROADMAP.md
+  NEXT_TASK_PROMPT.md now says: P2P20 — Dead Code Cleanup
+
+AI #2:
+  Opens repository
+  Reads: AGENTS.md → AI_STATE.json → NEXT_TASK_PROMPT.md
+  Verifies: source code matches documented state
+  Implements: P2P20 (dead code cleanup)
+  Verifies: typecheck PASS, tests PASS, build PASS
+  Updates: all handoff docs
+  NEXT_TASK_PROMPT.md now says: P2P21 — Categories & Accounts Search
+
+AI #3:
+  Opens same repository
+  Reads: AGENTS.md → AI_STATE.json → NEXT_TASK_PROMPT.md
+  Continues: P2P21
+  ...
+```
+
+This cycle continues indefinitely. No ChatGPT, human, or prompt engineer required between Coding AIs.

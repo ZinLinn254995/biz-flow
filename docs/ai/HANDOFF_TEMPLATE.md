@@ -1,6 +1,6 @@
 # BizFlow — AI Handoff Report Template
 
-> Copy this template and fill it after completing a task. This is the structured report that the next AI agent will read.
+> Copy this template and fill it after completing a task. This is the structured report that the next AI agent will read. Support COMPLETE, BLOCKED, and PARTIAL states.
 
 ---
 
@@ -8,7 +8,9 @@
 
 - **Task ID:** [e.g., P2P19]
 - **Task Name:** [e.g., Stock Operation Atomicity]
-- **Status:** [COMPLETE / INCOMPLETE / PARTIAL]
+- **Status:** [COMPLETE / BLOCKED / PARTIAL]
+
+---
 
 ## WHAT WAS CHANGED
 
@@ -72,6 +74,8 @@
 
 - [List any risks introduced or remaining, or "None"]
 
+---
+
 ## CURRENT PROJECT STATE
 
 - **Current milestone:** [e.g., P2P19]
@@ -80,6 +84,8 @@
 - **TypeScript:** [PASS / FAIL]
 - **Build:** [PASS / FAIL]
 - **Next milestone:** [e.g., P2P21]
+
+---
 
 ## NEXT RECOMMENDED TASK
 
@@ -90,63 +96,38 @@
 - **Complexity:** [LOW / MEDIUM / HIGH]
 - **Can combine with:** [Task ID, or "None"]
 
-## NEXT CODING AI PROMPT
+---
 
-> Copy-paste the prompt below into the next Coding AI to continue development.
+## NEXT CODING AI TASK
 
-```
-You are the implementation engineer continuing the existing BizFlow repository.
+> This section is directly actionable by the next Coding AI. No external explanation required.
 
-## MANDATORY CONTEXT
+The next Coding AI should:
 
-Read the following files before making any changes:
-1. AGENTS.md
-2. docs/ai/AI_START_HERE.md
-3. docs/ai/AI_HANDOFF.md
-4. docs/ai/CURRENT_STATE.md
-5. docs/ai/PROJECT_CONTEXT.md
-6. docs/ai/ARCHITECTURE.md
-7. docs/ai/ROADMAP.md
-8. docs/ai/DECISIONS.md
-9. docs/ai/KNOWN_ISSUES.md
-10. docs/ai/AI_CONTINUATION_PROTOCOL.md
-11. docs/ai/AI_TASK_SELECTION.md
-12. docs/ai/AI_STATE.json
+1. Read `AGENTS.md` at the repository root
+2. Read `docs/ai/AI_STATE.json` for machine-readable state
+3. Read `docs/ai/NEXT_TASK_PROMPT.md` for exact task instructions
+4. Verify the current state against actual source code
+5. Implement [NEXT TASK ID] — [NEXT TASK NAME]
+6. Run `npm run typecheck && npm run test && npm run build`
+7. Update all handoff documentation under `docs/ai/`
+8. Generate the next task in `NEXT_TASK_PROMPT.md`
+9. Produce a handoff report using this template
 
-Then:
-- Inspect relevant source files
-- Verify assumptions against actual code
-- Determine actual current state
-- Implement only the requested task
-- Run: npm run typecheck, npm run test, npm run build
-- Update handoff documentation under docs/ai/
-- Produce a final handoff report using docs/ai/HANDOFF_TEMPLATE.md
+**Do not ask a human or ChatGPT for the next task.** The repository contains everything needed to continue autonomously.
 
-## TASK
-
-[Task ID]: [Task Name]
-
-## OBJECTIVE
-
-[One sentence objective]
-
-## SCOPE
-
-[Files expected to change]
-
-## DO NOT TOUCH
-
-[Locked areas — see AGENTS.md section H]
-
-## ACCEPTANCE CRITERIA
-
-[Exact conditions]
-
-## TEST REQUIREMENTS
-
-[Tests to run and expected results]
-```
+---
 
 ## LOCKED AREAS
 
 All areas listed in `AGENTS.md` section H remain locked. [List any additional locked areas from this task, or "None added"]
+
+---
+
+## BLOCKED STATE (only fill if Status is BLOCKED)
+
+- **Blocker:** [Description of what prevents completion]
+- **Root cause:** [Description of the root cause]
+- **What was attempted:** [Description of approaches tried]
+- **What the next AI must inspect:** [Specific files, code, or tests to examine]
+- **Suggested approach:** [Description of a potential solution path]

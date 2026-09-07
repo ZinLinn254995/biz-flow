@@ -8,26 +8,21 @@ alwaysApply: true
 
 ## Canonical Instructions
 
-Read `AGENTS.md` at the repository root for the full AI development instruction set. It is the canonical source of truth.
+Read `AGENTS.md` at the repository root for the full AI development instruction set. It is the canonical source of truth. Do not duplicate instructions here — follow AGENTS.md.
 
-## Mandatory Reading Before Code Changes
+## Mandatory Startup Protocol
 
-1. `AGENTS.md`
-2. `docs/ai/AI_START_HERE.md`
-3. `docs/ai/AI_HANDOFF.md`
-4. `docs/ai/CURRENT_STATE.md`
-5. `docs/ai/AI_STATE.json`
-6. `docs/ai/ARCHITECTURE.md`
-7. `docs/ai/ROADMAP.md`
-8. `docs/ai/KNOWN_ISSUES.md`
-9. `docs/ai/AI_CONTINUATION_PROTOCOL.md`
-
-Then inspect the actual source code before making changes.
+1. Read `AGENTS.md`
+2. Read `docs/ai/AI_START_HERE.md`
+3. Read `docs/ai/AI_STATE.json`
+4. Read `docs/ai/AI_HANDOFF.md`
+5. Read `docs/ai/NEXT_TASK_PROMPT.md`
+6. Inspect the actual source code before making changes
 
 ## Critical Rules
 
 - **Trust source code over documentation** if they conflict
-- **Do not modify locked files** (see `AGENTS.md` section H for the full list)
+- **Do not modify locked files** (see `AGENTS.md` section H)
 - **Prefer small, verified, incremental changes** over large rewrites
 - **Do not introduce Supabase, Firebase, or cloud sync** without explicit user approval
 - **Use integer minor units for money** — never floating-point
@@ -39,6 +34,7 @@ Then inspect the actual source code before making changes.
 - **Run verification** before declaring complete: `npm run typecheck`, `npm run test`, `npm run build`
 - **Update `docs/ai/` handoff documentation** after completing work
 - **No emojis** in responses
+- **Do not ask a human or ChatGPT for the next task** — determine it yourself from the repository
 
 ## Architecture
 
@@ -54,4 +50,4 @@ UI never imports Dexie, repositories, or services directly. Hooks access service
 - **Tests:** 507 passing (45 files)
 - **TypeScript:** PASS
 - **Build:** PASS
-- **Next task:** P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup)
+- **Next task:** P2P19 + P2P20 (see `docs/ai/NEXT_TASK_PROMPT.md`)

@@ -2,25 +2,40 @@
 
 ## START HERE
 
-Before changing any code:
+**You are not starting a new project.** You are continuing an existing project called BizFlow.
 
-1. Read `AGENTS.md` (this file)
-2. Read `docs/ai/AI_START_HERE.md`
-3. Read `docs/ai/AI_HANDOFF.md`
-4. Read `docs/ai/CURRENT_STATE.md`
-5. Read `docs/ai/PROJECT_CONTEXT.md`
-6. Read `docs/ai/ARCHITECTURE.md`
-7. Read `docs/ai/ROADMAP.md`
-8. Read `docs/ai/KNOWN_ISSUES.md`
-9. Read `docs/ai/AI_CONTINUATION_PROTOCOL.md`
-10. Read `docs/ai/AI_TASK_SELECTION.md`
-11. Read `docs/ai/AI_STATE.json`
-12. Inspect the relevant source code
-13. Verify documentation against actual implementation
-14. Determine the next task
-15. Only then modify code
+Before changing any code, follow this mandatory startup protocol:
+
+### Mandatory Startup Protocol
+
+| Step | Action |
+|------|--------|
+| STEP 1 | Read `AGENTS.md` (this file) |
+| STEP 2 | Read `docs/ai/AI_START_HERE.md` |
+| STEP 3 | Read `docs/ai/AI_STATE.json` |
+| STEP 4 | Read `docs/ai/CURRENT_STATE.md` |
+| STEP 5 | Read `docs/ai/AI_HANDOFF.md` |
+| STEP 6 | Read `docs/ai/NEXT_TASK_PROMPT.md` |
+| STEP 7 | Read `docs/ai/ROADMAP.md`, `docs/ai/ARCHITECTURE.md`, `docs/ai/KNOWN_ISSUES.md`, `docs/ai/DECISIONS.md` |
+| STEP 8 | Inspect the actual source code relevant to the current task |
+| STEP 9 | Run verification before changing anything when practical: `npm run typecheck && npm run test && npm run build` |
+| STEP 10 | Determine the exact unfinished task from `NEXT_TASK_PROMPT.md` |
 
 **Do not blindly trust documentation.** The actual source code and test results are the final implementation evidence. If documentation says a feature is complete but the code does not support it, trust the code and report the discrepancy.
+
+**Source of truth hierarchy (highest to lowest):**
+1. Actual source code
+2. Actual tests
+3. Actual package/build configuration
+4. `docs/ai/AI_STATE.json`
+5. `docs/ai/CURRENT_STATE.md`
+6. `docs/ai/AI_HANDOFF.md`
+7. `docs/ai/ROADMAP.md`
+8. `docs/ai/KNOWN_ISSUES.md`
+9. `docs/ai/NEXT_TASK_PROMPT.md`
+10. Other explanatory documentation
+
+If documentation conflicts with actual code: inspect the repository and correct the documentation.
 
 ---
 
@@ -88,7 +103,7 @@ All AI continuation documentation is in `docs/ai/`:
 | `AI_CONTINUATION_PROTOCOL.md` | Step-by-step continuation protocol |
 | `AI_TASK_SELECTION.md` | Rules for choosing the next task |
 | `AI_STATE.json` | Machine-readable project state |
-| `NEXT_TASK_PROMPT.md` | Reusable prompt template for next task |
+| `NEXT_TASK_PROMPT.md` | Exact instructions for the NEXT Coding AI |
 | `HANDOFF_TEMPLATE.md` | Template for final handoff reports |
 | `CHANGELOG.md` | Historical changelog |
 | `QUALITY_GATE.md` | Mandatory quality checklist |
@@ -193,6 +208,7 @@ If a locked file genuinely must change for a task, the AI must explicitly explai
 - After implementation: verify `git diff`, verify changed files, ensure no accidental modifications
 - Do not overwrite uncommitted work
 - Do not force-push without explicit authorization
+- If you cannot commit: still update repository files locally and report changes are ready to commit
 
 ## N. AI Continuation Workflow
 
@@ -215,7 +231,7 @@ If a locked file genuinely must change for a task, the AI must explicitly explai
              ↓
       Update AI handoff docs
              ↓
-      Generate final handoff
+      Generate next task instructions
              ↓
 ┌─────────────────────────┐
 │       Next AI Agent     │
@@ -232,14 +248,17 @@ If a locked file genuinely must change for a task, the AI must explicitly explai
 
 ## O. Handoff Requirements
 
-After completing a task, update:
-1. `docs/ai/AI_HANDOFF.md` — milestone, status, next task
+After completing a task, the Coding AI MUST update:
+1. `docs/ai/AI_STATE.json` — machine-readable state (milestone, tests, next task, etc.)
 2. `docs/ai/CURRENT_STATE.md` — completed tasks, test status, technical debt
-3. `docs/ai/AI_STATE.json` — machine-readable state
-4. `docs/ai/CHANGELOG.md` — append new milestone entry
-5. `docs/ai/KNOWN_ISSUES.md` — mark resolved issues, add new ones
-6. `docs/ai/NEXT_TASK_PROMPT.md` — update with next task details
-7. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+3. `docs/ai/AI_HANDOFF.md` — milestone, status, next task, next AI instructions
+4. `docs/ai/NEXT_TASK_PROMPT.md` — exact instructions for the NEXT Coding AI
+5. `docs/ai/CHANGELOG.md` — append new milestone entry (do not rewrite history)
+6. `docs/ai/KNOWN_ISSUES.md` — mark resolved issues, add new ones
+7. `docs/ai/ROADMAP.md` — move completed task, update next/future sections
+8. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+
+The AI must generate the next task automatically. Do NOT leave "TODO: decide next task" or "Ask ChatGPT what to do next." That is forbidden.
 
 ## P. How to Determine the Next Task
 
@@ -249,6 +268,8 @@ After completing a task, update:
 4. Read `docs/ai/AI_STATE.json` for machine-readable state
 5. **Do not blindly follow P2P numbering** — if a critical data integrity issue exists, address it first
 6. Explain any deviation from the roadmap
+7. If `NEXT_TASK_PROMPT.md` explicitly defines a valid next task, follow it
+8. If it is stale or contradictory, inspect the actual repository and recalculate the correct next task
 
 ## Q. What NOT to Do
 
@@ -267,5 +288,40 @@ After completing a task, update:
 - Do NOT add comments unless explaining a non-obvious WHY
 - Do NOT use floating-point for money
 - Do NOT use emojis in responses
+- Do NOT ask ChatGPT, a human, or a prompt engineer for the next task
+- Do NOT leave the next task as a placeholder or TODO
 
 **Prefer small, verified, incremental changes over large rewrites.**
+
+## R. Failure Recovery Procedure
+
+If implementation fails:
+
+1. **Do NOT update the project as COMPLETE.**
+2. Record the failure in `docs/ai/AI_HANDOFF.md` and `docs/ai/CHANGELOG.md`.
+3. Diagnose the root cause — read the error, check assumptions, try a focused fix.
+4. Fix the implementation.
+5. Re-run verification: `npm run typecheck && npm run test && npm run build`.
+6. Only then mark the task complete.
+
+If the task cannot safely be completed:
+- Mark it **BLOCKED** in `AI_STATE.json` and `AI_HANDOFF.md`.
+- Document why it is blocked.
+- Do NOT invent a fake completion.
+- Generate a BLOCKED handoff explaining what the next Coding AI must inspect.
+
+## S. Completion Criteria
+
+A task is COMPLETE only when ALL of the following are true:
+1. `npm run typecheck` exits 0
+2. `npm run test` exits 0 with all tests passing
+3. `npm run build` exits 0
+4. No unintended source changes (verify with `git diff` or file comparison)
+5. No dangling imports (no imports reference deleted or renamed files)
+6. No broken routes (all routes in `AppRoutes.tsx` resolve)
+7. No architecture constraint violations (all `*UiConstraints.test.ts` pass)
+8. All handoff documentation updated
+9. Next task defined in `NEXT_TASK_PROMPT.md` (not a placeholder)
+10. `docs/ai/QUALITY_GATE.md` checklist completed
+
+If any check fails, the task is NOT complete. Fix the issue before declaring completion.

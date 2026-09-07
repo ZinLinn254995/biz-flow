@@ -1,184 +1,174 @@
 # BizFlow AI Development Handoff
 
-## Handoff Metadata
+## PROJECT
 
-| Field | Value |
-|-------|-------|
-| Project | BizFlow |
-| Date | 2026-09-07 |
-| Current branch | N/A (not a git repo) |
-| Latest commit | N/A |
-| Current milestone | P2P18 |
-| Completed milestone | P2P18 |
-| Next milestone | P2P19 (proposed) |
-| Implementation status | All tasks through P2P18 complete |
+BizFlow — offline-first business and personal finance management application.
 
-## Executive Summary
+## CURRENT MILESTONE
 
-BizFlow is a fully offline-first business and personal finance management application built with React, TypeScript, Vite, and Dexie/IndexedDB. All data persists locally in the browser. The application has 10 domain entities, 10 CRUD management pages, a dashboard with real financial summaries, inventory stock deduction logic, and search/filter/sort on list pages. All 507 tests pass, TypeScript passes, and the production build succeeds. The architecture is a clean 5-layer design (UI → Hooks → Services → Repository Interfaces → Dexie Repositories) with dependency injection and automated architecture constraint tests.
+P2P18 — COMPLETE
 
-## Current Architecture
+## LAST COMPLETED TASK
 
-5-layer offline-first architecture:
-- **UI** (13 pages + reusable components) → imports hooks only
-- **Hooks** (domain hooks + useAsync/useMutation) → calls services via ServiceProvider context
-- **Services** (10 services + calculations + validation) → calls repository interfaces
-- **Repository Interfaces** (11 TypeScript interfaces) → implemented by concrete repos
-- **Dexie Repositories** (10 repos + base class) → operates on Dexie/IndexedDB
+P2P18 — Search/Filter/Sort: Added search, filter, sort, and date-range controls to 6 list pages.
 
-No network calls. No global state library. DI via constructor + React context.
+## CURRENT TASK
 
-## Current Database
+None in progress. The repository is ready for the next task.
 
-Dexie (IndexedDB), database name `BizFlowDB`, version 1, 10 tables. Client-generated UUID primary keys. Integer minor-unit money. ISO-8601 timestamps. No transactions used (manual rollback for stock operations). No migrations beyond v1.
+## NEXT TASK
 
-## Current Domain Model
+P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup) — combined for token efficiency.
 
-11 domain entities: Business, InventoryItem, Sale, SaleItem, Customer, BusinessExpense, PersonalIncome, PersonalExpense, Category, Budget, Account. All extend BaseEntity (id, createdAt, updatedAt). Relationships via ID references.
+See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
-## Completed Work
+## OVERALL PROGRESS
 
-| Milestone | Description |
-|-----------|-------------|
-| P2P1 | Types, enums, repository interfaces |
-| P2P2 | Dexie/IndexedDB database with 10 tables |
-| P2P3 | 10 concrete Dexie repositories + base + singletons |
-| P2P5 | 10 application services with validation + DI |
-| P2P6 | React data access layer (hooks, useAsync, useMutation, ServiceProvider) |
-| P2P7–P2P13 | Full CRUD UI for all 10 management pages |
-| P2P14 | Account & Budget management UI |
-| P2P15 | Dashboard rewritten with real data + financial calculations |
-| P2P16 | Centralized multi-currency financial calculations |
-| P2P17 | Inventory stock deduction/restoration in SalesService |
-| P2P18 | Search/filter/sort/date-range on 6 list pages |
+| Metric | Value |
+|--------|-------|
+| Completed milestones | 11 (P2P1 through P2P18) |
+| Remaining milestones | 7 (P2P19 through P2P25) |
+| Progress | 61% |
+| Tests | 507 passing (45 files) |
+| TypeScript | PASS |
+| Build | PASS |
 
-## Current Work
+## IMPLEMENTED FEATURES
 
-Nothing unfinished. All tasks through P2P18 are complete.
+- Business CRUD with name, description, currency
+- Inventory CRUD with stock tracking, cost/sale prices, reorder threshold, stock status
+- Sales CRUD with multi-item line items, payment status, stock deduction/restoration
+- Customer CRUD with contact information
+- Business Expense CRUD with category and account references
+- Personal Income/Expense CRUD with category and account references
+- Category CRUD scoped to business/personal
+- Account CRUD (cash, bank, wallet, other) with balance
+- Budget CRUD with category, limit, period, date range
+- Dashboard with real-time financial summaries (business + personal), recent activity, low-stock alerts
+- Multi-currency support (per-currency totals, never combined)
+- Search, filter, sort, date-range on 6 list pages
+- Centralized financial calculations utility
+- Inventory stock deduction/restoration with manual rollback
 
-## Known Issues
+## RECENT CHANGES
 
-See `docs/ai/KNOWN_ISSUES.md` for full register. Key items:
-- Non-atomic stock operations (ISSUE-001, ISSUE-002)
-- Account balances never update (ISSUE-003)
-- No budget tracking (ISSUE-004)
-- Sale total not validated (ISSUE-005)
-- Orphaned dashboard components (ISSUE-006)
-- Unused useFilters.ts (ISSUE-007)
-- CategoriesPage/AccountsPage missing search (ISSUE-008)
+| Task | Description | Date |
+|------|-------------|------|
+| P2P18 | Search/filter/sort on list pages | 2026-09-07 |
+| P2P17 | Inventory stock logic in SalesService | 2026-09-07 |
+| P2P16 | Centralized financial calculations | 2026-09-07 |
+| P2P15 | Dashboard rewritten with real data | 2026-09-07 |
+| P2P14 | Account & Budget management UI | earlier |
+| P2P7-P2P13 | Full CRUD for all 10 management pages | earlier |
 
-## Technical Debt
+## FILES CHANGED (most recent task)
 
-See `docs/ai/KNOWN_ISSUES.md` for full register. Key items:
-- 7 orphaned dashboard component files
-- 1 unused hook file
-- Non-atomic stock operations
-- No cascade delete
-- Supabase dependency unused
+P2P18 modified 7 page files and created `src/hooks/common/useFilters.ts` (currently unused). No application source files were changed in the AI continuation system upgrade.
 
-## Locked Areas
+## FILES DELETED
 
-| Area | Status | Reason | Modification Rule |
-|------|--------|--------|-------------------|
-| DashboardPage.tsx | LOCKED | Stable, recently rewritten, tested | Do not modify unless explicitly required |
-| AppShell.tsx | LOCKED | Core layout shell | Do not modify |
-| Sidebar.tsx | LOCKED | Navigation structure | Do not modify |
-| MobileNavigation.tsx | LOCKED | Mobile navigation | Do not modify |
-| AppRoutes.tsx | PROTECTED | Route registration | Add routes only, never change existing |
-| navigationItems.ts | PROTECTED | Navigation config | Add items only, never change existing |
-| database.ts schema v1 | PROTECTED | Migration-sensitive | Version migration required for changes |
-| src/types/ domain types | PROTECTED | Contract stability | Change only when required |
-| src/types/repositories/ interfaces | PROTECTED | Architecture boundary | Change carefully |
-| DexieRepository base | PROTECTED | Shared by all repos | Change carefully |
-| useAsync.ts | PROTECTED | Core primitive | Do not modify |
-| useMutation.ts | PROTECTED | Core primitive | Do not modify |
-| ServiceProvider.tsx | PROTECTED | DI context | Do not modify |
-| All completed pages | PROTECTED | Working, tested | Add features only, never break |
-| All existing tests | PROTECTED | Regression safety | Add tests, do not delete assertions |
+None in the most recent task.
 
-## Important Business Rules
+## TEST STATUS
 
-1. Money is always integer minor units + ISO currency code — never floating-point
-2. Stock is deducted on sale create, restored on delete, adjusted on update
-3. Insufficient stock rejects sale creation
-4. Stock status: out_of_stock (qty<=0), low_stock (qty<=reorderThreshold), in_stock
-5. IDs are client-generated UUIDs, never database-generated
-6. Services validate input; repositories own ID/timestamp generation
-7. UI never imports Dexie, repositories, or services directly
-8. Different currencies are never combined in totals
-9. No network calls — fully offline-first
+| Metric | Value |
+|--------|-------|
+| Framework | Vitest 4.1.11 |
+| Test files | 45 |
+| Total tests | 507 |
+| Passing | 507 |
+| Failing | 0 |
+| Verified | 2026-09-07 |
 
-## Testing Status
+## TYPECHECK STATUS
 
-| Metric | Value | Verified |
-|--------|-------|----------|
-| Test framework | Vitest 4.1.11 | Yes |
-| Test files | 45 | Yes |
-| Total tests | 507 | Yes |
-| Passing | 507 | Yes |
-| Failing | 0 | Yes |
-| TypeScript | PASS | Yes |
-| Production build | PASS | Yes |
+PASS — `tsc --noEmit -p tsconfig.app.json` exits 0. Verified 2026-09-07.
 
-## Recommended Next Task
+## BUILD STATUS
 
-**P2P19 — Stock Operation Atomicity**
+PASS — `vite build` exits 0. Verified 2026-09-07.
 
-Wrap `deductStock` + `repository.create` (and `restoreStock` + `repository.remove`, and the update path) in Dexie `db.transaction()` to ensure atomicity. Combine with P2P20 (delete orphaned dashboard components + unused useFilters.ts).
+## KNOWN RISKS
 
-## Why This Task Is Next
+1. **Non-atomic stock operations** (ISSUE-001) — no Dexie transaction, manual rollback only
+2. **No concurrency protection** (ISSUE-002) — simultaneous sales could cause negative inventory
+3. **Account balances static** (ISSUE-003) — transactions don't update balances
+4. **No budget tracking** (ISSUE-004) — limits stored but no actual-vs-limit computation
+5. **Sale total not validated** (ISSUE-005) — totalAmount not checked against sum of lineTotal
+6. **Not a git repository** — GitHub is not yet the source of truth
 
-The non-atomic stock operations (ISSUE-001, ISSUE-002) are the highest-severity known issues. They pose a data integrity risk. The fix is scoped to `SalesService.ts` only — no UI changes, no database schema changes, no route changes. It can be combined with dead code cleanup (P2P20) for token efficiency.
+## KNOWN ISSUES
 
-## Task Scope
+See `docs/ai/KNOWN_ISSUES.md` for the full register. Summary:
 
-| File | Change |
+| ID | Title | Severity | Status |
+|----|-------|----------|--------|
+| ISSUE-001 | Non-atomic stock operations | High | Open — P2P19 |
+| ISSUE-002 | No concurrency protection | High | Open — P2P19 |
+| ISSUE-003 | Account balances never update | Medium | Open — P2P23 |
+| ISSUE-004 | No budget tracking | Medium | Open — P2P24 |
+| ISSUE-005 | Sale total not validated | Medium | Open — P2P22 |
+| ISSUE-006 | Orphaned dashboard components | Low | Open — P2P20 |
+| ISSUE-007 | Unused useFilters.ts | Low | Open — P2P20 |
+| ISSUE-008 | Categories/Accounts missing search | Low | Open — P2P21 |
+| ISSUE-009 | Supabase dependency unused | Low | Open |
+| ISSUE-010 | No cascade delete | Low | Open |
+
+## ARCHITECTURE CONSTRAINTS
+
+- UI cannot import repositories, services, or Dexie
+- Hooks access services via ServiceProvider context
+- Services depend on repository interfaces only
+- No network calls — fully offline-first
+- Money uses integer minor units — never floating-point
+- IDs are client-generated UUIDs
+- Timestamps auto-managed by repository layer
+
+## LOCKED AREAS
+
+| Area | Status |
 |------|--------|
-| `src/services/sales/SalesService.ts` | Wrap stock + persistence in `db.transaction()` |
-| `src/test/services/salesStockLogic.test.ts` | Verify atomicity behavior |
-| `src/components/dashboard/*` (7 files) | Delete (P2P20) |
-| `src/hooks/common/useFilters.ts` | Delete (P2P20) |
+| `src/pages/DashboardPage.tsx` | LOCKED |
+| `src/components/layout/AppShell.tsx` | LOCKED |
+| `src/components/layout/Sidebar.tsx` | LOCKED |
+| `src/components/layout/MobileNavigation.tsx` | LOCKED |
+| `src/routes/AppRoutes.tsx` | PROTECTED |
+| `src/config/navigationItems.ts` | PROTECTED |
+| `src/db/database.ts` | PROTECTED |
+| `src/types/` | PROTECTED |
+| `src/types/repositories/` | PROTECTED |
+| `src/repositories/dexieRepository.ts` | PROTECTED |
+| `src/hooks/common/useAsync.ts` | PROTECTED |
+| `src/hooks/common/useMutation.ts` | PROTECTED |
+| `src/hooks/common/ServiceProvider.tsx` | PROTECTED |
+| All completed pages | PROTECTED |
+| All existing tests | PROTECTED |
 
-## Do Not Touch
+## IMPORTANT DECISIONS
 
-- DashboardPage.tsx
-- AppShell, Sidebar, MobileNavigation
-- AppRoutes.tsx (existing routes)
-- database.ts (schema v1)
-- All type definitions
-- All repository interfaces
-- All completed pages (unless adding features)
-- All existing test assertions
+See `docs/ai/DECISIONS.md` for 12 architecture decision records. Key decisions:
+- Offline-first with Dexie/IndexedDB (no network dependency)
+- Repository pattern with interface segregation
+- Constructor dependency injection via ServiceProvider
+- Integer minor-unit money (never floating-point)
+- Client-generated UUID identifiers
+- Multi-currency per-currency totals (never combined)
+- No global state library
+- Manual rollback for stock operations (P2P19 will add transactions)
+- Architecture constraint tests enforce layer boundaries
 
-## Acceptance Criteria
+## NEXT CODING AI INSTRUCTIONS
 
-1. Stock deduction and sale persistence are wrapped in a single Dexie transaction
-2. If the transaction fails, no stock changes are applied
-3. All 507+ existing tests still pass
-4. TypeScript passes
-5. Production build passes
-6. Orphaned dashboard components are deleted
-7. Unused useFilters.ts is deleted
-8. No application behavior changes
+The next Coding AI should:
 
-## Verification Commands
+1. Read `AGENTS.md` at the repository root
+2. Read `docs/ai/AI_STATE.json` for machine-readable state
+3. Read `docs/ai/NEXT_TASK_PROMPT.md` for exact task instructions
+4. Verify the current state against actual source code
+5. Implement P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup)
+6. Run `npm run typecheck && npm run test && npm run build`
+7. Update all handoff documentation under `docs/ai/`
+8. Generate the next task (P2P21+P2P22) in `NEXT_TASK_PROMPT.md`
+9. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
 
-```bash
-npm run typecheck
-npm run test
-npm run build
-```
-
-## Next AI Instructions
-
-1. Read all files under `docs/ai/` before starting
-2. Verify the current state against the actual source code
-3. Read `src/services/sales/SalesService.ts` to understand current stock logic
-4. Read `src/db/database.ts` to understand the Dexie database structure
-5. Implement P2P19: wrap stock operations in `db.transaction()`
-6. Implement P2P20: delete orphaned files
-7. Run all verification commands
-8. Update `docs/ai/AI_HANDOFF.md` with the new state
-9. Update `docs/ai/CHANGELOG.md` with the completed milestone
-10. Update `docs/ai/CURRENT_STATE.md` with the new status
-11. Produce a final handoff report
+**Do not ask a human or ChatGPT for the next task.** The repository contains everything needed to continue autonomously.
