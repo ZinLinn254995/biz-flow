@@ -359,6 +359,7 @@ Runs, in order:
 | 5 | `npm run verify:ai` | `AI_STATE.json` is valid, complete, uses legal statuses, references only existing files, and agrees with `NEXT_TASK_PROMPT.md`, `AI_HANDOFF.md` and `CURRENT_STATE.md` |
 
 The same five steps run in CI on every push via `.github/workflows/ai-verify.yml`.
+Use **Node 22** — the architecture constraint tests call `node:fs` `globSync`, which does not exist on Node 20.
 The workflow is verification only — it never modifies source and never generates code.
 
 ## V. GitHub Source of Truth

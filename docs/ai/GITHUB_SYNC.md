@@ -94,6 +94,11 @@ Rules:
 | Dangling imports | `npm run verify:imports` |
 | AI state / docs consistency | `npm run verify:ai` |
 
+CI runs on **Node 22**. Node 20 fails: the architecture constraint tests use
+`node:fs` `globSync`, which only exists from Node 22. Use Node 22 locally too.
+
+Last verified CI run: commit `f53b8b4` on `main` — **success**.
+
 The workflow is **verification only**. It never modifies application source,
 never commits, and never generates code. A red CI run means the last push is
 not a valid handoff point: the next Coding AI must fix it before starting new

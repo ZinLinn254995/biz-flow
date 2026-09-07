@@ -3,7 +3,14 @@
   "stateContract": {
     "validator": "scripts/verify-ai-state.mjs",
     "validateCommand": "npm run verify:ai",
-    "taskStatusValues": ["PLANNED", "IN_PROGRESS", "BLOCKED", "PARTIAL", "COMPLETE", "FAILED"],
+    "taskStatusValues": [
+      "PLANNED",
+      "IN_PROGRESS",
+      "BLOCKED",
+      "PARTIAL",
+      "COMPLETE",
+      "FAILED"
+    ],
     "rule": "A task may only be recorded as COMPLETE when typecheck, tests and build actually passed and the result is recorded in quality.verificationRun."
   },
   "project": {
@@ -38,8 +45,28 @@
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
-    "completedMilestones": ["P2P1", "P2P2", "P2P3", "P2P5", "P2P6", "P2P7-P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18"],
-    "remainingMilestones": ["P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25"],
+    "completedMilestones": [
+      "P2P1",
+      "P2P2",
+      "P2P3",
+      "P2P5",
+      "P2P6",
+      "P2P7-P2P13",
+      "P2P14",
+      "P2P15",
+      "P2P16",
+      "P2P17",
+      "P2P18"
+    ],
+    "remainingMilestones": [
+      "P2P19",
+      "P2P20",
+      "P2P21",
+      "P2P22",
+      "P2P23",
+      "P2P24",
+      "P2P25"
+    ],
     "totalCompleted": 11,
     "totalRemaining": 7,
     "percentage": 61
@@ -67,11 +94,28 @@
       "runBy": "AI continuation system upgrade agent",
       "environment": "clean npm ci install of the repository at commit 8c64406",
       "results": [
-        { "command": "npm run typecheck", "result": "PASS" },
-        { "command": "npm run test", "result": "PASS", "detail": "45 files / 507 tests" },
-        { "command": "npm run build", "result": "PASS", "detail": "vite build, 509.77 kB bundle" },
-        { "command": "npm run verify:imports", "result": "PASS" },
-        { "command": "npm run verify:ai", "result": "PASS" }
+        {
+          "command": "npm run typecheck",
+          "result": "PASS"
+        },
+        {
+          "command": "npm run test",
+          "result": "PASS",
+          "detail": "45 files / 507 tests"
+        },
+        {
+          "command": "npm run build",
+          "result": "PASS",
+          "detail": "vite build, 509.77 kB bundle"
+        },
+        {
+          "command": "npm run verify:imports",
+          "result": "PASS"
+        },
+        {
+          "command": "npm run verify:ai",
+          "result": "PASS"
+        }
       ]
     },
     "qualityGates": {
@@ -88,7 +132,13 @@
   },
   "architecture": {
     "style": "5-layer offline-first",
-    "layers": ["UI", "React Hooks", "Application Services", "Repository Interfaces", "Dexie Repositories"],
+    "layers": [
+      "UI",
+      "React Hooks",
+      "Application Services",
+      "Repository Interfaces",
+      "Dexie Repositories"
+    ],
     "database": "Dexie/IndexedDB",
     "databaseName": "BizFlowDB",
     "databaseVersion": 1,
@@ -124,18 +174,66 @@
     "Account"
   ],
   "routes": [
-    { "path": "/dashboard", "page": "DashboardPage", "status": "complete" },
-    { "path": "/business", "page": "BusinessPage", "status": "complete" },
-    { "path": "/inventory", "page": "InventoryPage", "status": "complete" },
-    { "path": "/sales", "page": "SalesPage", "status": "complete" },
-    { "path": "/customers", "page": "CustomersPage", "status": "complete" },
-    { "path": "/business-expenses", "page": "BusinessExpensesPage", "status": "complete" },
-    { "path": "/personal", "page": "PersonalFinancePage", "status": "complete" },
-    { "path": "/categories", "page": "CategoriesPage", "status": "complete" },
-    { "path": "/accounts", "page": "AccountsPage", "status": "complete" },
-    { "path": "/budgets", "page": "BudgetsPage", "status": "complete" },
-    { "path": "/analytics", "page": "AnalyticsPage", "status": "placeholder" },
-    { "path": "/settings", "page": "SettingsPage", "status": "placeholder" }
+    {
+      "path": "/dashboard",
+      "page": "DashboardPage",
+      "status": "complete"
+    },
+    {
+      "path": "/business",
+      "page": "BusinessPage",
+      "status": "complete"
+    },
+    {
+      "path": "/inventory",
+      "page": "InventoryPage",
+      "status": "complete"
+    },
+    {
+      "path": "/sales",
+      "page": "SalesPage",
+      "status": "complete"
+    },
+    {
+      "path": "/customers",
+      "page": "CustomersPage",
+      "status": "complete"
+    },
+    {
+      "path": "/business-expenses",
+      "page": "BusinessExpensesPage",
+      "status": "complete"
+    },
+    {
+      "path": "/personal",
+      "page": "PersonalFinancePage",
+      "status": "complete"
+    },
+    {
+      "path": "/categories",
+      "page": "CategoriesPage",
+      "status": "complete"
+    },
+    {
+      "path": "/accounts",
+      "page": "AccountsPage",
+      "status": "complete"
+    },
+    {
+      "path": "/budgets",
+      "page": "BudgetsPage",
+      "status": "complete"
+    },
+    {
+      "path": "/analytics",
+      "page": "AnalyticsPage",
+      "status": "placeholder"
+    },
+    {
+      "path": "/settings",
+      "page": "SettingsPage",
+      "status": "placeholder"
+    }
   ],
   "nextTaskInstructions": {
     "id": "P2P19+P2P20",
@@ -193,32 +291,150 @@
     "applicationSourceChanged": false
   },
   "lockedAreas": [
-    { "path": "src/pages/DashboardPage.tsx", "status": "LOCKED", "reason": "Stable, recently rewritten, tested" },
-    { "path": "src/components/layout/AppShell.tsx", "status": "LOCKED", "reason": "Core layout shell" },
-    { "path": "src/components/layout/Sidebar.tsx", "status": "LOCKED", "reason": "Navigation structure" },
-    { "path": "src/components/layout/MobileNavigation.tsx", "status": "LOCKED", "reason": "Mobile navigation" },
-    { "path": "src/routes/AppRoutes.tsx", "status": "PROTECTED", "reason": "Route registration — add only" },
-    { "path": "src/config/navigationItems.ts", "status": "PROTECTED", "reason": "Navigation config — add only" },
-    { "path": "src/db/database.ts", "status": "PROTECTED", "reason": "Migration-sensitive — version migration required" },
-    { "path": "src/types/", "status": "PROTECTED", "reason": "Contract stability" },
-    { "path": "src/types/repositories/", "status": "PROTECTED", "reason": "Architecture boundary" },
-    { "path": "src/repositories/dexieRepository.ts", "status": "PROTECTED", "reason": "Shared by all repos" },
-    { "path": "src/hooks/common/useAsync.ts", "status": "PROTECTED", "reason": "Core primitive" },
-    { "path": "src/hooks/common/useMutation.ts", "status": "PROTECTED", "reason": "Core primitive" },
-    { "path": "src/hooks/common/ServiceProvider.tsx", "status": "PROTECTED", "reason": "DI context" }
+    {
+      "path": "src/pages/DashboardPage.tsx",
+      "status": "LOCKED",
+      "reason": "Stable, recently rewritten, tested"
+    },
+    {
+      "path": "src/components/layout/AppShell.tsx",
+      "status": "LOCKED",
+      "reason": "Core layout shell"
+    },
+    {
+      "path": "src/components/layout/Sidebar.tsx",
+      "status": "LOCKED",
+      "reason": "Navigation structure"
+    },
+    {
+      "path": "src/components/layout/MobileNavigation.tsx",
+      "status": "LOCKED",
+      "reason": "Mobile navigation"
+    },
+    {
+      "path": "src/routes/AppRoutes.tsx",
+      "status": "PROTECTED",
+      "reason": "Route registration — add only"
+    },
+    {
+      "path": "src/config/navigationItems.ts",
+      "status": "PROTECTED",
+      "reason": "Navigation config — add only"
+    },
+    {
+      "path": "src/db/database.ts",
+      "status": "PROTECTED",
+      "reason": "Migration-sensitive — version migration required"
+    },
+    {
+      "path": "src/types/",
+      "status": "PROTECTED",
+      "reason": "Contract stability"
+    },
+    {
+      "path": "src/types/repositories/",
+      "status": "PROTECTED",
+      "reason": "Architecture boundary"
+    },
+    {
+      "path": "src/repositories/dexieRepository.ts",
+      "status": "PROTECTED",
+      "reason": "Shared by all repos"
+    },
+    {
+      "path": "src/hooks/common/useAsync.ts",
+      "status": "PROTECTED",
+      "reason": "Core primitive"
+    },
+    {
+      "path": "src/hooks/common/useMutation.ts",
+      "status": "PROTECTED",
+      "reason": "Core primitive"
+    },
+    {
+      "path": "src/hooks/common/ServiceProvider.tsx",
+      "status": "PROTECTED",
+      "reason": "DI context"
+    }
   ],
   "knownIssues": [
-    { "id": "ISSUE-001", "title": "Non-atomic stock operations", "severity": "high", "status": "open", "addressedBy": "P2P19" },
-    { "id": "ISSUE-002", "title": "No concurrency protection on stock deduction", "severity": "high", "status": "open", "addressedBy": "P2P19" },
-    { "id": "ISSUE-003", "title": "Account balances never update from transactions", "severity": "medium", "status": "open", "addressedBy": "P2P23" },
-    { "id": "ISSUE-004", "title": "No budget actual-vs-limit tracking", "severity": "medium", "status": "open", "addressedBy": "P2P24" },
-    { "id": "ISSUE-005", "title": "Sale total not validated against sum of line items", "severity": "medium", "status": "open", "addressedBy": "P2P22" },
-    { "id": "ISSUE-006", "title": "Orphaned dashboard components (7 files)", "severity": "low", "status": "open", "addressedBy": "P2P20" },
-    { "id": "ISSUE-007", "title": "Unused useFilters.ts hook", "severity": "low", "status": "open", "addressedBy": "P2P20" },
-    { "id": "ISSUE-008", "title": "CategoriesPage and AccountsPage missing search", "severity": "low", "status": "open", "addressedBy": "P2P21" },
-    { "id": "ISSUE-009", "title": "Supabase dependency unused", "severity": "low", "status": "open", "addressedBy": null },
-    { "id": "ISSUE-010", "title": "No cascade delete", "severity": "low", "status": "open", "addressedBy": null },
-    { "id": "ISSUE-011", "title": "Production bundle is a single 509 kB chunk (no code splitting)", "severity": "low", "status": "open", "addressedBy": null }
+    {
+      "id": "ISSUE-001",
+      "title": "Non-atomic stock operations",
+      "severity": "high",
+      "status": "open",
+      "addressedBy": "P2P19"
+    },
+    {
+      "id": "ISSUE-002",
+      "title": "No concurrency protection on stock deduction",
+      "severity": "high",
+      "status": "open",
+      "addressedBy": "P2P19"
+    },
+    {
+      "id": "ISSUE-003",
+      "title": "Account balances never update from transactions",
+      "severity": "medium",
+      "status": "open",
+      "addressedBy": "P2P23"
+    },
+    {
+      "id": "ISSUE-004",
+      "title": "No budget actual-vs-limit tracking",
+      "severity": "medium",
+      "status": "open",
+      "addressedBy": "P2P24"
+    },
+    {
+      "id": "ISSUE-005",
+      "title": "Sale total not validated against sum of line items",
+      "severity": "medium",
+      "status": "open",
+      "addressedBy": "P2P22"
+    },
+    {
+      "id": "ISSUE-006",
+      "title": "Orphaned dashboard components (7 files)",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": "P2P20"
+    },
+    {
+      "id": "ISSUE-007",
+      "title": "Unused useFilters.ts hook",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": "P2P20"
+    },
+    {
+      "id": "ISSUE-008",
+      "title": "CategoriesPage and AccountsPage missing search",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": "P2P21"
+    },
+    {
+      "id": "ISSUE-009",
+      "title": "Supabase dependency unused",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": null
+    },
+    {
+      "id": "ISSUE-010",
+      "title": "No cascade delete",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": null
+    },
+    {
+      "id": "ISSUE-011",
+      "title": "Production bundle is a single 509 kB chunk (no code splitting)",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": null
+    }
   ],
   "risks": [
     "P2P19 touches SalesService, which all sale-related tests depend on. Dexie transactions must include every table written inside the callback or Dexie throws at runtime, not at compile time.",
@@ -233,7 +449,15 @@
     "syncMechanism": "Commits pushed directly to the GitHub repository. See docs/ai/GITHUB_SYNC.md.",
     "lastSyncedTask": "AI continuation system upgrade",
     "lastSyncedDate": "2026-09-07",
-    "ciWorkflow": ".github/workflows/ai-verify.yml"
+    "ciWorkflow": ".github/workflows/ai-verify.yml",
+    "ciStatus": {
+      "workflow": "AI Verification Gate",
+      "branch": "main",
+      "commit": "f53b8b4",
+      "conclusion": "success",
+      "date": "2026-09-07"
+    },
+    "nodeVersion": "22 (tests use node:fs globSync, which does not exist on Node 20)"
   },
   "continuation": {
     "entryPoint": "AGENTS.md",
