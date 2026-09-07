@@ -20,6 +20,7 @@ import {
   categoryRepository,
   budgetRepository,
   accountRepository,
+  salesTransactionRunner,
 } from '@/repositories';
 
 /**
@@ -45,7 +46,7 @@ export function createServiceContainer(): ServiceContainer {
   return {
     businessService: new BusinessService(businessRepository),
     inventoryService: new InventoryService(inventoryRepository),
-    salesService: new SalesService(saleRepository, inventoryRepository),
+    salesService: new SalesService(saleRepository, inventoryRepository, salesTransactionRunner),
     customerService: new CustomerService(customerRepository),
     businessExpenseService: new BusinessExpenseService(businessExpenseRepository),
     personalIncomeService: new PersonalIncomeService(personalIncomeRepository),

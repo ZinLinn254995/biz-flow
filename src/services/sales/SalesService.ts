@@ -5,6 +5,7 @@ import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull } from '@/services/common';
+import { directTransactionRunner, type TransactionRunner } from '@/services/common/transaction';
 
 function computeStockStatus(quantity: number, reorderThreshold?: number): StockStatus {
   if (quantity <= 0) return 'out_of_stock';
@@ -16,7 +17,18 @@ export class SalesService {
   constructor(
     private readonly repository: SaleRepository,
     private readonly inventoryRepository?: InventoryRepository,
+    private readonly transactionRunner: TransactionRunner = directTransactionRunner,
   ) {}
+
+  /**
+   * Runs stock movements and sale persistence as one atomic unit. With the
+   * Dexie-backed runner injected, a mid-operation failure rolls everything
+   * back; the inline compensation below remains as a safety net for the
+   * non-transactional fallback.
+   */
+  private runAtomic<T>(work: () => Promise<T>): Promise<T> {
+    return this.transactionRunner.run(work);
+  }
 
   async getSaleById(id: EntityId): Promise<Sale | null> {
     return this.repository.getById(id);
@@ -54,14 +66,15 @@ export class SalesService {
     validateMoney(input.totalAmount, 'totalAmount');
     const notes = trimToNull(input.notes) ?? undefined;
 
-    await this.deductStock(input.items);
-
-    try {
-      return await this.repository.create({ ...input, date, notes });
-    } catch (err) {
-      await this.restoreStock(input.items);
-      throw err;
-    }
+    return this.runAtomic(async () => {
+      await this.deductStock(input.items);
+      try {
+        return await this.repository.create({ ...input, date, notes });
+      } catch (err) {
+        await this.restoreStock(input.items);
+        throw err;
+      }
+    });
   }
 
   async updateSale(id: EntityId, changes: Partial<Sale>): Promise<Sale> {
@@ -86,20 +99,23 @@ export class SalesService {
       if (!oldSale) {
         throw new Error(`Sale not found: ${id}`);
       }
-      await this.restoreStock(oldSale.items);
-      try {
-        await this.deductStock(changes.items);
-      } catch (error) {
-        await this.deductStock(oldSale.items);
-        throw error;
-      }
-      try {
-        return await this.repository.update(id, changes);
-      } catch (error) {
-        await this.restoreStock(changes.items);
-        await this.deductStock(oldSale.items);
-        throw error;
-      }
+      const newItems = changes.items;
+      return this.runAtomic(async () => {
+        await this.restoreStock(oldSale.items);
+        try {
+          await this.deductStock(newItems);
+        } catch (error) {
+          await this.deductStock(oldSale.items);
+          throw error;
+        }
+        try {
+          return await this.repository.update(id, changes);
+        } catch (error) {
+          await this.restoreStock(newItems);
+          await this.deductStock(oldSale.items);
+          throw error;
+        }
+      });
     }
 
     return this.repository.update(id, changes);
@@ -109,13 +125,15 @@ export class SalesService {
     if (!this.inventoryRepository) return this.repository.remove(id);
     const sale = await this.repository.getById(id);
     if (!sale) return this.repository.remove(id);
-    await this.restoreStock(sale.items);
-    try {
-      await this.repository.remove(id);
-    } catch (error) {
-      await this.deductStock(sale.items);
-      throw error;
-    }
+    await this.runAtomic(async () => {
+      await this.restoreStock(sale.items);
+      try {
+        await this.repository.remove(id);
+      } catch (error) {
+        await this.deductStock(sale.items);
+        throw error;
+      }
+    });
   }
 
   private async deductStock(items: SaleItem[]): Promise<void> {

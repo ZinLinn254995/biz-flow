@@ -6,126 +6,95 @@
 
 ## CURRENT MILESTONE
 
-P2P18 — COMPLETE
+P2P19+P2P20 — COMPLETE
 
 ## PREVIOUS COMPLETED TASK
 
-P2P18 — Search/Filter/Sort: Added search, filter, sort, and date-range controls to 6 list pages.
+P2P19 — Stock Operation Atomicity (stock movements and sale persistence now commit or roll back together through an injected `TransactionRunner`) combined with P2P20 — Dead Code Cleanup (8 orphaned files deleted).
 
 ## NEXT TASK
 
-**P2P19 — Stock Operation Atomicity** (combined with **P2P20 — Dead Code Cleanup**)
+**P2P21 — Categories & Accounts Search** (combined with **P2P22 — Sale Total Validation**)
 
 ## WHY THIS TASK IS NEXT
 
-The non-atomic stock operations (ISSUE-001, ISSUE-002) are the highest-severity known issues. They pose a data integrity risk — if the process crashes between stock deduction and sale persistence, inventory may be inconsistent. The fix is scoped to `SalesService.ts` only — no UI changes, no database schema changes, no route changes. P2P20 (deleting 8 orphaned/unused files) is low-risk and can be done in the same pass for token efficiency.
+The high-severity data-integrity issues (ISSUE-001, ISSUE-002) are closed. The highest remaining
+items are ISSUE-008 (CategoriesPage and AccountsPage are the only list pages without the P2P18
+search/filter/sort controls) and ISSUE-005 (a sale's `totalAmount` is accepted without checking it
+against the sum of its line totals). Both are small, independent, and share one verification cycle.
 
 ## OBJECTIVE
 
-1. Wrap stock deduction + sale persistence in Dexie `db.transaction()` to ensure atomicity
-2. Delete orphaned dashboard components and unused useFilters.ts hook
+1. Add search/filter/sort controls to `CategoriesPage` and `AccountsPage`, matching the existing P2P18 patterns used by the other list pages.
+2. Validate in `SalesService` that `totalAmount` equals the sum of line totals, in a single currency.
 
 ## DEPENDENCIES
 
-None. P2P19 and P2P20 are independent of each other and all other tasks.
+None.
 
 ## SCOPE — Allowed Files
 
-### P2P19: Stock Atomicity
-- `src/services/sales/SalesService.ts` — wrap stock operations in Dexie transaction
-- `src/test/services/salesStockLogic.test.ts` — update if needed (do not delete existing assertions)
+### P2P21: Categories & Accounts Search
+- `src/pages/CategoriesPage.tsx`
+- `src/pages/AccountsPage.tsx`
+- Shared search/filter components already used by the other list pages (reuse, do not fork)
+- `src/test/hooks/categoriesPage.test.tsx`, `src/test/hooks/accountPage.test.tsx` (add assertions only)
 
-### P2P20: Dead Code Cleanup
-- Delete: `src/components/dashboard/AnalyticsPreview.tsx`
-- Delete: `src/components/dashboard/BusinessOverview.tsx`
-- Delete: `src/components/dashboard/InventoryStatus.tsx`
-- Delete: `src/components/dashboard/PersonalFinanceOverview.tsx`
-- Delete: `src/components/dashboard/QuickActions.tsx`
-- Delete: `src/components/dashboard/RecentActivity.tsx`
-- Delete: `src/components/dashboard/SummaryCard.tsx`
-- Delete: `src/hooks/common/useFilters.ts`
+### P2P22: Sale Total Validation
+- `src/services/sales/SalesService.ts`
+- `src/test/services/salesService.test.ts` (add assertions only)
 
 ## LOCKED FILES — Do Not Touch
 
 - `src/pages/DashboardPage.tsx`
-- `src/components/layout/AppShell.tsx`
-- `src/components/layout/Sidebar.tsx`
-- `src/components/layout/MobileNavigation.tsx`
+- `src/components/layout/AppShell.tsx`, `Sidebar.tsx`, `MobileNavigation.tsx`
 - `src/routes/AppRoutes.tsx`
 - `src/config/navigationItems.ts`
 - `src/db/database.ts`
-- `src/types/*`
-- `src/types/repositories/*`
+- `src/types/*`, `src/types/repositories/*`
 - `src/repositories/dexieRepository.ts`
-- `src/hooks/common/useAsync.ts`
-- `src/hooks/common/useMutation.ts`
-- `src/hooks/common/ServiceProvider.tsx`
-- All existing pages (unless adding features)
+- `src/hooks/common/useAsync.ts`, `useMutation.ts`, `ServiceProvider.tsx`
 - All existing test assertions (add only, never delete)
 
 ## ARCHITECTURE CONSTRAINTS
 
 - UI cannot import repositories, services, or Dexie
-- Hooks access services via ServiceProvider context
+- Services must NOT import `@/db` or Dexie — this is enforced by `src/test/services/serviceConstraints.test.ts`. Anything needing database capability is injected as a port (see `src/services/common/transaction.ts`)
 - Services depend on repository interfaces only
 - No network calls — fully offline-first
 - Money uses integer minor units — never floating-point
-- IDs are client-generated UUIDs
-
-## BUSINESS RULES
-
-- Stock is deducted on sale create, restored on delete, adjusted on update
-- Insufficient stock rejects sale creation
-- Stock status: out_of_stock (qty<=0), low_stock (qty<=reorderThreshold), in_stock
 - Different currencies are never combined in totals
 
 ## IMPLEMENTATION DETAILS
 
-### P2P19: Stock Atomicity
+### P2P21
+1. Read how `InventoryPage.tsx` or `CustomersPage.tsx` wire search, filter, sort and empty states after P2P18, and reuse the same components and prop shapes.
+2. CategoriesPage: search by name, filter by category type, sort by name and created date.
+3. AccountsPage: search by name, filter by account type, sort by name and balance.
+4. Preserve existing CRUD behaviour and all current test assertions.
 
-1. Import `db` from `@/db` in `SalesService.ts`
-2. In `createSale`: wrap `deductStock(items)` + `repository.create(...)` in:
-   ```typescript
-   await db.transaction('rw', [db.sales, db.inventoryItems], async () => {
-     await this.deductStock(input.items);
-     return await this.repository.create({ ...input, date, notes });
-   });
-   ```
-3. In `deleteSale`: wrap `restoreStock(sale.items)` + `repository.remove(id)` in the same transaction pattern
-4. In `updateSale`: wrap the stock adjustment + `repository.update(id, changes)` in the same transaction pattern
-5. Remove manual try/catch rollback logic — Dexie transactions auto-rollback on error
-6. Preserve all existing validation logic (do not change validation)
-7. The `deductStock` and `restoreStock` private methods can remain as-is — they will be called within the transaction context
-
-### P2P20: Dead Code Cleanup
-
-1. Before deleting, grep for imports of each file to confirm no references exist
-2. Delete the 7 dashboard component files in `src/components/dashboard/`
-3. Delete `src/hooks/common/useFilters.ts`
-4. Check if `src/hooks/common/index.ts` exports from `useFilters` — if so, remove that export
-5. Run typecheck to confirm no broken imports
+### P2P22
+1. In `createSale`, after per-item validation, compute the expected total: every `lineTotal` must share one currency, and the sum of `lineTotal.amountMinor` must equal `totalAmount.amountMinor`, with `totalAmount.currency` matching.
+2. Throw a `ValidationError` from `@/services/common` with a clear message on mismatch or mixed currency.
+3. Apply the same check in `updateSale` when both `items` and `totalAmount` are supplied; when only one is supplied, validate against the persisted sale.
+4. Validation must run before any stock movement or transaction is started.
 
 ## ACCEPTANCE CRITERIA
 
-1. Stock deduction and sale persistence are atomic (wrapped in Dexie transaction)
-2. If any part of the transaction fails, no changes are applied (Dexie auto-rollback)
-3. Manual rollback logic is removed (transactions handle this)
-4. All existing stock logic tests pass (12 tests in `salesStockLogic.test.ts`)
-5. All 507 tests pass
+1. CategoriesPage and AccountsPage have working search, filter and sort
+2. A sale whose `totalAmount` differs from the sum of line totals is rejected
+3. A sale mixing currencies across line items is rejected
+4. New tests cover both features
+5. All existing tests pass (510 at handoff time)
 6. TypeScript passes
 7. Production build passes
-8. 7 orphaned dashboard component files are deleted
-9. `useFilters.ts` is deleted
-10. No imports reference deleted files (no dangling imports)
-11. No application behavior changes
+8. No dangling imports, no locked files touched, no network calls added
 
 ## REQUIRED TESTS
 
-- All existing tests in `src/test/services/salesStockLogic.test.ts` must pass unchanged
-- All existing tests in `src/test/services/salesService.test.ts` must pass unchanged
-- All existing page integration tests must pass unchanged
-- All architecture constraint tests must pass unchanged
-- If adding new tests for atomicity, add them to `salesStockLogic.test.ts`
+- Add search/filter/sort assertions to the categories and accounts page tests
+- Add total-mismatch and mixed-currency rejection tests to `salesService.test.ts`
+- All existing tests, including `serviceConstraints.test.ts` and `salesStockLogic.test.ts`, must pass unchanged
 
 ## VERIFICATION COMMANDS
 
@@ -133,37 +102,32 @@ None. P2P19 and P2P20 are independent of each other and all other tasks.
 npm run verify
 ```
 
-This runs, in order: `npm run typecheck`, `npm run test`, `npm run build`,
-`npm run verify:imports` (catches imports of the 8 deleted files) and
-`npm run verify:ai` (validates `AI_STATE.json` and the handoff documents).
-
-All five must exit with code 0 before the task may be recorded as `COMPLETE`.
+Runs, in order: `npm run typecheck`, `npm run test`, `npm run build`, `npm run verify:imports`
+and `npm run verify:ai`. All five must exit 0 before recording the task as `COMPLETE`.
 The same five checks run in CI on every push (`.github/workflows/ai-verify.yml`).
 
 ## DOCUMENTATION UPDATE REQUIREMENTS
 
 After completing the task, update:
 
-1. `docs/ai/AI_STATE.json` — Update milestone to P2P19+P2P20, update tests count, mark ISSUE-001/002/006/007 as resolved, set next task to P2P21+P2P22
-2. `docs/ai/CURRENT_STATE.md` — Add P2P19 and P2P20 to completed tasks, update test status
-3. `docs/ai/AI_HANDOFF.md` — Update last completed task, next task, recent changes
-4. `docs/ai/NEXT_TASK_PROMPT.md` — Replace with P2P21+P2P22 instructions (Categories & Accounts Search + Sale Total Validation)
-5. `docs/ai/CHANGELOG.md` — Append P2P19+P2P20 entry
-6. `docs/ai/KNOWN_ISSUES.md` — Mark ISSUE-001, ISSUE-002, ISSUE-006, ISSUE-007 as resolved
-7. `docs/ai/ROADMAP.md` — Move P2P19 and P2P20 to completed, update next section
-8. Complete the `docs/ai/QUALITY_GATE.md` checklist
-9. Set `lastTaskFilesChanged` in `AI_STATE.json` (created / modified / deleted) and record the verification run in `quality.verificationRun`
-10. Commit code and state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`
+1. `docs/ai/AI_STATE.json` — milestone, `lastCompletedTask`, `nextTask` (P2P23), test count, mark ISSUE-005 and ISSUE-008 resolved, set `lastTaskFilesChanged` and `quality.verificationRun`
+2. `docs/ai/CURRENT_STATE.md`
+3. `docs/ai/AI_HANDOFF.md`
+4. `docs/ai/NEXT_TASK_PROMPT.md` — replace with P2P23 (Account Balance Tracking) instructions
+5. `docs/ai/CHANGELOG.md` — append
+6. `docs/ai/KNOWN_ISSUES.md` — mark ISSUE-005 and ISSUE-008 resolved
+7. `docs/ai/ROADMAP.md`
+8. `docs/ai/QUALITY_GATE.md` checklist
+9. Commit code and state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`
 
 ## IF YOU CANNOT FINISH
 
-Do not mark the task `COMPLETE`. Write a `currentTask` object into `AI_STATE.json` with
-status `IN_PROGRESS`, `PARTIAL`, `BLOCKED` or `FAILED`, listing `filesTouched`,
-`completedWork`, `remainingWork` and a `recommendation` of `continue` or `revert`.
+Do not mark the task `COMPLETE`. Write a `currentTask` object into `AI_STATE.json` with status
+`IN_PROGRESS`, `PARTIAL`, `BLOCKED` or `FAILED`, listing `filesTouched`, `completedWork`,
+`remainingWork` and a `recommendation` of `continue` or `revert`.
 See the FAILURE RECOVERY section of `docs/ai/AI_CONTINUATION_PROTOCOL.md`.
 
 ## NEXT HANDOFF REQUIREMENTS
 
-After completing this task, generate the next task instructions for P2P21 (Categories & Accounts Search) + P2P22 (Sale Total Validation) in `NEXT_TASK_PROMPT.md`. The next Coding AI should be able to follow that file directly without any external prompt.
-
-Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`.
+After completing this task, generate the next task instructions for P2P23 (Account Balance Tracking)
+in this file, and produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`.

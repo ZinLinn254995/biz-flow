@@ -22,26 +22,26 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P2P18",
-    "name": "Search/Filter/Sort",
+    "id": "P2P19+P2P20",
+    "name": "Stock Operation Atomicity + Dead Code Cleanup",
     "status": "COMPLETE",
     "verifiedDate": "2026-09-07"
   },
   "lastCompletedTask": {
-    "id": "P2P18",
-    "name": "Search/Filter/Sort",
+    "id": "P2P19+P2P20",
+    "name": "Stock Operation Atomicity + Dead Code Cleanup",
     "completedDate": "2026-09-07",
     "status": "COMPLETE"
   },
   "currentTask": null,
   "nextTask": {
-    "id": "P2P19+P2P20",
-    "name": "Stock Operation Atomicity + Dead Code Cleanup",
-    "priority": "P0+P1",
-    "complexity": "MEDIUM",
+    "id": "P2P21+P2P22",
+    "name": "Categories & Accounts Search + Sale Total Validation",
+    "priority": "P1+P1",
+    "complexity": "LOW",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "ISSUE-001 and ISSUE-002 are the only open high-severity data-integrity issues. Stock deduction and sale persistence are still separate writes with manual rollback, so a mid-operation failure can corrupt stock counts. P2P20 is bundled because the dead files are inert and deleting them in the same pass avoids a second full verification cycle.",
+    "reason": "With the high-severity stock-integrity issues closed, ISSUE-008 (CategoriesPage and AccountsPage still lack the search/filter controls every other list page has) and ISSUE-005 (sale totalAmount is never checked against the sum of line totals) are the highest remaining items. Both are small, independent and share one verification cycle.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -56,25 +56,25 @@
       "P2P15",
       "P2P16",
       "P2P17",
-      "P2P18"
+      "P2P18",
+      "P2P19",
+      "P2P20"
     ],
     "remainingMilestones": [
-      "P2P19",
-      "P2P20",
       "P2P21",
       "P2P22",
       "P2P23",
       "P2P24",
       "P2P25"
     ],
-    "totalCompleted": 11,
-    "totalRemaining": 7,
-    "percentage": 61
+    "totalCompleted": 13,
+    "totalRemaining": 5,
+    "percentage": 72
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 507,
+      "count": 510,
       "files": 45,
       "framework": "Vitest 4.1.11",
       "verifiedDate": "2026-09-07"
@@ -91,8 +91,8 @@
     },
     "verificationRun": {
       "date": "2026-09-07",
-      "runBy": "AI continuation system upgrade agent",
-      "environment": "clean npm ci install of the repository at commit 8c64406",
+      "runBy": "P2P19+P2P20 continuation agent (Lovable)",
+      "environment": "clean npm ci install of the repository at main after the continuation-system upgrade",
       "results": [
         {
           "command": "npm run typecheck",
@@ -101,12 +101,12 @@
         {
           "command": "npm run test",
           "result": "PASS",
-          "detail": "45 files / 507 tests"
+          "detail": "45 files / 510 tests (3 new atomicity tests)"
         },
         {
           "command": "npm run build",
           "result": "PASS",
-          "detail": "vite build, 509.77 kB bundle"
+          "detail": "vite build, single ~510 kB chunk warning only"
         },
         {
           "command": "npm run verify:imports",
@@ -236,28 +236,22 @@
     }
   ],
   "nextTaskInstructions": {
-    "id": "P2P19+P2P20",
-    "name": "Stock Operation Atomicity + Dead Code Cleanup",
-    "objective": "Wrap stock operations in Dexie db.transaction() for atomicity; delete 8 orphaned/unused files",
+    "id": "P2P21+P2P22",
+    "name": "Categories & Accounts Search + Sale Total Validation",
+    "objective": "Add search/filter/sort controls to CategoriesPage and AccountsPage (matching P2P18 patterns); validate that a sale's totalAmount equals the sum of its line totals in the same currency.",
     "scope": [
+      "src/pages/CategoriesPage.tsx",
+      "src/pages/AccountsPage.tsx",
       "src/services/sales/SalesService.ts",
-      "src/components/dashboard/AnalyticsPreview.tsx (delete)",
-      "src/components/dashboard/BusinessOverview.tsx (delete)",
-      "src/components/dashboard/InventoryStatus.tsx (delete)",
-      "src/components/dashboard/PersonalFinanceOverview.tsx (delete)",
-      "src/components/dashboard/QuickActions.tsx (delete)",
-      "src/components/dashboard/RecentActivity.tsx (delete)",
-      "src/components/dashboard/SummaryCard.tsx (delete)",
-      "src/hooks/common/useFilters.ts (delete)"
+      "src/test/services/salesService.test.ts"
     ],
     "acceptanceCriteria": [
-      "Stock deduction and sale persistence are wrapped in Dexie db.transaction()",
-      "Manual rollback logic removed (transactions handle atomicity)",
-      "All 507 existing tests pass",
-      "TypeScript passes",
-      "Production build passes",
-      "8 files deleted with no dangling imports (npm run verify:imports passes)",
-      "No application behavior changes"
+      "CategoriesPage and AccountsPage expose the same search/filter/sort UX as the other list pages",
+      "createSale and updateSale reject a totalAmount that does not equal the sum of line totals",
+      "Mixed-currency line items are rejected rather than summed",
+      "New tests cover both features; all existing tests still pass",
+      "npm run verify passes end to end",
+      "No changes to locked files"
     ],
     "verificationCommands": [
       "npm run typecheck",
@@ -268,27 +262,37 @@
     ]
   },
   "lastTaskFilesChanged": {
-    "task": "AI continuation system upgrade (infrastructure only, no application source changes)",
+    "task": "P2P19 Stock Operation Atomicity + P2P20 Dead Code Cleanup",
     "created": [
-      "scripts/verify-ai-state.mjs",
-      "scripts/check-dangling-imports.mjs",
-      ".github/workflows/ai-verify.yml",
-      "docs/ai/GITHUB_SYNC.md"
+      "src/services/common/transaction.ts",
+      "src/repositories/salesTransactionRunner.ts"
     ],
     "modified": [
-      "package.json",
-      "AGENTS.md",
+      "src/services/sales/SalesService.ts",
+      "src/services/common/index.ts",
+      "src/services/container.ts",
+      "src/repositories/index.ts",
+      "src/test/services/salesStockLogic.test.ts",
       "docs/ai/AI_STATE.json",
-      "docs/ai/AI_START_HERE.md",
-      "docs/ai/AI_HANDOFF.md",
-      "docs/ai/AI_CONTINUATION_PROTOCOL.md",
       "docs/ai/CURRENT_STATE.md",
-      "docs/ai/QUALITY_GATE.md",
+      "docs/ai/AI_HANDOFF.md",
+      "docs/ai/NEXT_TASK_PROMPT.md",
       "docs/ai/CHANGELOG.md",
-      "docs/ai/NEXT_TASK_PROMPT.md"
+      "docs/ai/KNOWN_ISSUES.md",
+      "docs/ai/ROADMAP.md"
     ],
-    "deleted": [],
-    "applicationSourceChanged": false
+    "deleted": [
+      "src/components/dashboard/AnalyticsPreview.tsx",
+      "src/components/dashboard/BusinessOverview.tsx",
+      "src/components/dashboard/InventoryStatus.tsx",
+      "src/components/dashboard/PersonalFinanceOverview.tsx",
+      "src/components/dashboard/QuickActions.tsx",
+      "src/components/dashboard/RecentActivity.tsx",
+      "src/components/dashboard/SummaryCard.tsx",
+      "src/hooks/common/useFilters.ts"
+    ],
+    "applicationSourceChanged": true,
+    "designNote": "The architecture test `services do not import the database directly` forbids importing @/db from a service, so atomicity is injected as a TransactionRunner port (src/services/common/transaction.ts). The Dexie implementation lives in the repository layer (src/repositories/salesTransactionRunner.ts) and is wired in src/services/container.ts. Services constructed without a runner fall back to direct execution, which keeps every mock-repository unit test working."
   },
   "lockedAreas": [
     {
@@ -314,17 +318,17 @@
     {
       "path": "src/routes/AppRoutes.tsx",
       "status": "PROTECTED",
-      "reason": "Route registration — add only"
+      "reason": "Route registration \u2014 add only"
     },
     {
       "path": "src/config/navigationItems.ts",
       "status": "PROTECTED",
-      "reason": "Navigation config — add only"
+      "reason": "Navigation config \u2014 add only"
     },
     {
       "path": "src/db/database.ts",
       "status": "PROTECTED",
-      "reason": "Migration-sensitive — version migration required"
+      "reason": "Migration-sensitive \u2014 version migration required"
     },
     {
       "path": "src/types/",
@@ -362,15 +366,19 @@
       "id": "ISSUE-001",
       "title": "Non-atomic stock operations",
       "severity": "high",
-      "status": "open",
-      "addressedBy": "P2P19"
+      "status": "resolved",
+      "addressedBy": "P2P19",
+      "resolvedBy": "P2P19",
+      "resolvedDate": "2026-09-07"
     },
     {
       "id": "ISSUE-002",
       "title": "No concurrency protection on stock deduction",
       "severity": "high",
-      "status": "open",
-      "addressedBy": "P2P19"
+      "status": "resolved",
+      "addressedBy": "P2P19",
+      "resolvedBy": "P2P19",
+      "resolvedDate": "2026-09-07"
     },
     {
       "id": "ISSUE-003",
@@ -397,15 +405,19 @@
       "id": "ISSUE-006",
       "title": "Orphaned dashboard components (7 files)",
       "severity": "low",
-      "status": "open",
-      "addressedBy": "P2P20"
+      "status": "resolved",
+      "addressedBy": "P2P20",
+      "resolvedBy": "P2P20",
+      "resolvedDate": "2026-09-07"
     },
     {
       "id": "ISSUE-007",
       "title": "Unused useFilters.ts hook",
       "severity": "low",
-      "status": "open",
-      "addressedBy": "P2P20"
+      "status": "resolved",
+      "addressedBy": "P2P20",
+      "resolvedBy": "P2P20",
+      "resolvedDate": "2026-09-07"
     },
     {
       "id": "ISSUE-008",
@@ -437,8 +449,8 @@
     }
   ],
   "risks": [
-    "P2P19 touches SalesService, which all sale-related tests depend on. Dexie transactions must include every table written inside the callback or Dexie throws at runtime, not at compile time.",
-    "Deleting the 7 dashboard components is only safe because DashboardPage.tsx (LOCKED) does not import them. Re-verify with npm run verify:imports after deletion.",
+    "SalesService now depends on an injected TransactionRunner. Any new construction site must pass salesTransactionRunner or the operation silently loses atomicity (it still works, but without rollback).",
+    "Dexie transactions must list every table written inside the callback; adding a new write to the sale flow means updating src/repositories/salesTransactionRunner.ts or Dexie throws at runtime.",
     "CI runs on GitHub-hosted runners with npm ci; adding dependencies without updating package-lock.json will fail CI."
   ],
   "gitState": {
@@ -447,16 +459,9 @@
     "defaultBranch": "main",
     "sourceOfTruth": "GitHub repository ZinLinn254995/biz-flow",
     "syncMechanism": "Commits pushed directly to the GitHub repository. See docs/ai/GITHUB_SYNC.md.",
-    "lastSyncedTask": "AI continuation system upgrade",
+    "lastSyncedTask": "P2P19+P2P20",
     "lastSyncedDate": "2026-09-07",
     "ciWorkflow": ".github/workflows/ai-verify.yml",
-    "ciStatus": {
-      "workflow": "AI Verification Gate",
-      "branch": "main",
-      "commit": "f53b8b4",
-      "conclusion": "success",
-      "date": "2026-09-07"
-    },
     "nodeVersion": "22 (tests use node:fs globSync, which does not exist on Node 20)"
   },
   "continuation": {
@@ -479,19 +484,19 @@
     "note": "A new Coding AI needs nothing beyond this repository URL. The human only needs to say: continue the next task in docs/ai/NEXT_TASK_PROMPT.md."
   },
   "nextAIInstructions": {
-    "summary": "Implement P2P19 + P2P20 exactly as specified in docs/ai/NEXT_TASK_PROMPT.md.",
+    "summary": "Implement P2P21 + P2P22 exactly as specified in docs/ai/NEXT_TASK_PROMPT.md.",
     "beforeStarting": [
       "npm ci",
-      "npm run verify (typecheck + tests + build + import check + AI state check) to confirm the documented baseline is real"
+      "npm run verify to confirm the documented baseline is real"
     ],
     "afterFinishing": [
       "Re-run npm run verify",
-      "Set currentTask to null and lastCompletedTask to P2P19+P2P20 with status COMPLETE only if verification passed",
+      "Set currentTask to null and lastCompletedTask to P2P21+P2P22 with status COMPLETE only if verification passed",
       "Update CURRENT_STATE.md, AI_HANDOFF.md, ROADMAP.md, CHANGELOG.md, KNOWN_ISSUES.md",
-      "Rewrite docs/ai/NEXT_TASK_PROMPT.md for P2P21",
+      "Rewrite docs/ai/NEXT_TASK_PROMPT.md for P2P23",
       "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
     ]
   },
   "lastUpdated": "2026-09-07",
-  "lastUpdatedBy": "AI continuation system upgrade agent (Lovable)"
+  "lastUpdatedBy": "P2P19+P2P20 continuation agent (Lovable)"
 }

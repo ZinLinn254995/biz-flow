@@ -6,11 +6,19 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P2P18 — COMPLETE
+P2P19+P2P20 — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P2P18 — Search/Filter/Sort: Added search, filter, sort, and date-range controls to 6 list pages.
+P2P19 — Stock Operation Atomicity + P2P20 — Dead Code Cleanup.
+
+Stock movements and sale persistence now commit or roll back as one unit. Because the architecture
+tests forbid a service importing `@/db`, atomicity is an injected port: `TransactionRunner`
+(`src/services/common/transaction.ts`), implemented for Dexie in
+`src/repositories/salesTransactionRunner.ts` over `[db.sales, db.inventoryItems]` and wired in
+`src/services/container.ts`. `SalesService` falls back to direct execution when no runner is
+injected, so every mock-repository unit test keeps working. Seven orphaned dashboard components and
+the unused `useFilters` hook were deleted. No user-visible behaviour changed.
 
 ## CURRENT TASK
 
@@ -24,7 +32,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup) — combined for token efficiency.
+P2P21 (Categories & Accounts Search) + P2P22 (Sale Total Validation) — combined for token efficiency.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
@@ -32,10 +40,10 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 | Metric | Value |
 |--------|-------|
-| Completed milestones | 11 (P2P1 through P2P18) |
-| Remaining milestones | 7 (P2P19 through P2P25) |
-| Progress | 61% |
-| Tests | 507 passing (45 files) |
+| Completed milestones | 13 (P2P1 through P2P20) |
+| Remaining milestones | 5 (P2P21 through P2P25) |
+| Progress | 72% |
+| Tests | 510 passing (45 files) |
 | TypeScript | PASS |
 | Build | PASS |
 

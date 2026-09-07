@@ -79,7 +79,7 @@
 
 ### P2P18 — Search/Filter/Sort
 - **Objective:** Add search, filter, sort, date-range controls to list pages
-- **Scope:** 7 page files, `src/hooks/common/useFilters.ts`
+- **Scope:** 7 page files (the unused `src/hooks/common/useFilters.ts` was deleted in P2P20)
 - **Status:** COMPLETE
 - **Tests:** Updated page integration tests
 - **Dependencies:** P2P7–P2P13
@@ -87,13 +87,10 @@
 - **Database impact:** None
 - **Known gap:** CategoriesPage and AccountsPage not updated
 
----
-
-## Next Tasks
-
 ### P2P19 — Stock Operation Atomicity
-- **Objective:** Wrap stock deduction + sale persistence in Dexie `db.transaction()`
+- **Objective:** Wrap stock deduction + sale persistence in one Dexie transaction (implemented as an injected `TransactionRunner` port, since services may not import `@/db`)
 - **Scope:** `src/services/sales/SalesService.ts`
+- **Status:** COMPLETE (2026-09-07)
 - **Dependencies:** None
 - **Risk:** Low — no UI changes, only service internals
 - **Complexity:** MEDIUM
@@ -106,6 +103,7 @@
 ### P2P20 — Dead Code Cleanup
 - **Objective:** Delete orphaned dashboard components and unused useFilters.ts
 - **Scope:** `src/components/dashboard/*` (7 files), `src/hooks/common/useFilters.ts`
+- **Status:** COMPLETE (2026-09-07)
 - **Dependencies:** None
 - **Risk:** Low — deleting unused code
 - **Complexity:** LOW
@@ -114,6 +112,10 @@
 - **Database impact:** None
 - **Testing:** All tests must still pass
 - **Can combine with:** P2P19
+
+---
+
+## Next Tasks
 
 ### P2P21 — Categories & Accounts Search
 - **Objective:** Add search/filter to CategoriesPage and AccountsPage

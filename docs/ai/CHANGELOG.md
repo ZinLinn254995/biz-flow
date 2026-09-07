@@ -4,6 +4,35 @@
 
 ---
 
+## P2P19 + P2P20 — 2026-09-07
+
+### Added
+- `src/services/common/transaction.ts` — `TransactionRunner` port plus `directTransactionRunner` fallback
+- `src/repositories/salesTransactionRunner.ts` — Dexie implementation over `[db.sales, db.inventoryItems]`
+- 3 atomicity tests in `src/test/services/salesStockLogic.test.ts` (510 tests total)
+
+### Changed
+- `SalesService.createSale` / `updateSale` / `deleteSale` now run stock movements and sale
+  persistence inside a single transaction; the inline compensation remains as a safety net for the
+  non-transactional fallback used by mock-repository unit tests
+- `src/services/container.ts` injects `salesTransactionRunner` into `SalesService`
+- `src/repositories/index.ts`, `src/services/common/index.ts` re-export the new pieces
+
+### Removed
+- `src/components/dashboard/AnalyticsPreview.tsx`, `BusinessOverview.tsx`, `InventoryStatus.tsx`,
+  `PersonalFinanceOverview.tsx`, `QuickActions.tsx`, `RecentActivity.tsx`, `SummaryCard.tsx`
+- `src/hooks/common/useFilters.ts`
+
+### Notes
+- The task prompt suggested importing `db` directly into `SalesService`; that violates the
+  architecture test `services do not import the database directly`, so the capability is injected
+  as a port instead. Same atomicity guarantee, architecture boundary intact.
+- Resolved ISSUE-001, ISSUE-002, ISSUE-006, ISSUE-007.
+- Verified: typecheck PASS, 510 tests PASS, build PASS, import check PASS, AI state check PASS.
+- No application behaviour changed.
+
+---
+
 ## AI Continuation System Upgrade — 2026-09-07
 
 > Infrastructure and documentation only. No application source file was changed.

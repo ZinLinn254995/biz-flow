@@ -278,3 +278,82 @@ describe('SalesService — no negative inventory', () => {
     expect(item?.quantity).toBe(0);
   });
 });
+
+describe('SalesService — atomic stock operations (P2P19)', () => {
+  function makeRunner() {
+    const calls: string[] = [];
+    return {
+      calls,
+      runner: {
+        run: async <T,>(work: () => Promise<T>): Promise<T> => {
+          calls.push('start');
+          try {
+            const result = await work();
+            calls.push('commit');
+            return result;
+          } catch (error) {
+            calls.push('rollback');
+            throw error;
+          }
+        },
+      },
+    };
+  }
+
+  it('runs sale creation and stock deduction inside a single transaction', async () => {
+    const saleRepo = createMockSaleRepo();
+    (saleRepo.create as ReturnType<typeof vi.fn>).mockImplementation(async (s: Sale) => s);
+    const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 10)]);
+    const { calls, runner } = makeRunner();
+    const service = new SalesService(saleRepo, invRepo, runner);
+
+    await service.createSale({
+      businessId: 'biz-1' as EntityId,
+      date: '2026-01-05',
+      items: [mkSaleItem('item-1', 3)],
+      totalAmount: { amountMinor: 6000, currency: 'USD' },
+      paymentStatus: 'paid',
+    });
+
+    expect(calls).toEqual(['start', 'commit']);
+    expect((await invRepo.getById('item-1' as EntityId))?.quantity).toBe(7);
+  });
+
+  it('rolls the transaction back when sale persistence fails', async () => {
+    const saleRepo = createMockSaleRepo();
+    (saleRepo.create as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('write failed'));
+    const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 10)]);
+    const { calls, runner } = makeRunner();
+    const service = new SalesService(saleRepo, invRepo, runner);
+
+    await expect(
+      service.createSale({
+        businessId: 'biz-1' as EntityId,
+        date: '2026-01-05',
+        items: [mkSaleItem('item-1', 3)],
+        totalAmount: { amountMinor: 6000, currency: 'USD' },
+        paymentStatus: 'paid',
+      }),
+    ).rejects.toThrow('write failed');
+
+    expect(calls).toEqual(['start', 'rollback']);
+    expect((await invRepo.getById('item-1' as EntityId))?.quantity).toBe(10);
+  });
+
+  it('runs stock restoration and sale deletion inside a single transaction', async () => {
+    const saleRepo = createMockSaleRepo();
+    (saleRepo.getById as ReturnType<typeof vi.fn>).mockResolvedValue({
+      id: 'sale-1' as EntityId,
+      items: [mkSaleItem('item-1', 4)],
+    } as unknown as Sale);
+    (saleRepo.remove as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
+    const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 6)]);
+    const { calls, runner } = makeRunner();
+    const service = new SalesService(saleRepo, invRepo, runner);
+
+    await service.deleteSale('sale-1' as EntityId);
+
+    expect(calls).toEqual(['start', 'commit']);
+    expect((await invRepo.getById('item-1' as EntityId))?.quantity).toBe(10);
+  });
+});

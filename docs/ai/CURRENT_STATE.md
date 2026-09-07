@@ -7,10 +7,10 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P2P18 |
+| Current milestone | P2P19+P2P20 |
 | Status | COMPLETE |
-| Next milestone | P2P19 (proposed) |
-| Implementation status | All planned tasks through P2P18 are complete |
+| Next milestone | P2P21+P2P22 (Categories & Accounts Search + Sale Total Validation) |
+| Implementation status | All planned tasks through P2P20 are complete |
 
 ## Completed Tasks
 
@@ -27,12 +27,14 @@
 | P2P16 | COMPLETE | Centralized financial calculations utility | `src/services/calculations/financialCalculations.ts` | `financialCalculations.test.ts` (16 tests) |
 | P2P17 | COMPLETE | Inventory stock deduction/restoration in SalesService | `src/services/sales/SalesService.ts` | `salesStockLogic.test.ts` (12 tests) |
 | P2P18 | COMPLETE | Search/filter/sort/date-range on list pages | 7 page files | Updated page integration tests |
+| P2P19 | COMPLETE | Atomic stock operations via an injected `TransactionRunner` port with a Dexie-backed implementation | `src/services/common/transaction.ts`, `src/repositories/salesTransactionRunner.ts`, `src/services/sales/SalesService.ts`, `src/services/container.ts` | `salesStockLogic.test.ts` (+3 atomicity tests) |
+| P2P20 | COMPLETE | Deleted 7 orphaned dashboard components and the unused `useFilters` hook | `src/components/dashboard/*`, `src/hooks/common/useFilters.ts` | `npm run verify:imports` |
 
 **Note:** P2P4 is not documented in `architecture.md` and no evidence of it exists in the codebase. It may have been skipped or merged into P2P5.
 
 ## In Progress
 
-None. All tasks through P2P18 are complete.
+None. All tasks through P2P20 are complete.
 
 ## Not Started
 
@@ -57,7 +59,7 @@ working tree matches the last verified state.
 | Command | Result |
 |---------|--------|
 | `npm run typecheck` | PASS |
-| `npm run test` | PASS (45 files, 507 tests) |
+| `npm run test` | PASS (45 files, 510 tests) |
 | `npm run build` | PASS |
 | `npm run verify:imports` | PASS |
 | `npm run verify:ai` | PASS |
@@ -66,7 +68,7 @@ Run all five at once with `npm run verify`.
 
 ## Known Bugs
 
-No confirmed bugs. All 507 tests pass, TypeScript passes, production build passes.
+No confirmed bugs. All 510 tests pass, TypeScript passes, production build passes.
 
 ## Technical Debt
 

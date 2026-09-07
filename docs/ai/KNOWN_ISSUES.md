@@ -15,7 +15,7 @@ None.
 - **Possible solution:** Wrap `deductStock` + `repository.create` in `db.transaction('rw', [salesTable, inventoryItemsTable], async () => {...})`.
 - **Affected files:** `src/services/sales/SalesService.ts`
 - **Dependencies:** None
-- **Status:** Open — proposed as P2P19
+- **Status:** RESOLVED in P2P19 (2026-09-07) — stock movements and sale persistence run inside an injected TransactionRunner backed by `db.transaction('rw', [db.sales, db.inventoryItems], ...)`
 
 ### ISSUE-002: No Concurrency Protection on Stock
 - **ID:** ISSUE-002
@@ -26,7 +26,7 @@ None.
 - **Possible solution:** Dexie transactions with read-write lock on inventory items.
 - **Affected files:** `src/services/sales/SalesService.ts`
 - **Dependencies:** ISSUE-001 (same fix)
-- **Status:** Open — addressed by P2P19
+- **Status:** RESOLVED in P2P19 (2026-09-07) — the read-check-write sequence now runs inside a single Dexie read-write transaction
 
 ## Medium
 
@@ -74,7 +74,7 @@ None.
 - **Possible solution:** Delete the 7 files.
 - **Affected files:** `src/components/dashboard/*`
 - **Dependencies:** None
-- **Status:** Open — proposed as P2P20
+- **Status:** RESOLVED in P2P20 (2026-09-07) — file deleted; `npm run verify:imports` confirms no dangling references
 
 ### ISSUE-007: Unused useFilters.ts Hook
 - **ID:** ISSUE-007
@@ -85,7 +85,7 @@ None.
 - **Possible solution:** Delete the file, or refactor pages to use it.
 - **Affected files:** `src/hooks/common/useFilters.ts`
 - **Dependencies:** None
-- **Status:** Open — proposed as P2P20
+- **Status:** RESOLVED in P2P20 (2026-09-07) — file deleted; `npm run verify:imports` confirms no dangling references
 
 ### ISSUE-008: CategoriesPage and AccountsPage Missing Search
 - **ID:** ISSUE-008
