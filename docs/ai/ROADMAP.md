@@ -115,7 +115,7 @@
 
 ---
 
-## Next Tasks
+## Completed in the last session
 
 ### P2P21 — Categories & Accounts Search
 - **Objective:** Add search/filter to CategoriesPage and AccountsPage
@@ -128,6 +128,7 @@
 - **Database impact:** None
 - **Testing:** Update page tests to verify search functionality
 - **Can combine with:** P2P22
+- **Status:** COMPLETE (2026-09-07)
 
 ### P2P22 — Sale Total Validation
 - **Objective:** Validate `totalAmount === sum(items.lineTotal)` in SalesService
@@ -140,10 +141,11 @@
 - **Database impact:** None
 - **Testing:** Add test for total mismatch rejection
 - **Can combine with:** P2P21
+- **Status:** COMPLETE (2026-09-07)
 
 ---
 
-## Future Tasks
+## Next Tasks
 
 ### P2P23 — Account Balance Updates
 - **Objective:** Update Account.balance when transactions reference accountId

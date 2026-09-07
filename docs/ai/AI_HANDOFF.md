@@ -6,19 +6,19 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P2P19+P2P20 — COMPLETE
+P2P21+P2P22 — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P2P19 — Stock Operation Atomicity + P2P20 — Dead Code Cleanup.
+P2P21 — Categories & Accounts Search + P2P22 — Sale Total Validation.
 
-Stock movements and sale persistence now commit or roll back as one unit. Because the architecture
-tests forbid a service importing `@/db`, atomicity is an injected port: `TransactionRunner`
-(`src/services/common/transaction.ts`), implemented for Dexie in
-`src/repositories/salesTransactionRunner.ts` over `[db.sales, db.inventoryItems]` and wired in
-`src/services/container.ts`. `SalesService` falls back to direct execution when no runner is
-injected, so every mock-repository unit test keeps working. Seven orphaned dashboard components and
-the unused `useFilters` hook were deleted. No user-visible behaviour changed.
+`CategoriesPage` gained a search box and a name/created sort; `AccountsPage` gained a search box
+(name or institution), an account-type filter, a name/balance sort, and a filtered empty state.
+Both follow the P2P18 pattern used by the other list pages, including the `Clear Filters` button.
+`SalesService` now validates that `totalAmount` equals the sum of line totals in a single currency,
+in both `createSale` and `updateSale`, before any stock movement — so a rejected sale never touches
+inventory. Fixtures in `salesStockLogic.test.ts` that declared totals inconsistent with their line
+items now derive the total; no assertion was removed.
 
 ## CURRENT TASK
 
@@ -32,7 +32,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P21 (Categories & Accounts Search) + P2P22 (Sale Total Validation) — combined for token efficiency.
+P2P23 (Account Balance Updates) — keep `Account.balance` in sync with the transactions that reference `accountId`.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
@@ -40,10 +40,10 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 | Metric | Value |
 |--------|-------|
-| Completed milestones | 13 (P2P1 through P2P20) |
-| Remaining milestones | 5 (P2P21 through P2P25) |
-| Progress | 72% |
-| Tests | 510 passing (45 files) |
+| Completed milestones | 15 (P2P1 through P2P22) |
+| Remaining milestones | 3 (P2P23 through P2P25) |
+| Progress | 83% |
+| Tests | 527 passing (45 files) |
 | TypeScript | PASS |
 | Build | PASS |
 
@@ -60,7 +60,8 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 - Budget CRUD with category, limit, period, date range
 - Dashboard with real-time financial summaries (business + personal), recent activity, low-stock alerts
 - Multi-currency support (per-currency totals, never combined)
-- Search, filter, sort, date-range on 6 list pages
+- Search, filter, sort, date-range on 8 list pages (all of them)
+- Sale totals validated against line items, mixed-currency line items rejected
 - Centralized financial calculations utility
 - Inventory stock deduction/restoration with manual rollback
 
@@ -68,6 +69,8 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 | Task | Description | Date |
 |------|-------------|------|
+| P2P21+P2P22 | Categories/Accounts search + sale total validation | 2026-09-07 |
+| P2P19+P2P20 | Stock atomicity + dead code cleanup | 2026-09-07 |
 | P2P18 | Search/filter/sort on list pages | 2026-09-07 |
 | P2P17 | Inventory stock logic in SalesService | 2026-09-07 |
 | P2P16 | Centralized financial calculations | 2026-09-07 |
@@ -77,7 +80,7 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 ## FILES CHANGED (most recent task)
 
-P2P18 modified 7 page files and created `src/hooks/common/useFilters.ts` (currently unused). No application source files were changed in the AI continuation system upgrade.
+P2P21+P2P22 modified `src/pages/CategoriesPage.tsx`, `src/pages/AccountsPage.tsx`, `src/services/sales/SalesService.ts` and four test files. Nothing was created or deleted.
 
 ## FILES DELETED
 
@@ -89,8 +92,8 @@ None in the most recent task.
 |--------|-------|
 | Framework | Vitest 4.1.11 |
 | Test files | 45 |
-| Total tests | 507 |
-| Passing | 507 |
+| Total tests | 527 |
+| Passing | 527 |
 | Failing | 0 |
 | Verified | 2026-09-07 |
 
@@ -104,12 +107,9 @@ PASS — `vite build` exits 0. Verified 2026-09-07.
 
 ## KNOWN RISKS
 
-1. **Non-atomic stock operations** (ISSUE-001) — no Dexie transaction, manual rollback only
-2. **No concurrency protection** (ISSUE-002) — simultaneous sales could cause negative inventory
-3. **Account balances static** (ISSUE-003) — transactions don't update balances
-4. **No budget tracking** (ISSUE-004) — limits stored but no actual-vs-limit computation
-5. **Sale total not validated** (ISSUE-005) — totalAmount not checked against sum of lineTotal
-6. **Single 509 kB JS bundle** (ISSUE-011) — no code splitting yet (low severity)
+1. **Account balances static** (ISSUE-003) — transactions don't update balances (next task, P2P23)
+2. **No budget tracking** (ISSUE-004) — limits stored but no actual-vs-limit computation
+3. **Single 515 kB JS bundle** (ISSUE-011) — no code splitting yet (low severity)
 
 ## KNOWN ISSUES
 
@@ -117,14 +117,14 @@ See `docs/ai/KNOWN_ISSUES.md` for the full register. Summary:
 
 | ID | Title | Severity | Status |
 |----|-------|----------|--------|
-| ISSUE-001 | Non-atomic stock operations | High | Open — P2P19 |
-| ISSUE-002 | No concurrency protection | High | Open — P2P19 |
+| ISSUE-001 | Non-atomic stock operations | High | RESOLVED — P2P19 |
+| ISSUE-002 | No concurrency protection | High | RESOLVED — P2P19 |
 | ISSUE-003 | Account balances never update | Medium | Open — P2P23 |
 | ISSUE-004 | No budget tracking | Medium | Open — P2P24 |
-| ISSUE-005 | Sale total not validated | Medium | Open — P2P22 |
-| ISSUE-006 | Orphaned dashboard components | Low | Open — P2P20 |
-| ISSUE-007 | Unused useFilters.ts | Low | Open — P2P20 |
-| ISSUE-008 | Categories/Accounts missing search | Low | Open — P2P21 |
+| ISSUE-005 | Sale total not validated | Medium | RESOLVED — P2P22 |
+| ISSUE-006 | Orphaned dashboard components | Low | RESOLVED — P2P20 |
+| ISSUE-007 | Unused useFilters.ts | Low | RESOLVED — P2P20 |
+| ISSUE-008 | Categories/Accounts missing search | Low | RESOLVED — P2P21 |
 | ISSUE-009 | Supabase dependency unused | Low | Open |
 | ISSUE-010 | No cascade delete | Low | Open |
 | ISSUE-011 | Single 509 kB bundle, no code splitting | Low | Open |
@@ -169,7 +169,7 @@ See `docs/ai/DECISIONS.md` for 12 architecture decision records. Key decisions:
 - Client-generated UUID identifiers
 - Multi-currency per-currency totals (never combined)
 - No global state library
-- Manual rollback for stock operations (P2P19 will add transactions)
+- Atomic stock operations via an injected `TransactionRunner` port (P2P19)
 - Architecture constraint tests enforce layer boundaries
 
 ## NEXT CODING AI INSTRUCTIONS
@@ -180,10 +180,10 @@ The next Coding AI should:
 2. Read `docs/ai/AI_STATE.json` for machine-readable state
 3. Read `docs/ai/NEXT_TASK_PROMPT.md` for exact task instructions
 4. Verify the current state against actual source code
-5. Implement P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup)
+5. Implement P2P23 (Account Balance Updates)
 6. Run `npm run verify` (typecheck + tests + build + import check + AI state check)
 7. Update all handoff documentation under `docs/ai/`
-8. Generate the next task (P2P21+P2P22) in `NEXT_TASK_PROMPT.md`
+8. Generate the next task (P2P24) in `NEXT_TASK_PROMPT.md`
 9. Commit code and updated state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`
 10. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
 

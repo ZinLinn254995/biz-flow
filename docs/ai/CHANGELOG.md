@@ -4,6 +4,25 @@
 
 ---
 
+## P2P21 + P2P22 — 2026-09-07
+
+### Added
+- Search, sort and clear-filters controls on `CategoriesPage` (search by name, sort by name or created date)
+- Search, account-type filter and sort controls on `AccountsPage` (search by name or institution, sort by name or balance)
+- Filtered empty state on `AccountsPage` distinct from the "No accounts yet" state
+- `validateSaleTotal()` in `SalesService` — rejects a `totalAmount` that differs from the sum of line totals, and rejects mixed-currency line items
+- 17 new tests (527 tests total)
+
+### Changed
+- `SalesService.createSale` and `updateSale` validate the sale total before any stock movement, so a rejected sale never touches inventory. `updateSale` cross-checks a lone `items` or `totalAmount` change against the persisted sale.
+- `src/test/services/salesStockLogic.test.ts` fixtures now derive `totalAmount` from their line items via a `sumTotal()` helper; previously they declared totals that did not match. No assertion was removed.
+
+### Notes
+- Resolved ISSUE-005 and ISSUE-008.
+- Verified: typecheck PASS, 527 tests PASS, build PASS, import check PASS, AI state check PASS.
+
+---
+
 ## P2P19 + P2P20 — 2026-09-07
 
 ### Added

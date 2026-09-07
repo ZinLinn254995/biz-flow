@@ -405,3 +405,95 @@ describe('AccountsPage — escape closes modal', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   });
 });
+
+const searchSampleAccounts: Account[] = [
+  sampleAccount,
+  {
+    id: 'acc-2' as EntityId,
+    createdAt: '2026-01-02T00:00:00.000Z',
+    updatedAt: '2026-01-02T00:00:00.000Z',
+    name: 'Petty Cash',
+    type: 'cash',
+    balance: { amountMinor: 10000, currency: 'USD' },
+  },
+  {
+    id: 'acc-3' as EntityId,
+    createdAt: '2026-01-03T00:00:00.000Z',
+    updatedAt: '2026-01-03T00:00:00.000Z',
+    name: 'Wave Wallet',
+    type: 'wallet',
+    balance: { amountMinor: 250000, currency: 'USD' },
+  },
+];
+
+describe('AccountsPage — search, filter and sort (P2P21)', () => {
+  it('filters accounts by search text', async () => {
+    const { container } = setupMocks(searchSampleAccounts);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Checking')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Search accounts'), { target: { value: 'petty' } });
+
+    await waitFor(() => expect(screen.queryByText('Checking')).toBeNull());
+    expect(screen.getByText('Petty Cash')).toBeDefined();
+  });
+
+  it('filters accounts by type', async () => {
+    const { container } = setupMocks(searchSampleAccounts);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Checking')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Filter by account type'), { target: { value: 'wallet' } });
+
+    await waitFor(() => expect(screen.getByText('Wave Wallet')).toBeDefined());
+    expect(screen.queryByText('Petty Cash')).toBeNull();
+  });
+
+  it('sorts accounts by balance, highest first', async () => {
+    const { container } = setupMocks(searchSampleAccounts);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Checking')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Sort by'), { target: { value: 'balance' } });
+
+    await waitFor(() => {
+      const names = screen.getAllByText(/Checking|Petty Cash|Wave Wallet/).map((n) => n.textContent);
+      expect(names[0]).toBe('Wave Wallet');
+    });
+  });
+
+  it('sorts accounts by name', async () => {
+    const { container } = setupMocks(searchSampleAccounts);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Checking')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Sort by'), { target: { value: 'name' } });
+
+    await waitFor(() => {
+      const names = screen.getAllByText(/Checking|Petty Cash|Wave Wallet/).map((n) => n.textContent);
+      expect(names[0]).toBe('Checking');
+    });
+  });
+
+  it('shows the filtered empty state and clears filters', async () => {
+    const { container } = setupMocks(searchSampleAccounts);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Checking')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Search accounts'), { target: { value: 'zzz' } });
+    await waitFor(() => expect(screen.getByText('No accounts match your filters')).toBeDefined());
+
+    fireEvent.click(screen.getByText('Clear Filters'));
+    await waitFor(() => expect(screen.getByText('Checking')).toBeDefined());
+  });
+});

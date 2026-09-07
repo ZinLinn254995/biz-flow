@@ -99,3 +99,110 @@ describe('SalesService', () => {
     await expect(service.createSale(validSaleInput)).rejects.toThrow('DB error');
   });
 });
+
+describe('SalesService — sale total validation (P2P22)', () => {
+  it('createSale rejects a totalAmount that differs from the sum of line totals', async () => {
+    const repo = createMockRepo();
+    const service = new SalesService(repo);
+
+    await expect(
+      service.createSale({ ...validSaleInput, totalAmount: { amountMinor: 999, currency: 'USD' } }),
+    ).rejects.toThrow(ValidationError);
+    expect(repo.create).not.toHaveBeenCalled();
+  });
+
+  it('createSale rejects items mixing currencies', async () => {
+    const repo = createMockRepo();
+    const service = new SalesService(repo);
+
+    await expect(
+      service.createSale({
+        ...validSaleInput,
+        items: [
+          validSaleInput.items[0],
+          {
+            inventoryItemId: 'inv-2' as EntityId,
+            name: 'Product B',
+            quantity: 1,
+            unitPrice: { amountMinor: 200, currency: 'EUR' },
+            lineTotal: { amountMinor: 200, currency: 'EUR' },
+          },
+        ],
+        totalAmount: { amountMinor: 1200, currency: 'USD' },
+      }),
+    ).rejects.toThrow(ValidationError);
+    expect(repo.create).not.toHaveBeenCalled();
+  });
+
+  it('createSale rejects a totalAmount currency that does not match the items', async () => {
+    const repo = createMockRepo();
+    const service = new SalesService(repo);
+
+    await expect(
+      service.createSale({ ...validSaleInput, totalAmount: { amountMinor: 1000, currency: 'EUR' } }),
+    ).rejects.toThrow(ValidationError);
+  });
+
+  it('createSale accepts a total equal to the sum of multiple line totals', async () => {
+    const repo = createMockRepo();
+    (repo.create as ReturnType<typeof vi.fn>).mockResolvedValue({ id: 'x' as EntityId });
+    const service = new SalesService(repo);
+
+    await service.createSale({
+      ...validSaleInput,
+      items: [
+        validSaleInput.items[0],
+        {
+          inventoryItemId: 'inv-2' as EntityId,
+          name: 'Product B',
+          quantity: 1,
+          unitPrice: { amountMinor: 250, currency: 'USD' },
+          lineTotal: { amountMinor: 250, currency: 'USD' },
+        },
+      ],
+      totalAmount: { amountMinor: 1250, currency: 'USD' },
+    });
+    expect(repo.create).toHaveBeenCalled();
+  });
+
+  it('updateSale rejects a mismatched items/totalAmount pair', async () => {
+    const repo = createMockRepo();
+    const service = new SalesService(repo);
+
+    await expect(
+      service.updateSale('sale-1' as EntityId, {
+        items: validSaleInput.items,
+        totalAmount: { amountMinor: 1, currency: 'USD' },
+      }),
+    ).rejects.toThrow(ValidationError);
+    expect(repo.update).not.toHaveBeenCalled();
+  });
+
+  it('updateSale validates a lone totalAmount against the persisted items', async () => {
+    const repo = createMockRepo();
+    (repo.getById as ReturnType<typeof vi.fn>).mockResolvedValue({
+      ...validSaleInput,
+      id: 'sale-1' as EntityId,
+      createdAt: '',
+      updatedAt: '',
+    });
+    const service = new SalesService(repo);
+
+    await expect(
+      service.updateSale('sale-1' as EntityId, { totalAmount: { amountMinor: 5000, currency: 'USD' } }),
+    ).rejects.toThrow(ValidationError);
+    expect(repo.update).not.toHaveBeenCalled();
+  });
+
+  it('updateSale accepts a matching items/totalAmount pair', async () => {
+    const repo = createMockRepo();
+    (repo.update as ReturnType<typeof vi.fn>).mockResolvedValue({ id: 'sale-1' as EntityId });
+    const service = new SalesService(repo);
+
+    await service.updateSale('sale-1' as EntityId, {
+      items: validSaleInput.items,
+      totalAmount: { amountMinor: 1000, currency: 'USD' },
+    });
+    expect(repo.update).toHaveBeenCalled();
+  });
+});

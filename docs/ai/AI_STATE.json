@@ -22,26 +22,26 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P2P19+P2P20",
-    "name": "Stock Operation Atomicity + Dead Code Cleanup",
+    "id": "P2P21+P2P22",
+    "name": "Categories & Accounts Search + Sale Total Validation",
     "status": "COMPLETE",
     "verifiedDate": "2026-09-07"
   },
   "lastCompletedTask": {
-    "id": "P2P19+P2P20",
-    "name": "Stock Operation Atomicity + Dead Code Cleanup",
+    "id": "P2P21+P2P22",
+    "name": "Categories & Accounts Search + Sale Total Validation",
     "completedDate": "2026-09-07",
     "status": "COMPLETE"
   },
   "currentTask": null,
   "nextTask": {
-    "id": "P2P21+P2P22",
-    "name": "Categories & Accounts Search + Sale Total Validation",
-    "priority": "P1+P1",
-    "complexity": "LOW",
+    "id": "P2P23",
+    "name": "Account Balance Updates",
+    "priority": "P1",
+    "complexity": "MEDIUM",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "With the high-severity stock-integrity issues closed, ISSUE-008 (CategoriesPage and AccountsPage still lack the search/filter controls every other list page has) and ISSUE-005 (sale totalAmount is never checked against the sum of line totals) are the highest remaining items. Both are small, independent and share one verification cycle.",
+    "reason": "With ISSUE-005 and ISSUE-008 closed, ISSUE-003 (Account.balance never changes when a transaction references accountId) is the highest remaining item and blocks accurate budget tracking in P2P24.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -58,23 +58,23 @@
       "P2P17",
       "P2P18",
       "P2P19",
-      "P2P20"
+      "P2P20",
+      "P2P21",
+      "P2P22"
     ],
     "remainingMilestones": [
-      "P2P21",
-      "P2P22",
       "P2P23",
       "P2P24",
       "P2P25"
     ],
-    "totalCompleted": 13,
-    "totalRemaining": 5,
-    "percentage": 72
+    "totalCompleted": 15,
+    "totalRemaining": 3,
+    "percentage": 83
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 510,
+      "count": 527,
       "files": 45,
       "framework": "Vitest 4.1.11",
       "verifiedDate": "2026-09-07"
@@ -91,8 +91,8 @@
     },
     "verificationRun": {
       "date": "2026-09-07",
-      "runBy": "P2P19+P2P20 continuation agent (Lovable)",
-      "environment": "clean npm ci install of the repository at main after the continuation-system upgrade",
+      "runBy": "P2P21+P2P22 continuation agent (Lovable)",
+      "environment": "clean npm ci install of the repository at main",
       "results": [
         {
           "command": "npm run typecheck",
@@ -101,12 +101,12 @@
         {
           "command": "npm run test",
           "result": "PASS",
-          "detail": "45 files / 510 tests (3 new atomicity tests)"
+          "detail": "45 files / 527 tests (17 new search, filter, sort and sale-total tests)"
         },
         {
           "command": "npm run build",
           "result": "PASS",
-          "detail": "vite build, single ~510 kB chunk warning only"
+          "detail": "vite build, single ~515 kB chunk warning only"
         },
         {
           "command": "npm run verify:imports",
@@ -236,20 +236,23 @@
     }
   ],
   "nextTaskInstructions": {
-    "id": "P2P21+P2P22",
-    "name": "Categories & Accounts Search + Sale Total Validation",
-    "objective": "Add search/filter/sort controls to CategoriesPage and AccountsPage (matching P2P18 patterns); validate that a sale's totalAmount equals the sum of its line totals in the same currency.",
+    "id": "P2P23",
+    "name": "Account Balance Updates",
+    "objective": "Keep Account.balance in sync with the transactions that reference accountId, applied atomically alongside the transaction write.",
     "scope": [
-      "src/pages/CategoriesPage.tsx",
-      "src/pages/AccountsPage.tsx",
-      "src/services/sales/SalesService.ts",
-      "src/test/services/salesService.test.ts"
+      "src/services/businessExpenses/BusinessExpenseService.ts",
+      "src/services/personalFinance/PersonalIncomeService.ts",
+      "src/services/personalFinance/PersonalExpenseService.ts",
+      "src/services/accounts/AccountService.ts",
+      "src/services/container.ts"
     ],
     "acceptanceCriteria": [
-      "CategoriesPage and AccountsPage expose the same search/filter/sort UX as the other list pages",
-      "createSale and updateSale reject a totalAmount that does not equal the sum of line totals",
-      "Mixed-currency line items are rejected rather than summed",
-      "New tests cover both features; all existing tests still pass",
+      "Creating an expense that names an accountId decreases that account balance by the expense amount",
+      "Creating an income that names an accountId increases that account balance",
+      "Updating or deleting a transaction reverses the previous effect and applies the new one",
+      "A transaction in a currency that differs from the account currency is rejected with ValidationError",
+      "Balance changes and transaction writes are applied through the injected TransactionRunner port, never by importing @/db into a service",
+      "New tests cover create, update and delete for both directions; all existing tests still pass",
       "npm run verify passes end to end",
       "No changes to locked files"
     ],
@@ -262,16 +265,15 @@
     ]
   },
   "lastTaskFilesChanged": {
-    "task": "P2P19 Stock Operation Atomicity + P2P20 Dead Code Cleanup",
-    "created": [
-      "src/services/common/transaction.ts",
-      "src/repositories/salesTransactionRunner.ts"
-    ],
+    "task": "P2P21 Categories & Accounts Search + P2P22 Sale Total Validation",
+    "created": [],
     "modified": [
+      "src/pages/CategoriesPage.tsx",
+      "src/pages/AccountsPage.tsx",
       "src/services/sales/SalesService.ts",
-      "src/services/common/index.ts",
-      "src/services/container.ts",
-      "src/repositories/index.ts",
+      "src/test/hooks/categoryPage.test.tsx",
+      "src/test/hooks/accountPage.test.tsx",
+      "src/test/services/salesService.test.ts",
       "src/test/services/salesStockLogic.test.ts",
       "docs/ai/AI_STATE.json",
       "docs/ai/CURRENT_STATE.md",
@@ -281,18 +283,9 @@
       "docs/ai/KNOWN_ISSUES.md",
       "docs/ai/ROADMAP.md"
     ],
-    "deleted": [
-      "src/components/dashboard/AnalyticsPreview.tsx",
-      "src/components/dashboard/BusinessOverview.tsx",
-      "src/components/dashboard/InventoryStatus.tsx",
-      "src/components/dashboard/PersonalFinanceOverview.tsx",
-      "src/components/dashboard/QuickActions.tsx",
-      "src/components/dashboard/RecentActivity.tsx",
-      "src/components/dashboard/SummaryCard.tsx",
-      "src/hooks/common/useFilters.ts"
-    ],
+    "deleted": [],
     "applicationSourceChanged": true,
-    "designNote": "The architecture test `services do not import the database directly` forbids importing @/db from a service, so atomicity is injected as a TransactionRunner port (src/services/common/transaction.ts). The Dexie implementation lives in the repository layer (src/repositories/salesTransactionRunner.ts) and is wired in src/services/container.ts. Services constructed without a runner fall back to direct execution, which keeps every mock-repository unit test working."
+    "designNote": "Sale total validation lives in a module-level validateSaleTotal() helper in SalesService, called before any stock movement in both createSale and updateSale so a rejected sale never touches inventory. Fixtures in salesStockLogic.test.ts previously declared totals that did not match their line items; they now derive the total with a sumTotal() helper. No assertion was removed."
   },
   "lockedAreas": [
     {
@@ -318,17 +311,17 @@
     {
       "path": "src/routes/AppRoutes.tsx",
       "status": "PROTECTED",
-      "reason": "Route registration \u2014 add only"
+      "reason": "Route registration — add only"
     },
     {
       "path": "src/config/navigationItems.ts",
       "status": "PROTECTED",
-      "reason": "Navigation config \u2014 add only"
+      "reason": "Navigation config — add only"
     },
     {
       "path": "src/db/database.ts",
       "status": "PROTECTED",
-      "reason": "Migration-sensitive \u2014 version migration required"
+      "reason": "Migration-sensitive — version migration required"
     },
     {
       "path": "src/types/",
@@ -398,7 +391,7 @@
       "id": "ISSUE-005",
       "title": "Sale total not validated against sum of line items",
       "severity": "medium",
-      "status": "open",
+      "status": "RESOLVED in P2P22 (2026-09-07)",
       "addressedBy": "P2P22"
     },
     {
@@ -423,7 +416,7 @@
       "id": "ISSUE-008",
       "title": "CategoriesPage and AccountsPage missing search",
       "severity": "low",
-      "status": "open",
+      "status": "RESOLVED in P2P21 (2026-09-07)",
       "addressedBy": "P2P21"
     },
     {
@@ -484,19 +477,19 @@
     "note": "A new Coding AI needs nothing beyond this repository URL. The human only needs to say: continue the next task in docs/ai/NEXT_TASK_PROMPT.md."
   },
   "nextAIInstructions": {
-    "summary": "Implement P2P21 + P2P22 exactly as specified in docs/ai/NEXT_TASK_PROMPT.md.",
+    "summary": "Implement P2P23 exactly as specified in docs/ai/NEXT_TASK_PROMPT.md.",
     "beforeStarting": [
       "npm ci",
       "npm run verify to confirm the documented baseline is real"
     ],
     "afterFinishing": [
       "Re-run npm run verify",
-      "Set currentTask to null and lastCompletedTask to P2P21+P2P22 with status COMPLETE only if verification passed",
+      "Set currentTask to null and lastCompletedTask to P2P23 with status COMPLETE only if verification passed",
       "Update CURRENT_STATE.md, AI_HANDOFF.md, ROADMAP.md, CHANGELOG.md, KNOWN_ISSUES.md",
-      "Rewrite docs/ai/NEXT_TASK_PROMPT.md for P2P23",
+      "Rewrite docs/ai/NEXT_TASK_PROMPT.md for P2P24",
       "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
     ]
   },
   "lastUpdated": "2026-09-07",
-  "lastUpdatedBy": "P2P19+P2P20 continuation agent (Lovable)"
+  "lastUpdatedBy": "P2P21+P2P22 continuation agent (Lovable)"
 }

@@ -4,8 +4,40 @@ import type { Sale, SaleItem } from '@/types/domain/sale';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
-import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull } from '@/services/common';
+import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull, ValidationError } from '@/services/common';
 import { directTransactionRunner, type TransactionRunner } from '@/services/common/transaction';
+
+/**
+ * Verifies that every line total shares one currency and that their sum
+ * equals the declared sale total. Money stays in integer minor units.
+ */
+function validateSaleTotal(items: SaleItem[], totalAmount: Money): void {
+  if (items.length === 0) {
+    if (totalAmount.amountMinor !== 0) {
+      throw new ValidationError('totalAmount must be 0 when a sale has no items');
+    }
+    return;
+  }
+  const currency = items[0].lineTotal.currency;
+  let sum = 0;
+  for (const item of items) {
+    if (item.lineTotal.currency !== currency) {
+      throw new ValidationError('All sale items must use the same currency');
+    }
+    sum += item.lineTotal.amountMinor;
+  }
+  if (totalAmount.currency !== currency) {
+    throw new ValidationError(
+      `totalAmount currency ${totalAmount.currency} does not match item currency ${currency}`,
+    );
+  }
+  if (totalAmount.amountMinor !== sum) {
+    throw new ValidationError(
+      `totalAmount ${totalAmount.amountMinor} does not match the sum of line totals ${sum}`,
+    );
+  }
+}
+
 
 function computeStockStatus(quantity: number, reorderThreshold?: number): StockStatus {
   if (quantity <= 0) return 'out_of_stock';
@@ -64,6 +96,8 @@ export class SalesService {
       validateMoney(item.lineTotal, 'items[].lineTotal');
     }
     validateMoney(input.totalAmount, 'totalAmount');
+    validateSaleTotal(input.items, input.totalAmount);
+
     const notes = trimToNull(input.notes) ?? undefined;
 
     return this.runAtomic(async () => {
@@ -93,6 +127,17 @@ export class SalesService {
     if (changes.totalAmount !== undefined) {
       validateMoney(changes.totalAmount, 'totalAmount');
     }
+
+    // Cross-check items against the declared total before any stock movement.
+    if (changes.items !== undefined && changes.totalAmount !== undefined) {
+      validateSaleTotal(changes.items, changes.totalAmount);
+    } else if (changes.items !== undefined || changes.totalAmount !== undefined) {
+      const persisted = await this.repository.getById(id);
+      if (persisted) {
+        validateSaleTotal(changes.items ?? persisted.items, changes.totalAmount ?? persisted.totalAmount);
+      }
+    }
+
 
     if (changes.items && this.inventoryRepository) {
       const oldSale = await this.repository.getById(id);

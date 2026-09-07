@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, AlertCircle, Loader2, Tag, Filter, X } from 'lucide-react';
+import { Plus, AlertCircle, Loader2, Tag, Filter, Search, X } from 'lucide-react';
 import PageContainer from '@/components/layout/PageContainer';
 import EmptyState from '@/components/ui/EmptyState';
 import { CategoryCard } from '@/components/categories/CategoryCard';
@@ -11,6 +11,7 @@ import type { CategoryScope, TransactionDirection } from '@/types/common/enums';
 
 type ScopeFilter = 'all' | CategoryScope;
 type DirectionFilter = 'all' | TransactionDirection;
+type CategorySort = 'name' | 'created' | null;
 
 function CategoriesPage() {
   const categoriesQuery = useCategories();
@@ -19,8 +20,10 @@ function CategoriesPage() {
   const updateMutation = useUpdateCategory();
   const deleteMutation = useDeleteCategory();
 
+  const [search, setSearch] = useState('');
   const [scopeFilter, setScopeFilter] = useState<ScopeFilter>('all');
   const [directionFilter, setDirectionFilter] = useState<DirectionFilter>('all');
+  const [sortBy, setSortBy] = useState<CategorySort>(null);
 
   const [formOpen, setFormOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -28,19 +31,31 @@ function CategoriesPage() {
 
   const filteredCategories = useMemo(() => {
     if (!categoriesQuery.data) return [];
-    return categoriesQuery.data.filter((cat) => {
+    const q = search.trim().toLowerCase();
+    let result = categoriesQuery.data.filter((cat) => {
       if (scopeFilter !== 'all' && cat.scope !== scopeFilter) return false;
       if (directionFilter !== 'all' && cat.direction !== directionFilter) return false;
+      if (q && !cat.name.toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [categoriesQuery.data, scopeFilter, directionFilter]);
+    if (sortBy === 'name') {
+      result = [...result].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'created') {
+      result = [...result].sort((a, b) => (a.createdAt > b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0));
+    }
+    return result;
+  }, [categoriesQuery.data, search, scopeFilter, directionFilter, sortBy]);
 
-  const hasFilters = scopeFilter !== 'all' || directionFilter !== 'all';
+  const hasFilters =
+    search.trim() !== '' || scopeFilter !== 'all' || directionFilter !== 'all' || sortBy !== null;
 
   const clearFilters = () => {
+    setSearch('');
     setScopeFilter('all');
     setDirectionFilter('all');
+    setSortBy(null);
   };
+
 
   const openCreateForm = () => {
     setEditingCategory(null);
@@ -103,6 +118,17 @@ function CategoriesPage() {
     <PageContainer title="Categories" subtitle="Manage income and expense categories for your business and personal finances.">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2} />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search categories…"
+              aria-label="Search categories"
+              className="pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow w-full sm:w-48"
+            />
+          </div>
           <Filter className="w-4 h-4 text-gray-400" strokeWidth={2} />
           <select
             value={scopeFilter}
@@ -124,6 +150,17 @@ function CategoriesPage() {
             <option value="income">Income</option>
             <option value="expense">Expense</option>
           </select>
+          <select
+            value={sortBy ?? ''}
+            onChange={(e) => setSortBy((e.target.value as CategorySort) || null)}
+            aria-label="Sort by"
+            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+          >
+            <option value="">No Sort</option>
+            <option value="name">Name (A-Z)</option>
+            <option value="created">Newest First</option>
+          </select>
+
           {hasFilters && (
             <button
               onClick={clearFilters}

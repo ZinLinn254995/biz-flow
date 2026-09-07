@@ -61,7 +61,7 @@ None.
 - **Possible solution:** Add validation in `createSale` and `updateSale`.
 - **Affected files:** `src/services/sales/SalesService.ts`
 - **Dependencies:** None
-- **Status:** Open — proposed as P2P22
+- **Status:** RESOLVED in P2P22 (2026-09-07) — `validateSaleTotal()` rejects mismatched totals and mixed-currency items in `createSale` and `updateSale`
 
 ## Low
 
@@ -96,7 +96,7 @@ None.
 - **Possible solution:** Add search inputs matching the pattern used in other pages.
 - **Affected files:** `src/pages/CategoriesPage.tsx`, `src/pages/AccountsPage.tsx`
 - **Dependencies:** None
-- **Status:** Open — proposed as P2P21
+- **Status:** RESOLVED in P2P21 (2026-09-07) — both pages now have search, filter, sort and clear-filters controls
 
 ### ISSUE-009: Supabase Dependency Unused
 - **ID:** ISSUE-009

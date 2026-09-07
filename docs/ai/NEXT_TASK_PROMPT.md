@@ -1,100 +1,65 @@
-# BizFlow — Next Task Instructions for the Next Coding AI
-
-> This file contains the exact instructions for the NEXT Coding AI. Follow this file directly. Do not ask a human or ChatGPT what to do next.
-
----
-
-## CURRENT MILESTONE
-
-P2P19+P2P20 — COMPLETE
-
-## PREVIOUS COMPLETED TASK
-
-P2P19 — Stock Operation Atomicity (stock movements and sale persistence now commit or roll back together through an injected `TransactionRunner`) combined with P2P20 — Dead Code Cleanup (8 orphaned files deleted).
+# NEXT TASK
 
 ## NEXT TASK
 
-**P2P21 — Categories & Accounts Search** (combined with **P2P22 — Sale Total Validation**)
+P2P23 — Account Balance Updates
 
-## WHY THIS TASK IS NEXT
+> This file is the single source of truth for the next task. A new Coding AI needs nothing else
+> from a human. Read `AGENTS.md` and `docs/ai/AI_STATE.json` first, then implement exactly this.
 
-The high-severity data-integrity issues (ISSUE-001, ISSUE-002) are closed. The highest remaining
-items are ISSUE-008 (CategoriesPage and AccountsPage are the only list pages without the P2P18
-search/filter/sort controls) and ISSUE-005 (a sale's `totalAmount` is accepted without checking it
-against the sum of its line totals). Both are small, independent, and share one verification cycle.
+## Context
+
+Everything through P2P22 is COMPLETE and verified (typecheck, 527 tests, build, import check,
+AI state check all PASS). `Account` entities store a `balance`, but no service ever changes it:
+creating an expense or income that names an `accountId` leaves the account balance untouched
+(ISSUE-003). This is the highest remaining item and blocks accurate budget tracking in P2P24.
 
 ## OBJECTIVE
 
-1. Add search/filter/sort controls to `CategoriesPage` and `AccountsPage`, matching the existing P2P18 patterns used by the other list pages.
-2. Validate in `SalesService` that `totalAmount` equals the sum of line totals, in a single currency.
+Keep `Account.balance` in sync with the transactions that reference `accountId`, applied atomically
+with the transaction write.
 
-## DEPENDENCIES
+## Scope
 
-None.
+- `src/services/businessExpenses/BusinessExpenseService.ts`
+- `src/services/personalFinance/PersonalIncomeService.ts`
+- `src/services/personalFinance/PersonalExpenseService.ts`
+- `src/services/accounts/AccountService.ts`
+- `src/services/container.ts` (wiring only)
+- `src/repositories/` — a transaction runner covering `[db.accounts, ...]` if a new one is needed
+- Tests under `src/test/services/`
 
-## SCOPE — Allowed Files
+Do not touch any locked or protected file listed in `AI_STATE.json` -> `lockedAreas`.
 
-### P2P21: Categories & Accounts Search
-- `src/pages/CategoriesPage.tsx`
-- `src/pages/AccountsPage.tsx`
-- Shared search/filter components already used by the other list pages (reuse, do not fork)
-- `src/test/hooks/categoriesPage.test.tsx`, `src/test/hooks/accountPage.test.tsx` (add assertions only)
+## Rules
 
-### P2P22: Sale Total Validation
-- `src/services/sales/SalesService.ts`
-- `src/test/services/salesService.test.ts` (add assertions only)
+- Money is integer minor units. Never floating-point.
+- A service must not import `@/db`. Atomicity comes from the injected `TransactionRunner` port
+  (`src/services/common/transaction.ts`), implemented in the repository layer, exactly as P2P19 did.
+  Services constructed without a runner must still work (direct execution) so mock-repository unit
+  tests keep passing.
+- A transaction whose currency differs from the account currency must be rejected with
+  `ValidationError` from `@/services/common`, before any balance change.
+- `accountId` remains optional. A transaction without one changes no balance.
 
-## LOCKED FILES — Do Not Touch
+## Behaviour to implement
 
-- `src/pages/DashboardPage.tsx`
-- `src/components/layout/AppShell.tsx`, `Sidebar.tsx`, `MobileNavigation.tsx`
-- `src/routes/AppRoutes.tsx`
-- `src/config/navigationItems.ts`
-- `src/db/database.ts`
-- `src/types/*`, `src/types/repositories/*`
-- `src/repositories/dexieRepository.ts`
-- `src/hooks/common/useAsync.ts`, `useMutation.ts`, `ServiceProvider.tsx`
-- All existing test assertions (add only, never delete)
-
-## ARCHITECTURE CONSTRAINTS
-
-- UI cannot import repositories, services, or Dexie
-- Services must NOT import `@/db` or Dexie — this is enforced by `src/test/services/serviceConstraints.test.ts`. Anything needing database capability is injected as a port (see `src/services/common/transaction.ts`)
-- Services depend on repository interfaces only
-- No network calls — fully offline-first
-- Money uses integer minor units — never floating-point
-- Different currencies are never combined in totals
-
-## IMPLEMENTATION DETAILS
-
-### P2P21
-1. Read how `InventoryPage.tsx` or `CustomersPage.tsx` wire search, filter, sort and empty states after P2P18, and reuse the same components and prop shapes.
-2. CategoriesPage: search by name, filter by category type, sort by name and created date.
-3. AccountsPage: search by name, filter by account type, sort by name and balance.
-4. Preserve existing CRUD behaviour and all current test assertions.
-
-### P2P22
-1. In `createSale`, after per-item validation, compute the expected total: every `lineTotal` must share one currency, and the sum of `lineTotal.amountMinor` must equal `totalAmount.amountMinor`, with `totalAmount.currency` matching.
-2. Throw a `ValidationError` from `@/services/common` with a clear message on mismatch or mixed currency.
-3. Apply the same check in `updateSale` when both `items` and `totalAmount` are supplied; when only one is supplied, validate against the persisted sale.
-4. Validation must run before any stock movement or transaction is started.
+| Operation | Effect on `Account.balance` |
+|-----------|-----------------------------|
+| Create expense (business or personal) with `accountId` | decrease by the expense amount |
+| Create income with `accountId` | increase by the income amount |
+| Update amount or `accountId` | reverse the previous effect, then apply the new one |
+| Delete | reverse the effect |
 
 ## ACCEPTANCE CRITERIA
 
-1. CategoriesPage and AccountsPage have working search, filter and sort
-2. A sale whose `totalAmount` differs from the sum of line totals is rejected
-3. A sale mixing currencies across line items is rejected
-4. New tests cover both features
-5. All existing tests pass (510 at handoff time)
-6. TypeScript passes
-7. Production build passes
-8. No dangling imports, no locked files touched, no network calls added
-
-## REQUIRED TESTS
-
-- Add search/filter/sort assertions to the categories and accounts page tests
-- Add total-mismatch and mixed-currency rejection tests to `salesService.test.ts`
-- All existing tests, including `serviceConstraints.test.ts` and `salesStockLogic.test.ts`, must pass unchanged
+- All four table rows above are implemented for business expenses, personal expenses and personal income.
+- Currency mismatch between transaction and account is rejected with `ValidationError`.
+- Balance change and transaction write are applied through the injected `TransactionRunner`.
+- No service imports `@/db`; all `*UiConstraints` and architecture tests still pass.
+- New tests cover create, update and delete for both directions, plus the currency-mismatch rejection.
+- `npm run verify` passes end to end.
+- No changes to locked files and no removed assertions in existing tests.
 
 ## VERIFICATION COMMANDS
 
@@ -102,32 +67,14 @@ None.
 npm run verify
 ```
 
-Runs, in order: `npm run typecheck`, `npm run test`, `npm run build`, `npm run verify:imports`
-and `npm run verify:ai`. All five must exit 0 before recording the task as `COMPLETE`.
-The same five checks run in CI on every push (`.github/workflows/ai-verify.yml`).
+Runs `typecheck`, `test`, `build`, `verify:imports` and `verify:ai` in order. All must exit 0.
 
-## DOCUMENTATION UPDATE REQUIREMENTS
+## After finishing
 
-After completing the task, update:
-
-1. `docs/ai/AI_STATE.json` — milestone, `lastCompletedTask`, `nextTask` (P2P23), test count, mark ISSUE-005 and ISSUE-008 resolved, set `lastTaskFilesChanged` and `quality.verificationRun`
-2. `docs/ai/CURRENT_STATE.md`
-3. `docs/ai/AI_HANDOFF.md`
-4. `docs/ai/NEXT_TASK_PROMPT.md` — replace with P2P23 (Account Balance Tracking) instructions
-5. `docs/ai/CHANGELOG.md` — append
-6. `docs/ai/KNOWN_ISSUES.md` — mark ISSUE-005 and ISSUE-008 resolved
-7. `docs/ai/ROADMAP.md`
-8. `docs/ai/QUALITY_GATE.md` checklist
-9. Commit code and state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`
-
-## IF YOU CANNOT FINISH
-
-Do not mark the task `COMPLETE`. Write a `currentTask` object into `AI_STATE.json` with status
-`IN_PROGRESS`, `PARTIAL`, `BLOCKED` or `FAILED`, listing `filesTouched`, `completedWork`,
-`remainingWork` and a `recommendation` of `continue` or `revert`.
-See the FAILURE RECOVERY section of `docs/ai/AI_CONTINUATION_PROTOCOL.md`.
-
-## NEXT HANDOFF REQUIREMENTS
-
-After completing this task, generate the next task instructions for P2P23 (Account Balance Tracking)
-in this file, and produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`.
+1. Re-run `npm run verify`.
+2. Set `currentTask` to `null` and `lastCompletedTask` to P2P23 with status `COMPLETE` — only if
+   verification actually passed.
+3. Update `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ROADMAP.md`, `CHANGELOG.md`, `KNOWN_ISSUES.md`
+   (mark ISSUE-003 resolved) and `AI_STATE.json`.
+4. Rewrite this file for P2P24 (Budget Tracking).
+5. Commit code and state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`.

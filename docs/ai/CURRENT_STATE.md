@@ -7,10 +7,10 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P2P19+P2P20 |
+| Current milestone | P2P21+P2P22 |
 | Status | COMPLETE |
-| Next milestone | P2P21+P2P22 (Categories & Accounts Search + Sale Total Validation) |
-| Implementation status | All planned tasks through P2P20 are complete |
+| Next milestone | P2P23 (Account Balance Updates) |
+| Implementation status | All planned tasks through P2P22 are complete |
 
 ## Completed Tasks
 
@@ -29,21 +29,19 @@
 | P2P18 | COMPLETE | Search/filter/sort/date-range on list pages | 7 page files | Updated page integration tests |
 | P2P19 | COMPLETE | Atomic stock operations via an injected `TransactionRunner` port with a Dexie-backed implementation | `src/services/common/transaction.ts`, `src/repositories/salesTransactionRunner.ts`, `src/services/sales/SalesService.ts`, `src/services/container.ts` | `salesStockLogic.test.ts` (+3 atomicity tests) |
 | P2P20 | COMPLETE | Deleted 7 orphaned dashboard components and the unused `useFilters` hook | `src/components/dashboard/*`, `src/hooks/common/useFilters.ts` | `npm run verify:imports` |
+| P2P21 | COMPLETE | Search/filter/sort on CategoriesPage and AccountsPage | `src/pages/CategoriesPage.tsx`, `src/pages/AccountsPage.tsx` | `categoryPage.test.tsx`, `accountPage.test.tsx` (+10 tests) |
+| P2P22 | COMPLETE | `totalAmount` validated against the sum of line totals, mixed currencies rejected | `src/services/sales/SalesService.ts` | `salesService.test.ts` (+7 tests) |
 
 **Note:** P2P4 is not documented in `architecture.md` and no evidence of it exists in the codebase. It may have been skipped or merged into P2P5.
 
 ## In Progress
 
-None. All tasks through P2P20 are complete.
+None. All tasks through P2P22 are complete.
 
 ## Not Started
 
 | Task | Description |
 |------|-------------|
-| P2P19 (proposed) | Wrap stock operations in Dexie transaction for atomicity |
-| P2P20 (proposed) | Delete orphaned dashboard components + unused useFilters.ts |
-| P2P21 (proposed) | Add search/filter to CategoriesPage and AccountsPage |
-| P2P22 (proposed) | Validate sale totalAmount against sum of line items |
 | P2P23 (proposed) | Account balance updates on transactions |
 | P2P24 (proposed) | Budget actual-vs-limit tracking |
 | P2P25 (proposed) | Analytics page implementation |

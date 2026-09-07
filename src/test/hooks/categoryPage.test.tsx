@@ -580,3 +580,73 @@ describe('CategoriesPage — escape closes modal', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   });
 });
+
+describe('CategoriesPage — search and sort (P2P21)', () => {
+  it('filters categories by search text', async () => {
+    const { container } = setupMocks(sampleCategories);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Office Supplies')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Search categories'), { target: { value: 'groc' } });
+
+    await waitFor(() => expect(screen.queryByText('Office Supplies')).toBeNull());
+    expect(screen.getByText('Groceries')).toBeDefined();
+  });
+
+  it('search is case-insensitive', async () => {
+    const { container } = setupMocks(sampleCategories);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Salary')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Search categories'), { target: { value: 'SALARY' } });
+
+    await waitFor(() => expect(screen.getByText('Salary')).toBeDefined());
+    expect(screen.queryByText('Groceries')).toBeNull();
+  });
+
+  it('shows the filtered empty state when search matches nothing', async () => {
+    const { container } = setupMocks(sampleCategories);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Office Supplies')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Search categories'), { target: { value: 'zzz' } });
+
+    await waitFor(() => expect(screen.getByText('No categories match your filters')).toBeDefined());
+  });
+
+  it('sorts categories by name', async () => {
+    const { container } = setupMocks(sampleCategories);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Office Supplies')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Sort by'), { target: { value: 'name' } });
+
+    await waitFor(() => {
+      const names = screen.getAllByText(/Office Supplies|Sales Revenue|Groceries|Salary/).map((n) => n.textContent);
+      expect(names[0]).toBe('Groceries');
+    });
+  });
+
+  it('clear button resets search and sort', async () => {
+    const { container } = setupMocks(sampleCategories);
+
+    renderPage(container);
+
+    await waitFor(() => expect(screen.getByText('Office Supplies')).toBeDefined());
+
+    fireEvent.change(screen.getByLabelText('Search categories'), { target: { value: 'zzz' } });
+    await waitFor(() => expect(screen.getByText('No categories match your filters')).toBeDefined());
+
+    fireEvent.click(screen.getByText('Clear Filters'));
+
+    await waitFor(() => expect(screen.getByText('Office Supplies')).toBeDefined());
+  });
+});

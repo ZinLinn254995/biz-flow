@@ -76,6 +76,11 @@ function mkSale(id: string, items: SaleItem[]): Sale {
   };
 }
 
+
+function sumTotal(items: SaleItem[]) {
+  return { amountMinor: items.reduce((s, i) => s + i.lineTotal.amountMinor, 0), currency: 'USD' as const };
+}
+
 const validInput = {
   businessId: 'biz-1' as EntityId,
   date: '2026-01-01',
@@ -103,7 +108,7 @@ describe('SalesService — stock deduction on create', () => {
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(mkSale('s1', validInput.items));
     const service = new SalesService(saleRepo, invRepo);
 
-    await service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 2)] });
+    await service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 2)], totalAmount: sumTotal([mkSaleItem('inv-1', 2)]) });
 
     const updated = await invRepo.getById('inv-1' as EntityId);
     expect(updated?.stockStatus).toBe('low_stock');
@@ -115,7 +120,7 @@ describe('SalesService — stock deduction on create', () => {
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(mkSale('s1', validInput.items));
     const service = new SalesService(saleRepo, invRepo);
 
-    await service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 2)] });
+    await service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 2)], totalAmount: sumTotal([mkSaleItem('inv-1', 2)]) });
 
     const updated = await invRepo.getById('inv-1' as EntityId);
     expect(updated?.quantity).toBe(0);
@@ -130,7 +135,7 @@ describe('SalesService — insufficient stock rejection', () => {
     const service = new SalesService(saleRepo, invRepo);
 
     await expect(
-      service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 5)] }),
+      service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 5)], totalAmount: sumTotal([mkSaleItem('inv-1', 5)]) }),
     ).rejects.toThrow(/Insufficient stock/);
 
     expect(saleRepo.create).not.toHaveBeenCalled();
@@ -157,6 +162,7 @@ describe('SalesService — insufficient stock rejection', () => {
       service.createSale({
         ...validInput,
         items: [mkSaleItem('inv-1', 3), mkSaleItem('inv-2', 5)],
+      totalAmount: sumTotal([mkSaleItem('inv-1', 3), mkSaleItem('inv-2', 5)]),
       }),
     ).rejects.toThrow(/Insufficient stock/);
 
@@ -197,6 +203,7 @@ describe('SalesService — sale update adjusts stock', () => {
 
     await service.updateSale('s1' as EntityId, {
       items: [mkSaleItem('inv-1', 3)],
+      totalAmount: sumTotal([mkSaleItem('inv-1', 3)]),
     });
 
     // Old: 48 + 2 (restored) = 50, then - 3 (new) = 47
@@ -214,6 +221,7 @@ describe('SalesService — sale update adjusts stock', () => {
     await expect(
       service.updateSale('s1' as EntityId, {
         items: [mkSaleItem('inv-1', 100)],
+      totalAmount: sumTotal([mkSaleItem('inv-1', 100)]),
       }),
     ).rejects.toThrow(/Insufficient stock/);
 
@@ -238,6 +246,7 @@ describe('SalesService — multiple items', () => {
     await service.createSale({
       ...validInput,
       items: [mkSaleItem('inv-1', 5), mkSaleItem('inv-2', 3)],
+      totalAmount: sumTotal([mkSaleItem('inv-1', 5), mkSaleItem('inv-2', 3)]),
     });
 
     const item1 = await invRepo.getById('inv-1' as EntityId);
@@ -257,6 +266,7 @@ describe('SalesService — multiple items', () => {
     await service.createSale({
       ...validInput,
       items: [mkSaleItem('inv-1', 3), mkSaleItem('inv-1', 4)],
+      totalAmount: sumTotal([mkSaleItem('inv-1', 3), mkSaleItem('inv-1', 4)]),
     });
 
     const updated = await invRepo.getById('inv-1' as EntityId);
@@ -271,7 +281,7 @@ describe('SalesService — no negative inventory', () => {
     const service = new SalesService(saleRepo, invRepo);
 
     await expect(
-      service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 1)] }),
+      service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 1)], totalAmount: sumTotal([mkSaleItem('inv-1', 1)]) }),
     ).rejects.toThrow(/Insufficient stock/);
 
     const item = await invRepo.getById('inv-1' as EntityId);
@@ -345,6 +355,7 @@ describe('SalesService — atomic stock operations (P2P19)', () => {
     (saleRepo.getById as ReturnType<typeof vi.fn>).mockResolvedValue({
       id: 'sale-1' as EntityId,
       items: [mkSaleItem('item-1', 4)],
+      totalAmount: sumTotal([mkSaleItem('item-1', 4)]),
     } as unknown as Sale);
     (saleRepo.remove as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
     const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 6)]);
