@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, AlertCircle, Loader2, Target } from 'lucide-react';
+import { Plus, AlertCircle, Loader2, Target, Filter, X } from 'lucide-react';
 import PageContainer from '@/components/layout/PageContainer';
 import EmptyState from '@/components/ui/EmptyState';
 import { BudgetCard } from '@/components/budgets/BudgetCard';
@@ -17,6 +17,8 @@ function BudgetsPage() {
   const createMutation = useCreateBudget();
   const updateMutation = useUpdateBudget();
   const deleteMutation = useDeleteBudget();
+
+  const [periodFilter, setPeriodFilter] = useState<'all' | 'weekly' | 'monthly' | 'quarterly' | 'yearly'>('all');
 
   const [formOpen, setFormOpen] = useState(false);
   const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
@@ -90,9 +92,42 @@ function BudgetsPage() {
   const isSubmitting = editingBudget ? updateMutation.isLoading : createMutation.isLoading;
   const mutationError = editingBudget ? updateMutation.error : createMutation.error;
 
+  const filteredBudgets = useMemo(() => {
+    if (!budgetsQuery.data) return [];
+    if (periodFilter === 'all') return budgetsQuery.data;
+    return budgetsQuery.data.filter((b) => b.period === periodFilter);
+  }, [budgetsQuery.data, periodFilter]);
+
+  const hasFilters = periodFilter !== 'all';
+  const clearFilters = () => setPeriodFilter('all');
+
   return (
     <PageContainer title="Budgets" subtitle="Set spending limits for your categories.">
-      <div className="flex items-center justify-end">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-gray-400" strokeWidth={2} />
+          <select
+            value={periodFilter}
+            onChange={(e) => setPeriodFilter(e.target.value as 'all' | 'weekly' | 'monthly' | 'quarterly' | 'yearly')}
+            aria-label="Filter by period"
+            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+          >
+            <option value="all">All Periods</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="quarterly">Quarterly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+          {hasFilters && (
+            <button
+              onClick={clearFilters}
+              className="flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+            >
+              <X className="w-3.5 h-3.5" strokeWidth={2} />
+              Clear
+            </button>
+          )}
+        </div>
         <button
           onClick={openCreateForm}
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
@@ -131,7 +166,7 @@ function BudgetsPage() {
         </div>
       )}
 
-      {!budgetsQuery.isLoading && !budgetsQuery.error && budgetsQuery.data && budgetsQuery.data.length === 0 && (
+      {!budgetsQuery.isLoading && !budgetsQuery.error && filteredBudgets.length === 0 && !hasFilters && (
         <div className="bg-white border border-gray-200 rounded-xl">
           <EmptyState
             icon={Target}
@@ -150,9 +185,9 @@ function BudgetsPage() {
         </div>
       )}
 
-      {!budgetsQuery.isLoading && !budgetsQuery.error && budgetsQuery.data && budgetsQuery.data.length > 0 && (
+      {!budgetsQuery.isLoading && !budgetsQuery.error && filteredBudgets.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {budgetsQuery.data.map((budget) => (
+          {filteredBudgets.map((budget) => (
             <BudgetCard
               key={budget.id}
               budget={budget}

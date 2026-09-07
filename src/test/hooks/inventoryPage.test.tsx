@@ -121,7 +121,7 @@ describe('InventoryPage', () => {
     expect(screen.getByText('50 kg')).toBeDefined();
     expect(screen.getByText('USD 10.00')).toBeDefined();
     expect(screen.getByText('USD 20.00')).toBeDefined();
-    expect(screen.getByText('In Stock')).toBeDefined();
+    expect(screen.getAllByText('In Stock').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Test Shop').length).toBeGreaterThan(0);
   });
 

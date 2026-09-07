@@ -51,13 +51,22 @@ function createMockCustomerRepo(): CustomerRepository {
   };
 }
 
-function createMockInventoryRepo(): InventoryRepository {
+function createMockInventoryRepo(items?: InventoryItem[]): InventoryRepository {
+  const itemMap = new Map((items ?? []).map((i) => [i.id, i]));
   return {
-    getById: vi.fn(),
+    getById: vi.fn().mockImplementation(async (id: EntityId) => itemMap.get(id) ?? null),
     getAll: vi.fn().mockResolvedValue([]),
     getByBusinessId: vi.fn().mockResolvedValue([]),
     create: vi.fn(),
-    update: vi.fn(),
+    update: vi.fn().mockImplementation(async (id: EntityId, changes: Partial<InventoryItem>) => {
+      const existing = itemMap.get(id);
+      if (existing) {
+        const updated = { ...existing, ...changes };
+        itemMap.set(id, updated);
+        return updated;
+      }
+      throw new Error('Not found');
+    }),
     remove: vi.fn(),
   };
 }
@@ -121,7 +130,7 @@ function createContainer(
   return {
     businessService: new BusinessService(bizRepo),
     inventoryService: new InventoryService(invRepo),
-    salesService: new SalesService(saleRepo),
+    salesService: new SalesService(saleRepo, invRepo),
     customerService: new CustomerService(custRepo),
     businessExpenseService: {} as never,
     personalIncomeService: {} as never,
@@ -148,7 +157,7 @@ function setupFullMocks() {
   bizRepo.getAll = vi.fn().mockResolvedValue([sampleBusiness]);
   const custRepo = createMockCustomerRepo();
   custRepo.getAll = vi.fn().mockResolvedValue([sampleCustomer]);
-  const invRepo = createMockInventoryRepo();
+  const invRepo = createMockInventoryRepo([sampleInventoryItem]);
   invRepo.getAll = vi.fn().mockResolvedValue([sampleInventoryItem]);
   const container = createContainer(saleRepo, bizRepo, custRepo, invRepo);
   return { saleRepo, bizRepo, custRepo, invRepo, container };
@@ -185,7 +194,7 @@ describe('SalesPage', () => {
     await waitFor(() => expect(screen.getByText('Jan 15, 2026')).toBeDefined());
     expect(screen.getByText('1 item')).toBeDefined();
     expect(screen.getByText('USD 40.00')).toBeDefined();
-    expect(screen.getByText('Paid')).toBeDefined();
+    expect(screen.getAllByText('Paid').length).toBeGreaterThan(0);
     expect(screen.getByText('Test note')).toBeDefined();
   });
 
@@ -283,6 +292,7 @@ describe('SalesPage — update', () => {
   it('opens edit form and updates a sale', async () => {
     const { saleRepo, container } = setupFullMocks();
     saleRepo.getAll = vi.fn().mockResolvedValue([sampleSale]);
+    saleRepo.getById = vi.fn().mockResolvedValue(sampleSale);
     saleRepo.update = vi.fn().mockResolvedValue({ ...sampleSale, paymentStatus: 'pending' });
 
     renderSalesPage(container);
@@ -318,6 +328,7 @@ describe('SalesPage — delete', () => {
   it('deletes a sale after confirmation', async () => {
     const { saleRepo, container } = setupFullMocks();
     saleRepo.getAll = vi.fn().mockResolvedValue([sampleSale]);
+    saleRepo.getById = vi.fn().mockResolvedValue(sampleSale);
     saleRepo.remove = vi.fn().mockResolvedValue(undefined);
 
     renderSalesPage(container);
@@ -352,6 +363,7 @@ describe('SalesPage — delete', () => {
   it('shows error on delete failure', async () => {
     const { saleRepo, container } = setupFullMocks();
     saleRepo.getAll = vi.fn().mockResolvedValue([sampleSale]);
+    saleRepo.getById = vi.fn().mockResolvedValue(sampleSale);
     saleRepo.remove = vi.fn().mockRejectedValue(new Error('Delete failed'));
 
     renderSalesPage(container);
@@ -402,6 +414,7 @@ describe('SalesPage — refresh after mutation', () => {
       callCount++;
       return callCount === 1 ? [sampleSale] : [];
     });
+    saleRepo.getById = vi.fn().mockResolvedValue(sampleSale);
     saleRepo.remove = vi.fn().mockResolvedValue(undefined);
 
     renderSalesPage(container);
@@ -519,9 +532,9 @@ describe('SalesPage — payment status rendering', () => {
 
     renderSalesPage(container);
 
-    await waitFor(() => expect(screen.getByText('Pending')).toBeDefined());
-    expect(screen.getByText('Partial')).toBeDefined();
-    expect(screen.getByText('Paid')).toBeDefined();
-    expect(screen.getByText('Refunded')).toBeDefined();
+    await waitFor(() => expect(screen.getAllByText('Pending').length).toBeGreaterThan(0));
+    expect(screen.getAllByText('Partial').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Paid').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Refunded').length).toBeGreaterThan(0);
   });
 });

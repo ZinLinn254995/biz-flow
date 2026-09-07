@@ -1,10 +1,22 @@
 import type { SaleRepository } from '@/types/repositories/saleRepository';
+import type { InventoryRepository } from '@/types/repositories/inventoryRepository';
 import type { Sale, SaleItem } from '@/types/domain/sale';
+import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId, Money } from '@/types/common/base';
+import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull } from '@/services/common';
 
+function computeStockStatus(quantity: number, reorderThreshold?: number): StockStatus {
+  if (quantity <= 0) return 'out_of_stock';
+  if (reorderThreshold !== undefined && quantity <= reorderThreshold) return 'low_stock';
+  return 'in_stock';
+}
+
 export class SalesService {
-  constructor(private readonly repository: SaleRepository) {}
+  constructor(
+    private readonly repository: SaleRepository,
+    private readonly inventoryRepository?: InventoryRepository,
+  ) {}
 
   async getSaleById(id: EntityId): Promise<Sale | null> {
     return this.repository.getById(id);
@@ -42,7 +54,14 @@ export class SalesService {
     validateMoney(input.totalAmount, 'totalAmount');
     const notes = trimToNull(input.notes) ?? undefined;
 
-    return this.repository.create({ ...input, date, notes });
+    await this.deductStock(input.items);
+
+    try {
+      return await this.repository.create({ ...input, date, notes });
+    } catch (err) {
+      await this.restoreStock(input.items);
+      throw err;
+    }
   }
 
   async updateSale(id: EntityId, changes: Partial<Sale>): Promise<Sale> {
@@ -61,10 +80,106 @@ export class SalesService {
     if (changes.totalAmount !== undefined) {
       validateMoney(changes.totalAmount, 'totalAmount');
     }
+
+    if (changes.items && this.inventoryRepository) {
+      const oldSale = await this.repository.getById(id);
+      if (!oldSale) {
+        throw new Error(`Sale not found: ${id}`);
+      }
+      await this.restoreStock(oldSale.items);
+      try {
+        await this.deductStock(changes.items);
+      } catch (error) {
+        await this.deductStock(oldSale.items);
+        throw error;
+      }
+      try {
+        return await this.repository.update(id, changes);
+      } catch (error) {
+        await this.restoreStock(changes.items);
+        await this.deductStock(oldSale.items);
+        throw error;
+      }
+    }
+
     return this.repository.update(id, changes);
   }
 
   async deleteSale(id: EntityId): Promise<void> {
-    return this.repository.remove(id);
+    if (!this.inventoryRepository) return this.repository.remove(id);
+    const sale = await this.repository.getById(id);
+    if (!sale) return this.repository.remove(id);
+    await this.restoreStock(sale.items);
+    try {
+      await this.repository.remove(id);
+    } catch (error) {
+      await this.deductStock(sale.items);
+      throw error;
+    }
+  }
+
+  private async deductStock(items: SaleItem[]): Promise<void> {
+    if (!this.inventoryRepository) return;
+
+    const quantities = new Map<EntityId, number>();
+    for (const item of items) {
+      quantities.set(
+        item.inventoryItemId,
+        (quantities.get(item.inventoryItemId) ?? 0) + item.quantity,
+      );
+    }
+
+    const applied: SaleItem[] = [];
+    try {
+      for (const [itemId, qtyToDeduct] of quantities) {
+        const invItem = await this.inventoryRepository.getById(itemId);
+        if (!invItem) {
+          throw new Error(`Inventory item not found: ${itemId}`);
+        }
+        if (invItem.quantity < qtyToDeduct) {
+          throw new Error(
+            `Insufficient stock for "${invItem.name}": available ${invItem.quantity}, requested ${qtyToDeduct}`,
+          );
+        }
+        const newQty = invItem.quantity - qtyToDeduct;
+        await this.inventoryRepository.update(itemId, {
+          quantity: newQty,
+          stockStatus: computeStockStatus(newQty, invItem.reorderThreshold),
+        });
+        applied.push({
+          inventoryItemId: itemId,
+          name: invItem.name,
+          quantity: qtyToDeduct,
+          unitPrice: invItem.salePrice,
+          lineTotal: { amountMinor: 0, currency: invItem.salePrice.currency },
+        });
+      }
+    } catch (error) {
+      await this.restoreStock(applied);
+      throw error;
+    }
+  }
+
+  private async restoreStock(items: SaleItem[]): Promise<void> {
+    if (!this.inventoryRepository) return;
+
+    const quantities = new Map<EntityId, number>();
+    for (const item of items) {
+      quantities.set(
+        item.inventoryItemId,
+        (quantities.get(item.inventoryItemId) ?? 0) + item.quantity,
+      );
+    }
+
+    for (const [itemId, qtyToRestore] of quantities) {
+      const invItem = await this.inventoryRepository.getById(itemId);
+      if (invItem) {
+        const newQty = invItem.quantity + qtyToRestore;
+        await this.inventoryRepository.update(itemId, {
+          quantity: newQty,
+          stockStatus: computeStockStatus(newQty, invItem.reorderThreshold),
+        });
+      }
+    }
   }
 }

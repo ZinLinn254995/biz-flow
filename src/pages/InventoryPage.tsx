@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, AlertCircle, Loader2, Package, Filter } from 'lucide-react';
+import { Plus, AlertCircle, Loader2, Package, Filter, Search, X } from 'lucide-react';
 import PageContainer from '@/components/layout/PageContainer';
 import EmptyState from '@/components/ui/EmptyState';
 import { InventoryCard } from '@/components/inventory/InventoryCard';
@@ -18,6 +18,9 @@ import type { EntityId } from '@/types/common/base';
 
 function InventoryPage() {
   const [selectedBusinessId, setSelectedBusinessId] = useState<EntityId | null>(null);
+  const [search, setSearch] = useState('');
+  const [stockFilter, setStockFilter] = useState<'all' | 'in_stock' | 'low_stock' | 'out_of_stock'>('all');
+  const [sortBy, setSortBy] = useState<'name' | 'quantity' | null>(null);
 
   const allInventory = useInventoryItems();
   const scopedInventory = useInventoryItemsByBusiness(selectedBusinessId);
@@ -103,13 +106,48 @@ function InventoryPage() {
   const isSubmitting = editingItem ? updateMutation.isLoading : createMutation.isLoading;
   const isLoading = inventory.isLoading;
   const error = inventory.error;
-  const items = inventory.data;
+  const items = useMemo(() => {
+    let result = inventory.data ?? [];
+    const q = search.trim().toLowerCase();
+    if (q) {
+      result = result.filter((i) =>
+        i.name.toLowerCase().includes(q) ||
+        (i.sku && i.sku.toLowerCase().includes(q)),
+      );
+    }
+    if (stockFilter !== 'all') {
+      result = result.filter((i) => i.stockStatus === stockFilter);
+    }
+    if (sortBy === 'name') {
+      result = [...result].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'quantity') {
+      result = [...result].sort((a, b) => b.quantity - a.quantity);
+    }
+    return result;
+  }, [inventory.data, search, stockFilter, sortBy]);
+
+  const hasFilters = search.trim() !== '' || stockFilter !== 'all' || sortBy !== null;
+  const clearFilters = () => {
+    setSearch('');
+    setStockFilter('all');
+    setSortBy(null);
+  };
 
   return (
     <PageContainer title="Inventory" subtitle="Track and manage stock for your businesses.">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-gray-400" strokeWidth={2} />
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2} />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search items…"
+              aria-label="Search inventory"
+              className="pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow w-full sm:w-48"
+            />
+          </div>
           <select
             value={selectedBusinessId ?? ''}
             onChange={(e) => setSelectedBusinessId((e.target.value || null) as EntityId | null)}
@@ -124,6 +162,36 @@ function InventoryPage() {
               </option>
             ))}
           </select>
+          <select
+            value={stockFilter}
+            onChange={(e) => setStockFilter(e.target.value as 'all' | 'in_stock' | 'low_stock' | 'out_of_stock')}
+            aria-label="Filter by stock status"
+            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+          >
+            <option value="all">All Stock</option>
+            <option value="in_stock">In Stock</option>
+            <option value="low_stock">Low Stock</option>
+            <option value="out_of_stock">Out of Stock</option>
+          </select>
+          <select
+            value={sortBy ?? ''}
+            onChange={(e) => setSortBy(e.target.value as 'name' | 'quantity' | null || null)}
+            aria-label="Sort by"
+            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+          >
+            <option value="">No Sort</option>
+            <option value="name">Name (A-Z)</option>
+            <option value="quantity">Quantity (High-Low)</option>
+          </select>
+          {hasFilters && (
+            <button
+              onClick={clearFilters}
+              className="flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+            >
+              <X className="w-3.5 h-3.5" strokeWidth={2} />
+              Clear
+            </button>
+          )}
         </div>
 
         <button
@@ -164,7 +232,7 @@ function InventoryPage() {
         </div>
       )}
 
-      {!isLoading && !error && items && items.length === 0 && (
+      {!isLoading && !error && items && items.length === 0 && !hasFilters && (
         <div className="bg-white border border-gray-200 rounded-xl">
           <EmptyState
             icon={Package}

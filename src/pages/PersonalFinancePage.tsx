@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, AlertCircle, Loader2, TrendingUp, TrendingDown, WalletCards } from 'lucide-react';
+import { Plus, AlertCircle, Loader2, TrendingUp, TrendingDown, WalletCards, Search, X } from 'lucide-react';
 import PageContainer from '@/components/layout/PageContainer';
 import EmptyState from '@/components/ui/EmptyState';
 import { PersonalIncomeCard } from '@/components/personalFinance/PersonalIncomeCard';
@@ -52,6 +52,13 @@ function PersonalFinancePage() {
   const updateExpenseMutation = useUpdatePersonalExpense();
   const deleteExpenseMutation = useDeletePersonalExpense();
 
+  const [incomeSearch, setIncomeSearch] = useState('');
+  const [expenseSearch, setExpenseSearch] = useState('');
+  const [incomeStartDate, setIncomeStartDate] = useState('');
+  const [incomeEndDate, setIncomeEndDate] = useState('');
+  const [expenseStartDate, setExpenseStartDate] = useState('');
+  const [expenseEndDate, setExpenseEndDate] = useState('');
+
   const [incomeFormOpen, setIncomeFormOpen] = useState(false);
   const [editingIncome, setEditingIncome] = useState<PersonalIncome | null>(null);
   const [deleteIncomeTarget, setDeleteIncomeTarget] = useState<PersonalIncome | null>(null);
@@ -79,6 +86,26 @@ function PersonalFinancePage() {
     }
     return map;
   }, [accounts]);
+
+  const filteredIncome = useMemo(() => {
+    if (!incomeQuery.data) return [];
+    let result = incomeQuery.data;
+    const q = incomeSearch.trim().toLowerCase();
+    if (q) result = result.filter((i) => i.source.toLowerCase().includes(q));
+    if (incomeStartDate) result = result.filter((i) => i.date >= incomeStartDate);
+    if (incomeEndDate) result = result.filter((i) => i.date <= incomeEndDate);
+    return result;
+  }, [incomeQuery.data, incomeSearch, incomeStartDate, incomeEndDate]);
+
+  const filteredExpenses = useMemo(() => {
+    if (!expenseQuery.data) return [];
+    let result = expenseQuery.data;
+    const q = expenseSearch.trim().toLowerCase();
+    if (q) result = result.filter((e) => e.title.toLowerCase().includes(q));
+    if (expenseStartDate) result = result.filter((e) => e.date >= expenseStartDate);
+    if (expenseEndDate) result = result.filter((e) => e.date <= expenseEndDate);
+    return result;
+  }, [expenseQuery.data, expenseSearch, expenseStartDate, expenseEndDate]);
 
   const incomeTotals = useMemo(
     () => computeTotals(incomeQuery.data ?? []),
@@ -280,8 +307,43 @@ function PersonalFinancePage() {
 
       {/* Income Section */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-base font-semibold text-gray-900">Income</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2} />
+              <input
+                type="text"
+                value={incomeSearch}
+                onChange={(e) => setIncomeSearch(e.target.value)}
+                placeholder="Search income…"
+                aria-label="Search income"
+                className="pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow w-full sm:w-48"
+              />
+            </div>
+            <input
+              type="date"
+              value={incomeStartDate}
+              onChange={(e) => setIncomeStartDate(e.target.value)}
+              aria-label="Income start date"
+              className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+            />
+            <input
+              type="date"
+              value={incomeEndDate}
+              onChange={(e) => setIncomeEndDate(e.target.value)}
+              aria-label="Income end date"
+              className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+            />
+            {(incomeSearch || incomeStartDate || incomeEndDate) && (
+              <button
+                onClick={() => { setIncomeSearch(''); setIncomeStartDate(''); setIncomeEndDate(''); }}
+                className="flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+              >
+                <X className="w-3.5 h-3.5" strokeWidth={2} />
+                Clear
+              </button>
+            )}
+          </div>
           <button
             onClick={openCreateIncome}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
@@ -317,7 +379,7 @@ function PersonalFinancePage() {
           </div>
         )}
 
-        {!incomeQuery.isLoading && !incomeQuery.error && incomeQuery.data && incomeQuery.data.length === 0 && (
+        {!incomeQuery.isLoading && !incomeQuery.error && filteredIncome.length === 0 && incomeSearch.trim() === '' && incomeStartDate === '' && incomeEndDate === '' && (
           <div className="bg-white border border-gray-200 rounded-xl">
             <EmptyState
               icon={TrendingUp}
@@ -336,9 +398,9 @@ function PersonalFinancePage() {
           </div>
         )}
 
-        {!incomeQuery.isLoading && !incomeQuery.error && incomeQuery.data && incomeQuery.data.length > 0 && (
+        {!incomeQuery.isLoading && !incomeQuery.error && filteredIncome.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {incomeQuery.data.map((income) => (
+            {filteredIncome.map((income) => (
               <PersonalIncomeCard
                 key={income.id}
                 income={income}
@@ -354,8 +416,43 @@ function PersonalFinancePage() {
 
       {/* Expense Section */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-base font-semibold text-gray-900">Expenses</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2} />
+              <input
+                type="text"
+                value={expenseSearch}
+                onChange={(e) => setExpenseSearch(e.target.value)}
+                placeholder="Search expenses…"
+                aria-label="Search expenses"
+                className="pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow w-full sm:w-48"
+              />
+            </div>
+            <input
+              type="date"
+              value={expenseStartDate}
+              onChange={(e) => setExpenseStartDate(e.target.value)}
+              aria-label="Expense start date"
+              className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+            />
+            <input
+              type="date"
+              value={expenseEndDate}
+              onChange={(e) => setExpenseEndDate(e.target.value)}
+              aria-label="Expense end date"
+              className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+            />
+            {(expenseSearch || expenseStartDate || expenseEndDate) && (
+              <button
+                onClick={() => { setExpenseSearch(''); setExpenseStartDate(''); setExpenseEndDate(''); }}
+                className="flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+              >
+                <X className="w-3.5 h-3.5" strokeWidth={2} />
+                Clear
+              </button>
+            )}
+          </div>
           <button
             onClick={openCreateExpense}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
@@ -391,7 +488,7 @@ function PersonalFinancePage() {
           </div>
         )}
 
-        {!expenseQuery.isLoading && !expenseQuery.error && expenseQuery.data && expenseQuery.data.length === 0 && (
+        {!expenseQuery.isLoading && !expenseQuery.error && filteredExpenses.length === 0 && expenseSearch.trim() === '' && expenseStartDate === '' && expenseEndDate === '' && (
           <div className="bg-white border border-gray-200 rounded-xl">
             <EmptyState
               icon={TrendingDown}
@@ -410,9 +507,9 @@ function PersonalFinancePage() {
           </div>
         )}
 
-        {!expenseQuery.isLoading && !expenseQuery.error && expenseQuery.data && expenseQuery.data.length > 0 && (
+        {!expenseQuery.isLoading && !expenseQuery.error && filteredExpenses.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {expenseQuery.data.map((expense) => (
+            {filteredExpenses.map((expense) => (
               <PersonalExpenseCard
                 key={expense.id}
                 expense={expense}

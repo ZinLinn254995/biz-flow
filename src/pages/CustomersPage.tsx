@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, AlertCircle, Loader2, Users, Filter } from 'lucide-react';
+import { Plus, AlertCircle, Loader2, Users, Filter, Search, X } from 'lucide-react';
 import PageContainer from '@/components/layout/PageContainer';
 import EmptyState from '@/components/ui/EmptyState';
 import { CustomerCard } from '@/components/customers/CustomerCard';
@@ -12,6 +12,7 @@ import type { EntityId } from '@/types/common/base';
 
 function CustomersPage() {
   const [selectedBusinessId, setSelectedBusinessId] = useState<EntityId | null>(null);
+  const [search, setSearch] = useState('');
 
   const allCustomers = useCustomers();
   const scopedCustomers = useCustomersByBusiness(selectedBusinessId);
@@ -104,13 +105,35 @@ function CustomersPage() {
   const isSubmitting = editingCustomer ? updateMutation.isLoading : createMutation.isLoading;
   const isLoading = customers.isLoading;
   const error = customers.error;
-  const customerList = customers.data;
+  const customerList = useMemo(() => {
+    if (!customers.data) return [];
+    const q = search.trim().toLowerCase();
+    if (!q) return customers.data;
+    return customers.data.filter((c) =>
+      c.name.toLowerCase().includes(q) ||
+      (c.email && c.email.toLowerCase().includes(q)) ||
+      (c.phone && c.phone.toLowerCase().includes(q)),
+    );
+  }, [customers.data, search]);
+
+  const hasFilters = search.trim() !== '';
+  const clearFilters = () => setSearch('');
 
   return (
     <PageContainer title="Customers" subtitle="Manage customer relationships for your businesses.">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-gray-400" strokeWidth={2} />
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2} />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search customers…"
+              aria-label="Search customers"
+              className="pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow w-full sm:w-48"
+            />
+          </div>
           <select
             value={selectedBusinessId ?? ''}
             onChange={(e) => setSelectedBusinessId((e.target.value || null) as EntityId | null)}
@@ -125,6 +148,15 @@ function CustomersPage() {
               </option>
             ))}
           </select>
+          {hasFilters && (
+            <button
+              onClick={clearFilters}
+              className="flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+            >
+              <X className="w-3.5 h-3.5" strokeWidth={2} />
+              Clear
+            </button>
+          )}
         </div>
 
         <button
@@ -165,7 +197,7 @@ function CustomersPage() {
         </div>
       )}
 
-      {!isLoading && !error && customerList && customerList.length === 0 && (
+      {!isLoading && !error && customerList && customerList.length === 0 && !hasFilters && (
         <div className="bg-white border border-gray-200 rounded-xl">
           <EmptyState
             icon={Users}

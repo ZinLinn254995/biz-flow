@@ -45,7 +45,7 @@ export function createServiceContainer(): ServiceContainer {
   return {
     businessService: new BusinessService(businessRepository),
     inventoryService: new InventoryService(inventoryRepository),
-    salesService: new SalesService(saleRepository),
+    salesService: new SalesService(saleRepository, inventoryRepository),
     customerService: new CustomerService(customerRepository),
     businessExpenseService: new BusinessExpenseService(businessExpenseRepository),
     personalIncomeService: new PersonalIncomeService(personalIncomeRepository),

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Plus, AlertCircle, Loader2, Receipt, Filter } from 'lucide-react';
+import { Plus, AlertCircle, Loader2, Receipt, Filter, Search, X } from 'lucide-react';
 import PageContainer from '@/components/layout/PageContainer';
 import EmptyState from '@/components/ui/EmptyState';
 import { BusinessExpenseCard } from '@/components/businessExpenses/BusinessExpenseCard';
@@ -23,6 +23,9 @@ function formatMoney(amountMinor: number, currency: string): string {
 
 function BusinessExpensesPage() {
   const [selectedBusinessId, setSelectedBusinessId] = useState<EntityId | null>(null);
+  const [search, setSearch] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const allExpenses = useBusinessExpenses();
   const scopedExpenses = useBusinessExpensesByBusiness(selectedBusinessId);
@@ -136,13 +139,34 @@ function BusinessExpensesPage() {
   const isSubmitting = editingExpense ? updateMutation.isLoading : createMutation.isLoading;
   const isLoading = expenses.isLoading;
   const error = expenses.error;
-  const expenseList = expenses.data;
+  const expenseList = useMemo(() => {
+    if (!expenses.data) return [];
+    let result = expenses.data;
+    const q = search.trim().toLowerCase();
+    if (q) result = result.filter((e) => e.title.toLowerCase().includes(q));
+    if (startDate) result = result.filter((e) => e.date >= startDate);
+    if (endDate) result = result.filter((e) => e.date <= endDate);
+    return result;
+  }, [expenses.data, search, startDate, endDate]);
+
+  const hasFilters = search.trim() !== '' || startDate !== '' || endDate !== '';
+  const clearFilters = () => { setSearch(''); setStartDate(''); setEndDate(''); };
 
   return (
     <PageContainer title="Business Expenses" subtitle="Track and manage expenses across your businesses.">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-gray-400" strokeWidth={2} />
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2} />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search expenses…"
+              aria-label="Search expenses"
+              className="pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow w-full sm:w-48"
+            />
+          </div>
           <select
             value={selectedBusinessId ?? ''}
             onChange={(e) => setSelectedBusinessId((e.target.value || null) as EntityId | null)}
@@ -157,6 +181,29 @@ function BusinessExpensesPage() {
               </option>
             ))}
           </select>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            aria-label="Start date"
+            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            aria-label="End date"
+            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow"
+          />
+          {hasFilters && (
+            <button
+              onClick={clearFilters}
+              className="flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+            >
+              <X className="w-3.5 h-3.5" strokeWidth={2} />
+              Clear
+            </button>
+          )}
         </div>
 
         <button
@@ -210,7 +257,7 @@ function BusinessExpensesPage() {
         </div>
       )}
 
-      {!isLoading && !error && expenseList && expenseList.length === 0 && (
+      {!isLoading && !error && expenseList && expenseList.length === 0 && !hasFilters && (
         <div className="bg-white border border-gray-200 rounded-xl">
           <EmptyState
             icon={Receipt}
