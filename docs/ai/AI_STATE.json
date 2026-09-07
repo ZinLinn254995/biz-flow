@@ -1,0 +1,234 @@
+{
+  "project": {
+    "name": "BizFlow",
+    "status": "active",
+    "developmentModel": "incremental",
+    "description": "Offline-first business and personal finance management application"
+  },
+  "currentMilestone": {
+    "id": "P2P18",
+    "name": "Search/Filter/Sort",
+    "status": "complete",
+    "verifiedDate": "2026-09-07"
+  },
+  "completedMilestones": [
+    { "id": "P2P1", "name": "Types & Contracts", "status": "complete" },
+    { "id": "P2P2", "name": "Database Layer (Dexie/IndexedDB)", "status": "complete" },
+    { "id": "P2P3", "name": "Repository Layer", "status": "complete" },
+    { "id": "P2P5", "name": "Service Layer", "status": "complete" },
+    { "id": "P2P6", "name": "React Data Access Layer", "status": "complete" },
+    { "id": "P2P7-P2P13", "name": "Page CRUD UI", "status": "complete" },
+    { "id": "P2P14", "name": "Account & Budget UI", "status": "complete" },
+    { "id": "P2P15", "name": "Dashboard Real Data", "status": "complete" },
+    { "id": "P2P16", "name": "Financial Calculations", "status": "complete" },
+    { "id": "P2P17", "name": "Inventory Stock Logic", "status": "complete" },
+    { "id": "P2P18", "name": "Search/Filter/Sort", "status": "complete" }
+  ],
+  "quality": {
+    "tests": {
+      "status": "passing",
+      "count": 507,
+      "files": 45,
+      "framework": "Vitest 4.1.11",
+      "verifiedDate": "2026-09-07"
+    },
+    "typescript": {
+      "status": "passing",
+      "command": "tsc --noEmit -p tsconfig.app.json",
+      "verifiedDate": "2026-09-07"
+    },
+    "productionBuild": {
+      "status": "passing",
+      "command": "vite build",
+      "verifiedDate": "2026-09-07"
+    }
+  },
+  "architecture": {
+    "style": "5-layer offline-first",
+    "layers": ["UI", "React Hooks", "Application Services", "Repository Interfaces", "Dexie Repositories"],
+    "database": "Dexie/IndexedDB",
+    "databaseName": "BizFlowDB",
+    "databaseVersion": 1,
+    "tables": 10,
+    "network": false,
+    "dependencyInjection": "constructor + ServiceProvider context",
+    "globalStateLibrary": false
+  },
+  "techStack": {
+    "framework": "React 18.3.1",
+    "language": "TypeScript 5.5.3",
+    "buildTool": "Vite 5.4",
+    "routing": "react-router-dom 7.18.3",
+    "css": "Tailwind CSS 3.4.1",
+    "icons": "lucide-react 0.446.0",
+    "database": "Dexie 4.4.5",
+    "testing": "Vitest 4.1.11",
+    "testRendering": "@testing-library/react 16.3.3",
+    "testEnvironment": "jsdom 30.0.1",
+    "testIndexedDB": "fake-indexeddb 6.2.5"
+  },
+  "domainEntities": [
+    "Business",
+    "InventoryItem",
+    "Sale",
+    "SaleItem",
+    "Customer",
+    "BusinessExpense",
+    "PersonalIncome",
+    "PersonalExpense",
+    "Category",
+    "Budget",
+    "Account"
+  ],
+  "routes": [
+    { "path": "/dashboard", "page": "DashboardPage", "status": "complete" },
+    { "path": "/business", "page": "BusinessPage", "status": "complete" },
+    { "path": "/inventory", "page": "InventoryPage", "status": "complete" },
+    { "path": "/sales", "page": "SalesPage", "status": "complete" },
+    { "path": "/customers", "page": "CustomersPage", "status": "complete" },
+    { "path": "/business-expenses", "page": "BusinessExpensesPage", "status": "complete" },
+    { "path": "/personal", "page": "PersonalFinancePage", "status": "complete" },
+    { "path": "/categories", "page": "CategoriesPage", "status": "complete" },
+    { "path": "/accounts", "page": "AccountsPage", "status": "complete" },
+    { "path": "/budgets", "page": "BudgetsPage", "status": "complete" },
+    { "path": "/analytics", "page": "AnalyticsPage", "status": "placeholder" },
+    { "path": "/settings", "page": "SettingsPage", "status": "placeholder" }
+  ],
+  "nextRecommendedTasks": [
+    {
+      "id": "P2P19",
+      "name": "Stock Operation Atomicity",
+      "priority": "P0",
+      "complexity": "MEDIUM",
+      "canCombineWith": "P2P20",
+      "filesLikelyAffected": ["src/services/sales/SalesService.ts", "src/test/services/salesStockLogic.test.ts"]
+    },
+    {
+      "id": "P2P20",
+      "name": "Dead Code Cleanup",
+      "priority": "P1",
+      "complexity": "LOW",
+      "canCombineWith": "P2P19",
+      "filesLikelyAffected": [
+        "src/components/dashboard/AnalyticsPreview.tsx",
+        "src/components/dashboard/BusinessOverview.tsx",
+        "src/components/dashboard/InventoryStatus.tsx",
+        "src/components/dashboard/PersonalFinanceOverview.tsx",
+        "src/components/dashboard/QuickActions.tsx",
+        "src/components/dashboard/RecentActivity.tsx",
+        "src/components/dashboard/SummaryCard.tsx",
+        "src/hooks/common/useFilters.ts"
+      ]
+    },
+    {
+      "id": "P2P21",
+      "name": "Categories & Accounts Search",
+      "priority": "P2",
+      "complexity": "LOW",
+      "canCombineWith": "P2P22",
+      "filesLikelyAffected": ["src/pages/CategoriesPage.tsx", "src/pages/AccountsPage.tsx"]
+    },
+    {
+      "id": "P2P22",
+      "name": "Sale Total Validation",
+      "priority": "P2",
+      "complexity": "LOW",
+      "canCombineWith": "P2P21",
+      "filesLikelyAffected": ["src/services/sales/SalesService.ts"]
+    }
+  ],
+  "lockedAreas": [
+    { "path": "src/pages/DashboardPage.tsx", "status": "LOCKED", "reason": "Stable, recently rewritten, tested" },
+    { "path": "src/components/layout/AppShell.tsx", "status": "LOCKED", "reason": "Core layout shell" },
+    { "path": "src/components/layout/Sidebar.tsx", "status": "LOCKED", "reason": "Navigation structure" },
+    { "path": "src/components/layout/MobileNavigation.tsx", "status": "LOCKED", "reason": "Mobile navigation" },
+    { "path": "src/routes/AppRoutes.tsx", "status": "PROTECTED", "reason": "Route registration — add only" },
+    { "path": "src/config/navigationItems.ts", "status": "PROTECTED", "reason": "Navigation config — add only" },
+    { "path": "src/db/database.ts", "status": "PROTECTED", "reason": "Migration-sensitive — version migration required" },
+    { "path": "src/types/", "status": "PROTECTED", "reason": "Contract stability" },
+    { "path": "src/types/repositories/", "status": "PROTECTED", "reason": "Architecture boundary" },
+    { "path": "src/repositories/dexieRepository.ts", "status": "PROTECTED", "reason": "Shared by all repos" },
+    { "path": "src/hooks/common/useAsync.ts", "status": "PROTECTED", "reason": "Core primitive" },
+    { "path": "src/hooks/common/useMutation.ts", "status": "PROTECTED", "reason": "Core primitive" },
+    { "path": "src/hooks/common/ServiceProvider.tsx", "status": "PROTECTED", "reason": "DI context" }
+  ],
+  "knownRisks": [
+    {
+      "id": "ISSUE-001",
+      "title": "Non-atomic stock operations",
+      "severity": "high",
+      "status": "open",
+      "addressedBy": "P2P19"
+    },
+    {
+      "id": "ISSUE-002",
+      "title": "No concurrency protection on stock deduction",
+      "severity": "high",
+      "status": "open",
+      "addressedBy": "P2P19"
+    },
+    {
+      "id": "ISSUE-003",
+      "title": "Account balances never update from transactions",
+      "severity": "medium",
+      "status": "open",
+      "addressedBy": "P2P23"
+    },
+    {
+      "id": "ISSUE-004",
+      "title": "No budget actual-vs-limit tracking",
+      "severity": "medium",
+      "status": "open",
+      "addressedBy": "P2P24"
+    },
+    {
+      "id": "ISSUE-005",
+      "title": "Sale total not validated against sum of line items",
+      "severity": "medium",
+      "status": "open",
+      "addressedBy": "P2P22"
+    },
+    {
+      "id": "ISSUE-006",
+      "title": "Orphaned dashboard components (7 files)",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": "P2P20"
+    },
+    {
+      "id": "ISSUE-007",
+      "title": "Unused useFilters.ts hook",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": "P2P20"
+    },
+    {
+      "id": "ISSUE-008",
+      "title": "CategoriesPage and AccountsPage missing search",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": "P2P21"
+    },
+    {
+      "id": "ISSUE-009",
+      "title": "Supabase dependency unused",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": null
+    },
+    {
+      "id": "ISSUE-010",
+      "title": "No cascade delete",
+      "severity": "low",
+      "status": "open",
+      "addressedBy": null
+    }
+  ],
+  "gitState": {
+    "isGitRepo": false,
+    "branch": null,
+    "latestCommit": null
+  },
+  "lastUpdated": "2026-09-07",
+  "lastUpdatedBy": "AI audit agent (P2P18 complete, AI continuation system installed)"
+}

@@ -1,0 +1,57 @@
+---
+description: BizFlow AI development rules and continuation protocol
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# BizFlow Cursor Rules
+
+## Canonical Instructions
+
+Read `AGENTS.md` at the repository root for the full AI development instruction set. It is the canonical source of truth.
+
+## Mandatory Reading Before Code Changes
+
+1. `AGENTS.md`
+2. `docs/ai/AI_START_HERE.md`
+3. `docs/ai/AI_HANDOFF.md`
+4. `docs/ai/CURRENT_STATE.md`
+5. `docs/ai/AI_STATE.json`
+6. `docs/ai/ARCHITECTURE.md`
+7. `docs/ai/ROADMAP.md`
+8. `docs/ai/KNOWN_ISSUES.md`
+9. `docs/ai/AI_CONTINUATION_PROTOCOL.md`
+
+Then inspect the actual source code before making changes.
+
+## Critical Rules
+
+- **Trust source code over documentation** if they conflict
+- **Do not modify locked files** (see `AGENTS.md` section H for the full list)
+- **Prefer small, verified, incremental changes** over large rewrites
+- **Do not introduce Supabase, Firebase, or cloud sync** without explicit user approval
+- **Use integer minor units for money** — never floating-point
+- **No network calls** — the app is offline-first
+- **Do not redesign UI** unnecessarily
+- **Do not refactor working architecture**
+- **Do not change routes** unnecessarily
+- **Do not change domain types or repository interfaces** unnecessarily
+- **Run verification** before declaring complete: `npm run typecheck`, `npm run test`, `npm run build`
+- **Update `docs/ai/` handoff documentation** after completing work
+- **No emojis** in responses
+
+## Architecture
+
+```
+UI → Hooks → Services → Repository Interfaces → Dexie Repositories → IndexedDB
+```
+
+UI never imports Dexie, repositories, or services directly. Hooks access services via ServiceProvider context.
+
+## Current State
+
+- **Milestone:** P2P18 (COMPLETE)
+- **Tests:** 507 passing (45 files)
+- **TypeScript:** PASS
+- **Build:** PASS
+- **Next task:** P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup)

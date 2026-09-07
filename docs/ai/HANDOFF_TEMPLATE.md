@@ -1,99 +1,152 @@
 # BizFlow — AI Handoff Report Template
 
-> Copy this template and fill it after completing a task. Append the filled report to `docs/ai/CHANGELOG.md` or create a new handoff file.
+> Copy this template and fill it after completing a task. This is the structured report that the next AI agent will read.
 
 ---
 
-## Handoff Report: [TASK ID] — [TASK NAME]
+## TASK COMPLETION
 
-**Date:** YYYY-MM-DD
-**AI Agent:** [Agent name/identifier]
-**Previous milestone:** [e.g., P2P18]
-**Completed milestone:** [e.g., P2P19]
+- **Task ID:** [e.g., P2P19]
+- **Task Name:** [e.g., Stock Operation Atomicity]
+- **Status:** [COMPLETE / INCOMPLETE / PARTIAL]
 
-### What I Inspected
+## WHAT WAS CHANGED
 
-- [List files read and verified]
+[Summary of changes in 2-3 sentences]
 
-### What I Changed
+## FILES CREATED
 
-- [Summary of changes]
+- [List with paths, or "None"]
 
-### Files Created
+## FILES MODIFIED
 
-- [List, or "None"]
+- [Path] — [brief description of change]
 
-### Files Modified
+## FILES DELETED
 
-- [List with brief description of each change]
+- [List with paths, or "None"]
 
-### Files Deleted
+## BEHAVIOR CHANGES
 
-- [List, or "None"]
+- [Description of any user-visible behavior changes, or "None"]
 
-### Features Implemented
+## ARCHITECTURE IMPACT
 
-- [List, or "None"]
+- [Description of any architectural changes, or "None"]
 
-### Tests Added
+## DATABASE IMPACT
 
-- [List test files and test names, or "None"]
+- [Description of any database changes, or "None"]
 
-### Tests Changed
+## TEST RESULTS
 
-- [List with reason, or "None"]
+- **Test framework:** Vitest [version]
+- **Total tests:** [N]
+- **Test files:** [N]
+- **Passing:** [N]
+- **Failing:** [N]
+- **New tests added:** [N, or "None"]
+- **Existing tests changed:** [List with reason, or "None"]
 
-### Tests Passed
+## TYPESCRIPT RESULT
 
-- Total: [N]
-- Files: [N]
-- Framework: Vitest [version]
+- **Status:** [PASS / FAIL]
+- **Command:** `npm run typecheck`
 
-### TypeScript Result
+## BUILD RESULT
 
-- PASS / FAIL
-- Command: `npm run typecheck`
+- **Status:** [PASS / FAIL]
+- **Command:** `npm run build`
 
-### Build Result
+## SECURITY IMPACT
 
-- PASS / FAIL
-- Command: `npm run build`
+- [Description of any security-relevant changes, or "None"]
 
-### Database Changes
+## KNOWN ISSUES
 
-- [Description, or "None"]
+- **Resolved:** [List issue IDs, or "None"]
+- **New:** [List new issues discovered, or "None"]
+- **Remaining:** [List remaining relevant issues, or reference `docs/ai/KNOWN_ISSUES.md`]
 
-### Architecture Changes
+## REMAINING RISKS
 
-- [Description, or "None"]
+- [List any risks introduced or remaining, or "None"]
 
-### Known Limitations
+## CURRENT PROJECT STATE
 
-- [List any new or remaining limitations]
+- **Current milestone:** [e.g., P2P19]
+- **Status:** [e.g., COMPLETE]
+- **Tests:** [N] passing ([N] files)
+- **TypeScript:** [PASS / FAIL]
+- **Build:** [PASS / FAIL]
+- **Next milestone:** [e.g., P2P21]
 
-### Remaining Work
+## NEXT RECOMMENDED TASK
 
-- [List remaining tasks from roadmap]
+- **Task ID:** [e.g., P2P21]
+- **Task Name:** [e.g., Categories & Accounts Search]
+- **Why:** [One sentence explanation]
+- **Scope:** [List of files likely affected]
+- **Complexity:** [LOW / MEDIUM / HIGH]
+- **Can combine with:** [Task ID, or "None"]
 
-### Recommended Next Task
+## NEXT CODING AI PROMPT
 
-- [Task ID and name]
-- [Why]
-- [Scope]
+> Copy-paste the prompt below into the next Coding AI to continue development.
 
-### Next AI Prompt
+```
+You are the implementation engineer continuing the existing BizFlow repository.
 
-- [Reference to `docs/ai/NEXT_TASK_PROMPT.md` which should be updated]
+## MANDATORY CONTEXT
 
-### Locked Areas
+Read the following files before making any changes:
+1. AGENTS.md
+2. docs/ai/AI_START_HERE.md
+3. docs/ai/AI_HANDOFF.md
+4. docs/ai/CURRENT_STATE.md
+5. docs/ai/PROJECT_CONTEXT.md
+6. docs/ai/ARCHITECTURE.md
+7. docs/ai/ROADMAP.md
+8. docs/ai/DECISIONS.md
+9. docs/ai/KNOWN_ISSUES.md
+10. docs/ai/AI_CONTINUATION_PROTOCOL.md
+11. docs/ai/AI_TASK_SELECTION.md
+12. docs/ai/AI_STATE.json
 
-- All areas listed in `docs/ai/AI_HANDOFF.md` "Locked Areas" table remain locked
-- [Any additional locked areas from this task]
+Then:
+- Inspect relevant source files
+- Verify assumptions against actual code
+- Determine actual current state
+- Implement only the requested task
+- Run: npm run typecheck, npm run test, npm run build
+- Update handoff documentation under docs/ai/
+- Produce a final handoff report using docs/ai/HANDOFF_TEMPLATE.md
 
-### Discrepancies Found
+## TASK
 
-- [Any discrepancies between documentation and actual code, or "None"]
+[Task ID]: [Task Name]
 
-### Risks
+## OBJECTIVE
 
-- [Any risks introduced, or "None"]
+[One sentence objective]
+
+## SCOPE
+
+[Files expected to change]
+
+## DO NOT TOUCH
+
+[Locked areas — see AGENTS.md section H]
+
+## ACCEPTANCE CRITERIA
+
+[Exact conditions]
+
+## TEST REQUIREMENTS
+
+[Tests to run and expected results]
+```
+
+## LOCKED AREAS
+
+All areas listed in `AGENTS.md` section H remain locked. [List any additional locked areas from this task, or "None added"]

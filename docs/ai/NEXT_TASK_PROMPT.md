@@ -1,25 +1,49 @@
 # BizFlow — Next Task Prompt Template
 
-> This file is a reusable prompt template. After each milestone, update it with the next task's details. The next AI agent should follow this prompt exactly.
+> This file is a reusable prompt template for generating the next Coding AI prompt. After each milestone, update it with the next task's details. The next AI agent should follow this prompt exactly.
 
 ---
 
-## PROJECT
+## ROLE
 
-BizFlow — an offline-first business and personal finance management application built with React, TypeScript, Vite, and Dexie/IndexedDB.
+You are the implementation engineer continuing the existing BizFlow repository.
 
-## CURRENT STATE
+## REPOSITORY
 
-- **Milestone:** P2P18 (COMPLETE)
-- **Tests:** 507 passing (45 files)
-- **TypeScript:** PASS
-- **Build:** PASS
-- **Architecture:** 5-layer (UI → Hooks → Services → Repository Interfaces → Dexie Repositories)
-- **Database:** Dexie/IndexedDB, `BizFlowDB` v1, 10 tables
+Use the GitHub repository as the source of truth. Do not rely on conversation history or hidden context.
 
-## TASK
+## MANDATORY CONTEXT
 
-**P2P19 — Stock Operation Atomicity** (combined with **P2P20 — Dead Code Cleanup**)
+Read the following files before making any changes:
+
+1. `AGENTS.md` — canonical AI instructions
+2. `docs/ai/AI_START_HERE.md` — quick orientation
+3. `docs/ai/AI_HANDOFF.md` — latest handoff state
+4. `docs/ai/CURRENT_STATE.md` — detailed current state
+5. `docs/ai/PROJECT_CONTEXT.md` — project identity and domain model
+6. `docs/ai/ARCHITECTURE.md` — technical architecture
+7. `docs/ai/ROADMAP.md` — roadmap and next tasks
+8. `docs/ai/DECISIONS.md` — architecture decisions
+9. `docs/ai/KNOWN_ISSUES.md` — known issues and risks
+10. `docs/ai/AI_CONTINUATION_PROTOCOL.md` — continuation protocol
+11. `docs/ai/AI_TASK_SELECTION.md` — task selection rules
+12. `docs/ai/AI_STATE.json` — machine-readable state
+13. `docs/ai/QUALITY_GATE.md` — quality checklist
+
+Then:
+- Inspect relevant source files
+- Verify assumptions against actual code
+- Determine the actual current state
+- Implement only the requested task
+- Run: `npm run typecheck`, `npm run test`, `npm run build`
+- Update handoff documentation under `docs/ai/`
+- Produce a final handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+
+---
+
+## CURRENT TASK
+
+### P2P19 — Stock Operation Atomicity (combined with P2P20 — Dead Code Cleanup)
 
 ## OBJECTIVE
 
@@ -46,11 +70,11 @@ BizFlow — an offline-first business and personal finance management applicatio
 - **Delete:** `src/components/dashboard/RecentActivity.tsx`
 - **Delete:** `src/components/dashboard/SummaryCard.tsx`
 - **Delete:** `src/hooks/common/useFilters.ts`
-- **Verify:** No imports reference these files (grep for imports)
+- **Verify:** No imports reference these files (grep for imports before deleting)
 
 ## DEPENDENCIES
 
-- None. P2P19 and P2P20 are independent of each other and all other tasks.
+None. P2P19 and P2P20 are independent of each other and all other tasks.
 
 ## LOCKED AREAS
 
@@ -121,13 +145,16 @@ After completing the task, update:
 
 1. `docs/ai/AI_HANDOFF.md` — Update milestone, status, next task
 2. `docs/ai/CURRENT_STATE.md` — Update completed tasks, test status, technical debt
-3. `docs/ai/CHANGELOG.md` — Append new milestone entry
-4. `docs/ai/KNOWN_ISSUES.md` — Mark ISSUE-001, ISSUE-002, ISSUE-006, ISSUE-007 as resolved
-5. `docs/ai/NEXT_TASK_PROMPT.md` — Update with the next task (P2P21)
+3. `docs/ai/AI_STATE.json` — Update machine-readable state
+4. `docs/ai/CHANGELOG.md` — Append new milestone entry
+5. `docs/ai/KNOWN_ISSUES.md` — Mark ISSUE-001, ISSUE-002, ISSUE-006, ISSUE-007 as resolved
+6. `docs/ai/NEXT_TASK_PROMPT.md` — Update with the next task (P2P21+P2P22)
+7. `docs/ai/ROADMAP.md` — Move P2P19 and P2P20 to completed, update next section
+8. Complete the `docs/ai/QUALITY_GATE.md` checklist
 
 ## FINAL HANDOFF REQUIREMENTS
 
-After completing the task, produce a handoff report using the template in `docs/ai/HANDOFF_TEMPLATE.md`. Include:
+After completing the task, produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`. Include:
 - What was inspected
 - What was changed
 - Files created/modified/deleted
@@ -135,3 +162,4 @@ After completing the task, produce a handoff report using the template in `docs/
 - Verification results (TypeScript, tests, build)
 - Known limitations
 - Recommended next task
+- Copy-pastable prompt for the next Coding AI
