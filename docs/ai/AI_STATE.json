@@ -1,22 +1,30 @@
 {
+  "schemaVersion": "2.0.0",
+  "stateContract": {
+    "validator": "scripts/verify-ai-state.mjs",
+    "validateCommand": "npm run verify:ai",
+    "taskStatusValues": ["PLANNED", "IN_PROGRESS", "BLOCKED", "PARTIAL", "COMPLETE", "FAILED"],
+    "rule": "A task may only be recorded as COMPLETE when typecheck, tests and build actually passed and the result is recorded in quality.verificationRun."
+  },
   "project": {
     "name": "BizFlow",
     "version": "1.0.0",
     "status": "active",
     "developmentModel": "incremental",
-    "description": "Offline-first business and personal finance management application"
+    "description": "Offline-first business and personal finance management application",
+    "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
     "id": "P2P18",
     "name": "Search/Filter/Sort",
-    "status": "complete",
+    "status": "COMPLETE",
     "verifiedDate": "2026-09-07"
   },
   "lastCompletedTask": {
     "id": "P2P18",
     "name": "Search/Filter/Sort",
     "completedDate": "2026-09-07",
-    "status": "complete"
+    "status": "COMPLETE"
   },
   "currentTask": null,
   "nextTask": {
@@ -25,7 +33,8 @@
     "priority": "P0+P1",
     "complexity": "MEDIUM",
     "canCombineWith": null,
-    "status": "not_started",
+    "status": "PLANNED",
+    "reason": "ISSUE-001 and ISSUE-002 are the only open high-severity data-integrity issues. Stock deduction and sale persistence are still separate writes with manual rollback, so a mid-operation failure can corrupt stock counts. P2P20 is bundled because the dead files are inert and deleting them in the same pass avoids a second full verification cycle.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -45,18 +54,31 @@
     },
     "typescript": {
       "status": "passing",
-      "command": "tsc --noEmit -p tsconfig.app.json",
+      "command": "npm run typecheck",
       "verifiedDate": "2026-09-07"
     },
     "productionBuild": {
       "status": "passing",
-      "command": "vite build",
+      "command": "npm run build",
       "verifiedDate": "2026-09-07"
+    },
+    "verificationRun": {
+      "date": "2026-09-07",
+      "runBy": "AI continuation system upgrade agent",
+      "environment": "clean npm ci install of the repository at commit 8c64406",
+      "results": [
+        { "command": "npm run typecheck", "result": "PASS" },
+        { "command": "npm run test", "result": "PASS", "detail": "45 files / 507 tests" },
+        { "command": "npm run build", "result": "PASS", "detail": "vite build, 509.77 kB bundle" },
+        { "command": "npm run verify:imports", "result": "PASS" },
+        { "command": "npm run verify:ai", "result": "PASS" }
+      ]
     },
     "qualityGates": {
       "typecheck": true,
       "tests": true,
       "build": true,
+      "aiStateValid": true,
       "architectureConstraints": true,
       "noDanglingImports": true,
       "noBrokenRoutes": true,
@@ -136,10 +158,39 @@
       "All 507 existing tests pass",
       "TypeScript passes",
       "Production build passes",
-      "8 files deleted with no dangling imports",
+      "8 files deleted with no dangling imports (npm run verify:imports passes)",
       "No application behavior changes"
     ],
-    "verificationCommands": ["npm run typecheck", "npm run test", "npm run build"]
+    "verificationCommands": [
+      "npm run typecheck",
+      "npm run test",
+      "npm run build",
+      "npm run verify:imports",
+      "npm run verify:ai"
+    ]
+  },
+  "lastTaskFilesChanged": {
+    "task": "AI continuation system upgrade (infrastructure only, no application source changes)",
+    "created": [
+      "scripts/verify-ai-state.mjs",
+      "scripts/check-dangling-imports.mjs",
+      ".github/workflows/ai-verify.yml",
+      "docs/ai/GITHUB_SYNC.md"
+    ],
+    "modified": [
+      "package.json",
+      "AGENTS.md",
+      "docs/ai/AI_STATE.json",
+      "docs/ai/AI_START_HERE.md",
+      "docs/ai/AI_HANDOFF.md",
+      "docs/ai/AI_CONTINUATION_PROTOCOL.md",
+      "docs/ai/CURRENT_STATE.md",
+      "docs/ai/QUALITY_GATE.md",
+      "docs/ai/CHANGELOG.md",
+      "docs/ai/NEXT_TASK_PROMPT.md"
+    ],
+    "deleted": [],
+    "applicationSourceChanged": false
   },
   "lockedAreas": [
     { "path": "src/pages/DashboardPage.tsx", "status": "LOCKED", "reason": "Stable, recently rewritten, tested" },
@@ -166,13 +217,57 @@
     { "id": "ISSUE-007", "title": "Unused useFilters.ts hook", "severity": "low", "status": "open", "addressedBy": "P2P20" },
     { "id": "ISSUE-008", "title": "CategoriesPage and AccountsPage missing search", "severity": "low", "status": "open", "addressedBy": "P2P21" },
     { "id": "ISSUE-009", "title": "Supabase dependency unused", "severity": "low", "status": "open", "addressedBy": null },
-    { "id": "ISSUE-010", "title": "No cascade delete", "severity": "low", "status": "open", "addressedBy": null }
+    { "id": "ISSUE-010", "title": "No cascade delete", "severity": "low", "status": "open", "addressedBy": null },
+    { "id": "ISSUE-011", "title": "Production bundle is a single 509 kB chunk (no code splitting)", "severity": "low", "status": "open", "addressedBy": null }
+  ],
+  "risks": [
+    "P2P19 touches SalesService, which all sale-related tests depend on. Dexie transactions must include every table written inside the callback or Dexie throws at runtime, not at compile time.",
+    "Deleting the 7 dashboard components is only safe because DashboardPage.tsx (LOCKED) does not import them. Re-verify with npm run verify:imports after deletion.",
+    "CI runs on GitHub-hosted runners with npm ci; adding dependencies without updating package-lock.json will fail CI."
   ],
   "gitState": {
-    "isGitRepo": false,
-    "branch": null,
-    "latestCommit": null
+    "isGitRepo": true,
+    "remote": "https://github.com/ZinLinn254995/biz-flow",
+    "defaultBranch": "main",
+    "sourceOfTruth": "GitHub repository ZinLinn254995/biz-flow",
+    "syncMechanism": "Commits pushed directly to the GitHub repository. See docs/ai/GITHUB_SYNC.md.",
+    "lastSyncedTask": "AI continuation system upgrade",
+    "lastSyncedDate": "2026-09-07",
+    "ciWorkflow": ".github/workflows/ai-verify.yml"
+  },
+  "continuation": {
+    "entryPoint": "AGENTS.md",
+    "readingOrder": [
+      "AGENTS.md",
+      "docs/ai/AI_START_HERE.md",
+      "docs/ai/AI_STATE.json",
+      "docs/ai/AI_HANDOFF.md",
+      "docs/ai/NEXT_TASK_PROMPT.md",
+      "docs/ai/CURRENT_STATE.md",
+      "docs/ai/ROADMAP.md",
+      "docs/ai/KNOWN_ISSUES.md",
+      "docs/ai/ARCHITECTURE.md",
+      "docs/ai/AI_CONTINUATION_PROTOCOL.md",
+      "docs/ai/GITHUB_SYNC.md"
+    ],
+    "verifyCommand": "npm run verify",
+    "humanPromptRequired": false,
+    "note": "A new Coding AI needs nothing beyond this repository URL. The human only needs to say: continue the next task in docs/ai/NEXT_TASK_PROMPT.md."
+  },
+  "nextAIInstructions": {
+    "summary": "Implement P2P19 + P2P20 exactly as specified in docs/ai/NEXT_TASK_PROMPT.md.",
+    "beforeStarting": [
+      "npm ci",
+      "npm run verify (typecheck + tests + build + import check + AI state check) to confirm the documented baseline is real"
+    ],
+    "afterFinishing": [
+      "Re-run npm run verify",
+      "Set currentTask to null and lastCompletedTask to P2P19+P2P20 with status COMPLETE only if verification passed",
+      "Update CURRENT_STATE.md, AI_HANDOFF.md, ROADMAP.md, CHANGELOG.md, KNOWN_ISSUES.md",
+      "Rewrite docs/ai/NEXT_TASK_PROMPT.md for P2P21",
+      "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
+    ]
   },
   "lastUpdated": "2026-09-07",
-  "lastUpdatedBy": "AI continuation system upgrade agent"
+  "lastUpdatedBy": "AI continuation system upgrade agent (Lovable)"
 }

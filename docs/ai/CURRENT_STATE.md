@@ -47,6 +47,23 @@ None. All tasks through P2P18 are complete.
 | P2P25 (proposed) | Analytics page implementation |
 | Future | Settings page, cloud sync, data export/import, PWA |
 
+## In-Flight Work
+
+`AI_STATE.json` -> `currentTask` is `null`. No task is partially implemented, and the
+working tree matches the last verified state.
+
+## Verification Baseline (2026-09-07, clean `npm ci`)
+
+| Command | Result |
+|---------|--------|
+| `npm run typecheck` | PASS |
+| `npm run test` | PASS (45 files, 507 tests) |
+| `npm run build` | PASS |
+| `npm run verify:imports` | PASS |
+| `npm run verify:ai` | PASS |
+
+Run all five at once with `npm run verify`.
+
 ## Known Bugs
 
 No confirmed bugs. All 507 tests pass, TypeScript passes, production build passes.
@@ -65,6 +82,7 @@ No confirmed bugs. All 507 tests pass, TypeScript passes, production build passe
 | TD-08 | CategoriesPage/AccountsPage missing search | Low | P2P18 not applied to these two pages |
 | TD-09 | Supabase dependency unused | Low | `@supabase/supabase-js` in `package.json` but never imported |
 | TD-10 | No cascade delete | Low | Deleting a business doesn't delete children |
+| TD-11 | Single 509 kB JS bundle | Low | No code splitting; Vite warns on build |
 
 ## Current Test Status
 
@@ -93,9 +111,11 @@ No confirmed bugs. All 507 tests pass, TypeScript passes, production build passe
 
 | Field | Value |
 |-------|-------|
-| Is git repo | No |
-| Branch | N/A |
-| Latest commit | N/A |
-| Working tree | N/A |
+| Is git repo | Yes |
+| Remote | `https://github.com/ZinLinn254995/biz-flow` |
+| Default branch | `main` |
+| Source of truth | The GitHub repository |
+| CI | `.github/workflows/ai-verify.yml` (typecheck, tests, build, import check, AI state check) |
 
-**Note:** This project is not currently a git repository. GitHub is not yet the source of truth. The AI handoff documentation system is being created to establish this workflow.
+GitHub is the source of truth. Every completed task must push application code, tests and
+updated `docs/ai/*` state together in one commit. See `docs/ai/GITHUB_SYNC.md`.

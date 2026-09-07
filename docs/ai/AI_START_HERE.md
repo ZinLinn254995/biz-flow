@@ -24,6 +24,7 @@
 6. `docs/ai/ROADMAP.md` — roadmap
 7. `docs/ai/KNOWN_ISSUES.md` — known issues
 8. `docs/ai/ARCHITECTURE.md` — architecture reference
+9. `docs/ai/GITHUB_SYNC.md` — commit and synchronization protocol
 
 Then inspect the actual source code before making changes.
 
@@ -32,10 +33,11 @@ Then inspect the actual source code before making changes.
 1. **Read** the files above
 2. **Verify** the documented state against actual source code
 3. **Implement** only the task in `NEXT_TASK_PROMPT.md`
-4. **Test** — run `npm run typecheck && npm run test && npm run build`
+4. **Test** — run `npm run verify` (typecheck + tests + build + import check + AI state check)
 5. **Update** handoff documentation under `docs/ai/`
 6. **Generate** the next task in `NEXT_TASK_PROMPT.md`
-7. **Produce** a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+7. **Push** code and state together to GitHub — see `docs/ai/GITHUB_SYNC.md`
+8. **Produce** a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
 
 ## Critical Rules
 
@@ -59,3 +61,20 @@ Then inspect the actual source code before making changes.
 - All existing pages and tests — PROTECTED
 
 See `AGENTS.md` section H for the full list.
+
+## Task Status Vocabulary
+
+`docs/ai/AI_STATE.json` uses exactly these statuses:
+`PLANNED`, `IN_PROGRESS`, `BLOCKED`, `PARTIAL`, `COMPLETE`, `FAILED`.
+
+Never record `COMPLETE` unless `npm run verify` actually passed.
+
+## If the Previous AI Stopped Halfway
+
+Check `AI_STATE.json` -> `currentTask`:
+
+- `null` -> nothing in flight; start `nextTask`.
+- `IN_PROGRESS` / `PARTIAL` -> read `currentTask.filesTouched`, `currentTask.completedWork`,
+  `currentTask.remainingWork`, run `npm run verify` to see what actually passes, then either
+  finish the work or revert it (`git checkout -- <files>`) and start clean. Say which you chose.
+- `BLOCKED` / `FAILED` -> read `currentTask.blockedReason` before touching anything.

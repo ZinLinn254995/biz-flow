@@ -107,6 +107,7 @@ All AI continuation documentation is in `docs/ai/`:
 | `HANDOFF_TEMPLATE.md` | Template for final handoff reports |
 | `CHANGELOG.md` | Historical changelog |
 | `QUALITY_GATE.md` | Mandatory quality checklist |
+| `GITHUB_SYNC.md` | GitHub source-of-truth, commit and synchronization protocol |
 
 ## F. Mandatory Reading Order
 
@@ -325,3 +326,58 @@ A task is COMPLETE only when ALL of the following are true:
 10. `docs/ai/QUALITY_GATE.md` checklist completed
 
 If any check fails, the task is NOT complete. Fix the issue before declaring completion.
+
+## T. Task Status Vocabulary (machine-readable)
+
+Every task recorded in `docs/ai/AI_STATE.json` uses exactly one of these statuses:
+
+| Status | Meaning | Allowed to hand off? |
+|--------|---------|----------------------|
+| `PLANNED` | Defined but not started | Yes |
+| `IN_PROGRESS` | Actively being implemented, working tree may be inconsistent | Yes, but must be recorded in `AI_STATE.json.currentTask` with `filesTouched` |
+| `BLOCKED` | Cannot proceed; reason recorded | Yes, with the blocker documented |
+| `PARTIAL` | Some acceptance criteria met, others not; verification does not fully pass | Yes, with remaining work listed |
+| `COMPLETE` | All acceptance criteria met AND `npm run verify` passed | Yes |
+| `FAILED` | Attempted and abandoned; work reverted or left broken with explanation | Yes, with recovery instructions |
+
+**A task may only be marked `COMPLETE` when `npm run verify` actually exited 0 and the run is recorded in `AI_STATE.json` -> `quality.verificationRun`.** Marking unverified work COMPLETE is the single most damaging thing a Coding AI can do to this project.
+
+## U. One-Command Verification
+
+```bash
+npm run verify
+```
+
+Runs, in order:
+
+| Step | Command | Checks |
+|------|---------|--------|
+| 1 | `npm run typecheck` | TypeScript |
+| 2 | `npm run test` | Vitest suite |
+| 3 | `npm run build` | Production build |
+| 4 | `npm run verify:imports` | Every relative import in `src/` resolves (catches dangling imports after deletions) |
+| 5 | `npm run verify:ai` | `AI_STATE.json` is valid, complete, uses legal statuses, references only existing files, and agrees with `NEXT_TASK_PROMPT.md`, `AI_HANDOFF.md` and `CURRENT_STATE.md` |
+
+The same five steps run in CI on every push via `.github/workflows/ai-verify.yml`.
+The workflow is verification only — it never modifies source and never generates code.
+
+## V. GitHub Source of Truth
+
+The repository `https://github.com/ZinLinn254995/biz-flow` (branch `main`) is the
+only source of truth for project state. Chat transcripts are not.
+
+A handoff is complete only when code, tests, and updated `docs/ai/*` state are
+pushed together in one commit. Read `docs/ai/GITHUB_SYNC.md` before committing.
+
+If your environment cannot push to GitHub, say so explicitly and list every
+changed file so the human can commit. Never claim a push happened when it did not.
+
+## W. Same-Chat Continuation
+
+If the human simply says "continue", do not restart the project and do not ask for
+an explanation. Instead:
+
+1. Read `docs/ai/AI_STATE.json`.
+2. If `currentTask` is not null, resume it from `currentTask.remainingWork`.
+3. If `currentTask` is null, start `nextTask` using `docs/ai/NEXT_TASK_PROMPT.md`.
+4. Verify the documented state against the actual source before writing code.

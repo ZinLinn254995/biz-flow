@@ -154,12 +154,23 @@ Run verification after implementation:
    ```bash
    npm run test
    ```
+   Or run everything in one command:
+   ```bash
+   npm run verify
+   ```
 5. **Architecture constraint tests:**
    ```bash
    npx vitest run src/test/hooks/*UiConstraints.test.ts src/test/hooks/hookConstraints.test.ts src/test/hooks/serviceConstraints.test.ts
    ```
-6. **Dangling imports check:** Verify no imports reference deleted or renamed files
+6. **Dangling imports check:**
+   ```bash
+   npm run verify:imports
+   ```
 7. **Routes check:** Verify all routes in `AppRoutes.tsx` resolve to existing pages
+8. **AI state / documentation consistency:**
+   ```bash
+   npm run verify:ai
+   ```
 
 All must pass before declaring the task complete. Complete the `docs/ai/QUALITY_GATE.md` checklist.
 
@@ -176,6 +187,7 @@ Update the AI handoff documentation after verification passes:
 5. `docs/ai/CHANGELOG.md` — Append new milestone entry (do not rewrite history)
 6. `docs/ai/KNOWN_ISSUES.md` — Mark resolved issues, add any new issues discovered
 7. `docs/ai/ROADMAP.md` — Move completed task to "Completed", update "Next" section
+8. Re-run `npm run verify:ai` — it fails if the state and the markdown documents disagree
 
 **The AI must generate the next task automatically.** Do NOT leave "TODO: decide next task" or "Ask ChatGPT what to do next." That is forbidden.
 
@@ -208,6 +220,35 @@ This report is what the next AI agent will read. Make it accurate and complete.
 
 ---
 
+## PHASE 10 — SYNCHRONIZE TO GITHUB
+
+The next Coding AI enters through the GitHub repository, not through a chat log.
+After Phase 9, follow `docs/ai/GITHUB_SYNC.md`:
+
+1. `npm run verify` must pass.
+2. Commit code, tests and updated `docs/ai/*` together in one commit.
+3. Push to `main` and confirm the push landed (`git log --oneline -1`, `git status -sb`).
+4. Record the sync in `AI_STATE.json` -> `gitState.lastSyncedTask` / `lastSyncedDate`.
+5. If your environment cannot push, say so explicitly and list every changed file.
+   Never claim a sync that did not happen.
+
+---
+
+## TASK STATUS VOCABULARY
+
+| Status | Meaning | Allowed to hand off? |
+|--------|---------|----------------------|
+| `PLANNED` | Defined but not started | Yes |
+| `IN_PROGRESS` | Actively being implemented, working tree may be inconsistent | Yes, but must be recorded in `AI_STATE.json.currentTask` with `filesTouched` |
+| `BLOCKED` | Cannot proceed; reason recorded | Yes, with the blocker documented |
+| `PARTIAL` | Some acceptance criteria met, others not; verification does not fully pass | Yes, with remaining work listed |
+| `COMPLETE` | All acceptance criteria met AND `npm run verify` passed | Yes |
+| `FAILED` | Attempted and abandoned; work reverted or left broken with explanation | Yes, with recovery instructions |
+
+**A task may only be marked `COMPLETE` when `npm run verify` actually exited 0 and the run is recorded in `AI_STATE.json` -> `quality.verificationRun`.** Marking unverified work COMPLETE is the single most damaging thing a Coding AI can do to this project.
+
+---
+
 ## FAILURE RECOVERY
 
 If implementation fails:
@@ -218,6 +259,31 @@ If implementation fails:
 4. Fix the implementation.
 5. Re-run verification: `npm run typecheck && npm run test && npm run build`.
 6. Only then mark the task complete.
+
+### Recording an interrupted task
+
+If you stop mid-task (context exhausted, blocked, or failing), write an explicit
+`currentTask` object into `AI_STATE.json` before finishing:
+
+```json
+"currentTask": {
+  "id": "P2P19",
+  "name": "Stock Operation Atomicity",
+  "status": "PARTIAL",
+  "startedDate": "YYYY-MM-DD",
+  "filesTouched": ["src/services/sales/SalesService.ts"],
+  "completedWork": ["createSale wrapped in db.transaction"],
+  "remainingWork": ["updateSale and deleteSale still use manual rollback"],
+  "verification": { "typecheck": "PASS", "tests": "FAIL", "build": "not run" },
+  "blockedReason": null,
+  "recommendation": "continue"
+}
+```
+
+`recommendation` is either `continue` (the partial work is sound) or `revert`
+(discard with `git checkout -- <files>` and restart the task cleanly).
+
+The next AI must run `npm run verify` first and trust its output over these notes.
 
 If the task cannot safely be completed:
 - Mark it **BLOCKED** in `AI_STATE.json` and `AI_HANDOFF.md`.

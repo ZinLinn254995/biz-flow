@@ -14,7 +14,13 @@ P2P18 — Search/Filter/Sort: Added search, filter, sort, and date-range control
 
 ## CURRENT TASK
 
-None in progress. The repository is ready for the next task.
+`AI_STATE.json` -> `currentTask` is `null`. Nothing is in flight; the working tree is
+consistent and fully verified. Start the next task.
+
+## TASK STATUS VOCABULARY
+
+`PLANNED`, `IN_PROGRESS`, `BLOCKED`, `PARTIAL`, `COMPLETE`, `FAILED`.
+Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
@@ -95,7 +101,7 @@ PASS — `vite build` exits 0. Verified 2026-09-07.
 3. **Account balances static** (ISSUE-003) — transactions don't update balances
 4. **No budget tracking** (ISSUE-004) — limits stored but no actual-vs-limit computation
 5. **Sale total not validated** (ISSUE-005) — totalAmount not checked against sum of lineTotal
-6. **Not a git repository** — GitHub is not yet the source of truth
+6. **Single 509 kB JS bundle** (ISSUE-011) — no code splitting yet (low severity)
 
 ## KNOWN ISSUES
 
@@ -113,6 +119,7 @@ See `docs/ai/KNOWN_ISSUES.md` for the full register. Summary:
 | ISSUE-008 | Categories/Accounts missing search | Low | Open — P2P21 |
 | ISSUE-009 | Supabase dependency unused | Low | Open |
 | ISSUE-010 | No cascade delete | Low | Open |
+| ISSUE-011 | Single 509 kB bundle, no code splitting | Low | Open |
 
 ## ARCHITECTURE CONSTRAINTS
 
@@ -166,9 +173,54 @@ The next Coding AI should:
 3. Read `docs/ai/NEXT_TASK_PROMPT.md` for exact task instructions
 4. Verify the current state against actual source code
 5. Implement P2P19 (Stock Operation Atomicity) + P2P20 (Dead Code Cleanup)
-6. Run `npm run typecheck && npm run test && npm run build`
+6. Run `npm run verify` (typecheck + tests + build + import check + AI state check)
 7. Update all handoff documentation under `docs/ai/`
 8. Generate the next task (P2P21+P2P22) in `NEXT_TASK_PROMPT.md`
-9. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+9. Commit code and updated state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`
+10. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
 
 **Do not ask a human or ChatGPT for the next task.** The repository contains everything needed to continue autonomously.
+
+---
+
+## LAST SESSION — AI CONTINUATION SYSTEM UPGRADE (2026-09-07)
+
+**Type:** infrastructure and documentation only. **No application source file was changed.**
+
+### Verified baseline (clean `npm ci` install, commit `8c64406`)
+
+| Check | Result |
+|-------|--------|
+| `npm run typecheck` | PASS |
+| `npm run test` | PASS — 45 files / 507 tests |
+| `npm run build` | PASS — 509.77 kB bundle |
+| `npm run verify:imports` | PASS |
+| `npm run verify:ai` | PASS |
+
+Documentation was found to be accurate: P2P18 is genuinely complete and P2P19 is
+genuinely **not** started (`SalesService.ts` contains no `db.transaction`, and all 8
+dead-code files still exist).
+
+### Files created
+
+- `scripts/verify-ai-state.mjs` — validates `AI_STATE.json` structure, statuses, referenced paths, and agreement with `NEXT_TASK_PROMPT.md` / `AI_HANDOFF.md` / `CURRENT_STATE.md`
+- `scripts/check-dangling-imports.mjs` — resolves every relative import under `src/`
+- `.github/workflows/ai-verify.yml` — CI verification gate (verification only; never writes code)
+- `docs/ai/GITHUB_SYNC.md` — GitHub source-of-truth and commit protocol
+
+### Files modified
+
+`package.json` (added `verify`, `verify:ai`, `verify:imports` scripts), `AGENTS.md`,
+`docs/ai/AI_STATE.json` (schema 2.0.0), `AI_START_HERE.md`, `AI_CONTINUATION_PROTOCOL.md`,
+`CURRENT_STATE.md`, `QUALITY_GATE.md`, `CHANGELOG.md`, `NEXT_TASK_PROMPT.md`, this file.
+
+### What changed conceptually
+
+1. Task statuses are now an enforced enum (`PLANNED` ... `FAILED`) instead of prose.
+2. `COMPLETE` is machine-checked against a recorded verification run.
+3. Interrupted work is recorded in `AI_STATE.json` -> `currentTask` with
+   `filesTouched` / `completedWork` / `remainingWork` / `recommendation`, so a new AI can
+   resume or revert deliberately.
+4. `AI_STATE.json` records `lastTaskFilesChanged`, `risks`, real `gitState`, and
+   `nextAIInstructions`.
+5. Handoff consistency is verified by CI, not by trust.

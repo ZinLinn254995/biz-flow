@@ -25,18 +25,21 @@
 - [ ] **Handoff generated** — Final handoff report produced using `docs/ai/HANDOFF_TEMPLATE.md`
 - [ ] **Next task identified** — Next recommended task documented in `NEXT_TASK_PROMPT.md` (not a placeholder)
 - [ ] **AI_STATE.json updated** — Machine-readable state reflects the new milestone and next task
+- [ ] **AI state validated** — `npm run verify:ai` exits 0 (valid JSON, legal statuses, referenced files exist, docs agree)
+- [ ] **Import check passes** — `npm run verify:imports` exits 0
+- [ ] **Synchronized to GitHub** — code and state pushed together, or the human is told explicitly that nothing was pushed (see `docs/ai/GITHUB_SYNC.md`)
 
 ---
 
 ## Verification Commands
 
 ```bash
-npm run typecheck
-npm run test
-npm run build
+npm run verify
 ```
 
-All three must exit with code 0.
+This runs `typecheck`, `test`, `build`, `verify:imports` and `verify:ai` in order.
+All five must exit with code 0. They are the same checks CI runs
+(`.github/workflows/ai-verify.yml`), so a green local run predicts a green CI run.
 
 ## Architecture Constraint Tests
 
@@ -53,7 +56,12 @@ After deleting files, verify no imports reference them:
 grep -r "deleted-file-name" src/ --include="*.ts" --include="*.tsx"
 ```
 
-If any results are found, fix the imports before declaring completion.
+If any results are found, fix the imports before declaring completion. The
+automated equivalent, which walks every relative import in `src/`, is:
+
+```bash
+npm run verify:imports
+```
 
 ---
 
@@ -74,8 +82,12 @@ If you discover a discrepancy between documentation and code:
 
 ## Completion Declaration
 
-A task is COMPLETE only when ALL checks above pass. If any check fails, the task is:
-- **INCOMPLETE** — if the AI is still working on it
-- **BLOCKED** — if the AI cannot fix the failure
+A task is COMPLETE only when ALL checks above pass. If any check fails, record one of
+these statuses in `AI_STATE.json` instead of `COMPLETE`:
+
+- **IN_PROGRESS** — still being worked on
+- **PARTIAL** — some acceptance criteria met, verification not fully green
+- **BLOCKED** — cannot proceed; blocker documented
+- **FAILED** — attempted and abandoned; recovery instructions documented
 
 Never declare a task COMPLETE with failing checks.

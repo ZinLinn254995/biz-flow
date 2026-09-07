@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify:ai": "node scripts/verify-ai-state.mjs",
+    "verify:imports": "node scripts/check-dangling-imports.mjs",
+    "verify": "npm run typecheck && npm run test && npm run build && npm run verify:imports && npm run verify:ai"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

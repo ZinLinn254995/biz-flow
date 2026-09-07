@@ -130,12 +130,15 @@ None. P2P19 and P2P20 are independent of each other and all other tasks.
 ## VERIFICATION COMMANDS
 
 ```bash
-npm run typecheck
-npm run test
-npm run build
+npm run verify
 ```
 
-All three must exit with code 0 before the task is considered complete.
+This runs, in order: `npm run typecheck`, `npm run test`, `npm run build`,
+`npm run verify:imports` (catches imports of the 8 deleted files) and
+`npm run verify:ai` (validates `AI_STATE.json` and the handoff documents).
+
+All five must exit with code 0 before the task may be recorded as `COMPLETE`.
+The same five checks run in CI on every push (`.github/workflows/ai-verify.yml`).
 
 ## DOCUMENTATION UPDATE REQUIREMENTS
 
@@ -149,6 +152,15 @@ After completing the task, update:
 6. `docs/ai/KNOWN_ISSUES.md` — Mark ISSUE-001, ISSUE-002, ISSUE-006, ISSUE-007 as resolved
 7. `docs/ai/ROADMAP.md` — Move P2P19 and P2P20 to completed, update next section
 8. Complete the `docs/ai/QUALITY_GATE.md` checklist
+9. Set `lastTaskFilesChanged` in `AI_STATE.json` (created / modified / deleted) and record the verification run in `quality.verificationRun`
+10. Commit code and state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`
+
+## IF YOU CANNOT FINISH
+
+Do not mark the task `COMPLETE`. Write a `currentTask` object into `AI_STATE.json` with
+status `IN_PROGRESS`, `PARTIAL`, `BLOCKED` or `FAILED`, listing `filesTouched`,
+`completedWork`, `remainingWork` and a `recommendation` of `continue` or `revert`.
+See the FAILURE RECOVERY section of `docs/ai/AI_CONTINUATION_PROTOCOL.md`.
 
 ## NEXT HANDOFF REQUIREMENTS
 
