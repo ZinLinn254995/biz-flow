@@ -9,6 +9,8 @@ import {
   ChartNoAxesCombined,
   Settings,
   Tag,
+  Wallet,
+  Target,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -50,6 +52,8 @@ export const navigationGroups: NavigationGroup[] = [
     label: 'Configuration',
     items: [
       { label: 'Categories', path: '/categories', icon: Tag },
+      { label: 'Accounts', path: '/accounts', icon: Wallet },
+      { label: 'Budgets', path: '/budgets', icon: Target },
     ],
   },
   {

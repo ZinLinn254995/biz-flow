@@ -199,3 +199,32 @@ IndexedDB
 - **No UI changes:** this phase establishes the integration
   boundary only. The Dashboard and all pages remain unchanged
   with their existing empty-state UI.
+
+## Account & Budget Management UI (P2P14)
+
+Account and Budget management pages were added, completing the
+configuration-level CRUD surface alongside Categories.
+
+- **Accounts page** (`/accounts`) provides full CRUD for liquid-asset
+  accounts (cash, bank, wallet, other). The form captures name, type,
+  initial balance with currency, and optional institution. Money is
+  converted from decimal input to integer `amountMinor` at the form
+  boundary, preserving the existing `Money` architecture.
+- **Budgets page** (`/budgets`) provides full CRUD for per-category
+  spending limits. The form includes a category selector (populated via
+  `useCategories`), budget limit with currency, period (weekly/monthly/
+  quarterly/yearly), start/end dates, and optional notes. Budget cards
+  display the category name, period badge, limit, and date range.
+- **Hook-based data access:** both pages communicate exclusively through
+  existing hooks (`useAccounts`, `useBudgets`, `useCategories` and their
+  mutation counterparts). No UI component imports services, repositories,
+  Dexie, or the database.
+- **Route additions:** `/accounts` and `/budgets` were registered in the
+  existing router. A "Configuration" navigation group groups Categories,
+  Accounts, and Budgets.
+- **Testing:** integration tests (`accountPage.test.tsx`,
+  `budgetPage.test.tsx`) cover loading, empty, error, retry, CRUD flows,
+  validation, service errors, refresh after mutations, category
+  integration, and escape-to-close. Architectural constraint tests
+  (`accountUiConstraints.test.ts`, `budgetUiConstraints.test.ts`)
+  verify no imports of Dexie, repositories, services, or network APIs.

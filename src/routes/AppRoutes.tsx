@@ -8,6 +8,8 @@ import CustomersPage from '@/pages/CustomersPage';
 import BusinessExpensesPage from '@/pages/BusinessExpensesPage';
 import PersonalFinancePage from '@/pages/PersonalFinancePage';
 import CategoriesPage from '@/pages/CategoriesPage';
+import AccountsPage from '@/pages/AccountsPage';
+import BudgetsPage from '@/pages/BudgetsPage';
 import AnalyticsPage from '@/pages/AnalyticsPage';
 import SettingsPage from '@/pages/SettingsPage';
 import NotFoundPage from '@/pages/NotFoundPage';
@@ -25,6 +27,8 @@ function AppRoutes() {
         <Route path="/business-expenses" element={<BusinessExpensesPage />} />
         <Route path="/personal" element={<PersonalFinancePage />} />
         <Route path="/categories" element={<CategoriesPage />} />
+        <Route path="/accounts" element={<AccountsPage />} />
+        <Route path="/budgets" element={<BudgetsPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
