@@ -12,3 +12,14 @@ export const salesTransactionRunner: TransactionRunner = {
     return db.transaction('rw', [db.sales, db.inventoryItems], work);
   },
 };
+
+/** Covers account-linked income and expense writes atomically. */
+export const financeTransactionRunner: TransactionRunner = {
+  run<T>(work: () => Promise<T>): Promise<T> {
+    return db.transaction(
+      'rw',
+      [db.accounts, db.businessExpenses, db.personalExpenses, db.personalIncomes],
+      work,
+    );
+  },
+};

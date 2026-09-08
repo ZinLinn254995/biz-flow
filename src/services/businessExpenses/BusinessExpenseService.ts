@@ -1,10 +1,15 @@
 import type { BusinessExpenseRepository } from '@/types/repositories/businessExpenseRepository';
 import type { BusinessExpense } from '@/types/domain/businessExpense';
 import type { EntityId } from '@/types/common/base';
-import { requireNonEmptyString, validateMoney, trimToNull } from '@/services/common';
+import { requireNonEmptyString, validateMoney, trimToNull, directTransactionRunner, type TransactionRunner } from '@/services/common';
+import { AccountService } from '@/services/accounts/AccountService';
 
 export class BusinessExpenseService {
-  constructor(private readonly repository: BusinessExpenseRepository) {}
+  constructor(
+    private readonly repository: BusinessExpenseRepository,
+    private readonly accountService?: AccountService,
+    private readonly transactionRunner: TransactionRunner = directTransactionRunner,
+  ) {}
 
   async getBusinessExpenseById(id: EntityId): Promise<BusinessExpense | null> {
     return this.repository.getById(id);
@@ -33,7 +38,16 @@ export class BusinessExpenseService {
     validateMoney(input.amount, 'amount');
     const notes = trimToNull(input.notes) ?? undefined;
 
-    return this.repository.create({ ...input, title, date, notes });
+    return this.transactionRunner.run(async () => {
+      const expense = await this.repository.create({ ...input, title, date, notes });
+      if (expense.accountId) {
+        await this.accountService?.adjustBalance(expense.accountId, {
+          amountMinor: -expense.amount.amountMinor,
+          currency: expense.amount.currency,
+        });
+      }
+      return expense;
+    });
   }
 
   async updateBusinessExpense(id: EntityId, changes: Partial<BusinessExpense>): Promise<BusinessExpense> {
@@ -46,10 +60,32 @@ export class BusinessExpenseService {
     if (changes.amount !== undefined) {
       validateMoney(changes.amount, 'amount');
     }
-    return this.repository.update(id, changes);
+    return this.transactionRunner.run(async () => {
+      const current = await this.repository.getById(id);
+      const updated = await this.repository.update(id, changes);
+      if (current?.accountId) {
+        await this.accountService?.adjustBalance(current.accountId, {
+          amountMinor: current.amount.amountMinor,
+          currency: current.amount.currency,
+        });
+      }
+      if (updated.accountId) {
+        await this.accountService?.adjustBalance(updated.accountId, {
+          amountMinor: -updated.amount.amountMinor,
+          currency: updated.amount.currency,
+        });
+      }
+      return updated;
+    });
   }
 
   async deleteBusinessExpense(id: EntityId): Promise<void> {
-    return this.repository.remove(id);
+    return this.transactionRunner.run(async () => {
+      const current = await this.repository.getById(id);
+      if (current?.accountId) {
+        await this.accountService?.adjustBalance(current.accountId, current.amount);
+      }
+      await this.repository.remove(id);
+    });
   }
 }

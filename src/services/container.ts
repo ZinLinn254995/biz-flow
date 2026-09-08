@@ -21,6 +21,7 @@ import {
   budgetRepository,
   accountRepository,
   salesTransactionRunner,
+  financeTransactionRunner,
 } from '@/repositories';
 
 /**
@@ -48,9 +49,9 @@ export function createServiceContainer(): ServiceContainer {
     inventoryService: new InventoryService(inventoryRepository),
     salesService: new SalesService(saleRepository, inventoryRepository, salesTransactionRunner),
     customerService: new CustomerService(customerRepository),
-    businessExpenseService: new BusinessExpenseService(businessExpenseRepository),
-    personalIncomeService: new PersonalIncomeService(personalIncomeRepository),
-    personalExpenseService: new PersonalExpenseService(personalExpenseRepository),
+    businessExpenseService: new BusinessExpenseService(businessExpenseRepository, new AccountService(accountRepository), financeTransactionRunner),
+    personalIncomeService: new PersonalIncomeService(personalIncomeRepository, new AccountService(accountRepository), financeTransactionRunner),
+    personalExpenseService: new PersonalExpenseService(personalExpenseRepository, new AccountService(accountRepository), financeTransactionRunner),
     categoryService: new CategoryService(categoryRepository),
     budgetService: new BudgetService(budgetRepository),
     accountService: new AccountService(accountRepository),
