@@ -9,8 +9,8 @@
 |-------|-------|
 | Current milestone | P2P25 |
 | Status | COMPLETE |
-| Next milestone | P2P26 (Settings Page) |
-| Implementation status | All planned tasks through P2P25 are complete |
+| Next milestone | P2P28 (future roadmap task) |
+| Implementation status | P2P1-P2P27 are complete; offline JSON data export/import is available from Settings |
 
 ## Completed Tasks
 

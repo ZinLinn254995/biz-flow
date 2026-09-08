@@ -34,7 +34,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P27 (Data Export and Import) — add validated JSON backup and restore for the offline-first dataset.
+P2P28 — Select the next roadmap task after completing P2P27 data export and import.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 

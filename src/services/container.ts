@@ -20,9 +20,11 @@ import {
   categoryRepository,
   budgetRepository,
   accountRepository,
+  dataBackupRepository,
   salesTransactionRunner,
   financeTransactionRunner,
 } from '@/repositories';
+import { DataBackupService } from '@/services/dataBackup/DataBackupService';
 
 /**
  * Bundles all application services so they can be provided to the
@@ -41,6 +43,7 @@ export interface ServiceContainer {
   categoryService: CategoryService;
   budgetService: BudgetService;
   accountService: AccountService;
+  dataBackupService?: DataBackupService;
 }
 
 export function createServiceContainer(): ServiceContainer {
@@ -55,6 +58,7 @@ export function createServiceContainer(): ServiceContainer {
     categoryService: new CategoryService(categoryRepository),
     budgetService: new BudgetService(budgetRepository, businessExpenseRepository, personalExpenseRepository),
     accountService: new AccountService(accountRepository),
+    dataBackupService: new DataBackupService(dataBackupRepository),
   };
 }
 
