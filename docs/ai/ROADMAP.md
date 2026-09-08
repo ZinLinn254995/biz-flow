@@ -1,5 +1,7 @@
 # BizFlow — Development Roadmap
 
+> **Development paused:** All planned milestones are complete. Development is paused pending a new roadmap phase for account-based online/offline sync; do not pick a next task from old low-priority issues without new instructions.
+
 ## Completed Tasks
 
 ### P2P1 — Types & Contracts

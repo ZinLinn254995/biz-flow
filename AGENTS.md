@@ -278,6 +278,7 @@ The AI must generate the next task automatically. Do NOT leave "TODO: decide nex
 6. Explain any deviation from the roadmap
 7. If `NEXT_TASK_PROMPT.md` explicitly defines a valid next task, follow it
 8. If it is stale or contradictory, inspect the actual repository and recalculate the correct next task
+9. Before starting any task, check `docs/ai/AI_STATE.json` for a `developmentStatus` field. If `developmentStatus` is `PAUSED_AWAITING_INSTRUCTIONS`, the AI must NOT invent, select, or start any task on its own — including tasks from `KNOWN_ISSUES.md`, `ROADMAP.md`, or its own suggestions — even if asked to 'continue'. In this state, the AI must reply in the chat explaining that the project is paused awaiting new instructions from the project owner, and ask what they'd like to work on next. This overrides the normal 'continue' behavior in Section W until `developmentStatus` is changed back to `active` (or removed) by an explicit human instruction referencing a new plan.
 
 ## Q. What NOT to Do
 

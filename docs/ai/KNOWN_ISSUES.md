@@ -98,16 +98,16 @@ None.
 - **Dependencies:** None
 - **Status:** RESOLVED in P2P21 (2026-09-07) — both pages now have search, filter, sort and clear-filters controls
 
-### ISSUE-009: Supabase Dependency Unused
+### ISSUE-009: Supabase Dependency Under Evaluation
 - **ID:** ISSUE-009
-- **Title:** `@supabase/supabase-js` in package.json but never imported
+- **Title:** `@supabase/supabase-js` is present while the sync architecture is being evaluated
 - **Severity:** Low
-- **Description:** The Supabase JS client is listed as a dependency and credentials exist in `.env`, but no application code imports or uses it.
-- **Impact:** Unused dependency increases bundle size slightly.
-- **Possible solution:** Remove from package.json if not planning cloud sync, or keep for future use.
+- **Description:** The Supabase JS client is listed as a dependency, but no application code currently imports or uses it. Supabase is under evaluation for the planned account-based online/offline sync feature, so it is not confirmed unused.
+- **Impact:** The dependency may increase bundle size slightly while the future sync design is being decided.
+- **Possible solution:** Reassess the dependency after the sync architecture is defined; remove it only if the approved design does not use Supabase.
 - **Affected files:** `package.json`
-- **Dependencies:** None
-- **Status:** Open — informational
+- **Dependencies:** Future account-based online/offline sync plan
+- **Status:** Open — under evaluation for planned sync feature
 
 ### ISSUE-010: No Cascade Delete
 - **ID:** ISSUE-010
