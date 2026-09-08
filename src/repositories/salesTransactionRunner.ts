@@ -1,5 +1,6 @@
 import { db } from '@/db';
 import type { TransactionRunner } from '@/services/common/transaction';
+import type { BizFlowDB } from '@/db/database';
 
 /**
  * Dexie-backed transaction runner covering the tables touched by sale
@@ -14,6 +15,20 @@ export const salesTransactionRunner: TransactionRunner = {
 };
 
 /** Covers account-linked income and expense writes atomically. */
+export function createBusinessCascadeTransactionRunner(database: BizFlowDB): TransactionRunner {
+  return {
+    run<T>(work: () => Promise<T>): Promise<T> {
+      return database.transaction(
+        'rw',
+        [database.businesses, database.inventoryItems, database.sales, database.customers, database.businessExpenses],
+        work,
+      );
+    },
+  };
+}
+
+export const businessCascadeTransactionRunner = createBusinessCascadeTransactionRunner(db);
+
 export const financeTransactionRunner: TransactionRunner = {
   run<T>(work: () => Promise<T>): Promise<T> {
     return db.transaction(

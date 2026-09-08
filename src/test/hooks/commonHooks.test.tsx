@@ -18,6 +18,7 @@ function createMockBusinessRepo(): BusinessRepository {
     create: vi.fn(),
     update: vi.fn(),
     remove: vi.fn(),
+    removeCascade: vi.fn(),
   };
 }
 

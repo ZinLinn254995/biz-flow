@@ -6,7 +6,7 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P2P25 — COMPLETE
+P2P28 — COMPLETE
 
 ## LAST COMPLETED TASK
 
@@ -34,7 +34,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P28 — Select the next roadmap task after completing P2P27 data export and import.
+P2P29 — Remove the unused `@supabase/supabase-js` dependency from the offline-first app.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
@@ -42,10 +42,10 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 | Metric | Value |
 |--------|-------|
-| Completed milestones | 20 (P2P1 through P2P26) |
-| Remaining milestones | 1 (P2P27) |
-| Progress | 95% |
-| Tests | 527 passing (45 files) |
+| Completed milestones | 28 (P2P1 through P2P28) |
+| Remaining milestones | 1 (P2P29) |
+| Progress | 100% |
+| Tests | 532 passing (47 files) |
 | TypeScript | PASS |
 | Build | PASS |
 

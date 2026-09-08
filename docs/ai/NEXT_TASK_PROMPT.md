@@ -2,7 +2,7 @@
 
 ## NEXT TASK
 
-P2P28 — Business Cascade Delete
+P2P29 — Remove unused Supabase dependency
 
 > This file is the single source of truth for the next task. Read `AGENTS.md` and `docs/ai/AI_STATE.json` first, then implement exactly this task.
 

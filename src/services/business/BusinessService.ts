@@ -40,6 +40,6 @@ export class BusinessService {
   }
 
   async deleteBusiness(id: EntityId): Promise<void> {
-    return this.repository.remove(id);
+    return this.repository.removeCascade(id);
   }
 }
