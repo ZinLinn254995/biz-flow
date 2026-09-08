@@ -1,6 +1,6 @@
 # BizFlow — Development Roadmap
 
-> **Development paused:** All planned milestones are complete. Development is paused pending a new roadmap phase for account-based online/offline sync; do not pick a next task from old low-priority issues without new instructions.
+> **Development paused:** All planned milestones are complete. Development is paused pending a new roadmap phase for account-based online/offline sync; do not pick a next task from old low-priority issues or invent Phase 3 features without new instructions. Phase 3 is READY / awaiting user requirements; its implementation has not started. Future direction only: Offline-First + User Account + Cloud Sync + Multi-Device App; future cloud readiness is not current cloud implementation.
 
 ## Completed Tasks
 

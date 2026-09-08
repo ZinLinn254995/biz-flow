@@ -8,11 +8,15 @@
 
 ## Current State
 
-- **Milestone:** P2P18 COMPLETE
-- **Tests:** 507 passing (45 files)
+- **Milestone:** P2P28 COMPLETE
+- **Development status:** `PAUSED_AWAITING_INSTRUCTIONS`
+- **Phase 3:** READY / awaiting explicit user requirements; implementation has not started
+- **Tests:** 532 passing (47 files)
 - **TypeScript:** PASS
 - **Build:** PASS
-- **Next task:** P2P19 + P2P20 (see `NEXT_TASK_PROMPT.md`)
+- **Next task:** None — wait for the user to define Phase 3 requirements
+
+Long-term direction is future-only: BizFlow may evolve toward an Offline-First + User Account + Cloud Sync + Multi-Device App. Future Cloud Readiness does not mean current cloud implementation; do not add accounts, authentication, cloud services, sync, or multi-device infrastructure now.
 
 ## What to Read (in order)
 

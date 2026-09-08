@@ -65,6 +65,8 @@ Document any discrepancies between documentation and implementation.
 
 ## PHASE 4 — DECIDE
 
+Before determining any task, check `docs/ai/AI_STATE.json` for `developmentStatus`. If it is `PAUSED_AWAITING_INSTRUCTIONS`, stop task selection: Phase 3 is ready but awaiting explicit user requirements, and no AI may invent, select, or start work from old roadmap items, known issues, or its own suggestions. Explain the paused state in chat and ask what the project owner would like to work on next.
+
 Determine the highest-priority safe next task.
 
 Use `docs/ai/AI_TASK_SELECTION.md` for the priority framework. In summary:

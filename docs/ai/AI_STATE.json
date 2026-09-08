@@ -2,6 +2,21 @@
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
   "pauseNote": "All planned milestones are complete. The project owner is designing a new phase for account-based sync between offline Dexie/IndexedDB data and an online backend and will provide new task definitions later. No AI should invent or start new work in the meantime.",
+  "phase3": {
+    "status": "READY_AWAITING_USER_REQUIREMENTS",
+    "implementationStarted": false,
+    "scope": "Pending explicit user-defined requirements; do not invent Phase 3 features."
+  },
+  "futureDirection": {
+    "description": "Offline-First + User Account + Cloud Sync + Multi-Device App",
+    "status": "FUTURE_DIRECTION_ONLY",
+    "cloudReadinessIsNotCurrentCloudImplementation": true,
+    "rules": [
+      "Future phases may introduce user accounts, cloud sync, and multi-device synchronization.",
+      "Do not implement accounts, authentication, cloud services, sync infrastructure, or multi-device behavior during the current paused state.",
+      "Future compatibility may be considered only when explicit Phase 3 requirements require an architectural decision."
+    ]
+  },
   "stateContract": {
     "validator": "scripts/verify-ai-state.mjs",
     "validateCommand": "npm run verify:ai",
@@ -37,13 +52,7 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": {
-    "id": "P2P29",
-    "status": "PLANNED",
-    "confidence": "high",
-    "needsHumanReview": false,
-    "lockedFileOverrideReason": "The completed P2P28 implementation extended the protected business repository contract to expose the required atomic cascade-delete operation."
-  },
+  "currentTask": null,
   "nextTask": null,
   "progress": {
     "completedMilestones": [
