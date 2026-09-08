@@ -28,29 +28,22 @@
     "verifiedDate": "2026-09-07"
   },
   "lastCompletedTask": {
-    "id": "P2P23",
-    "name": "Account Balance Updates",
+    "id": "P2P24",
+    "name": "Budget Tracking",
     "completedDate": "2026-09-08",
     "status": "COMPLETE",
     "confidence": "medium",
     "needsHumanReview": false
   },
-  "currentTask": {
-    "id": "P2P23",
-    "name": "Account Balance Updates",
-    "status": "IN_PROGRESS",
-    "confidence": "medium",
-    "needsHumanReview": false,
-    "lockedFileOverrideReason": "P2P23 explicitly requires the protected AccountService to implement account balance adjustments; no locked files were modified."
-  },
+  "currentTask": null,
   "nextTask": {
-    "id": "P2P23",
-    "name": "Account Balance Updates",
+    "id": "P2P25",
+    "name": "Analytics Page",
     "priority": "P1",
-    "complexity": "MEDIUM",
+    "complexity": "HIGH",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "With ISSUE-005 and ISSUE-008 closed, ISSUE-003 (Account.balance never changes when a transaction references accountId) is the highest remaining item and blocks accurate budget tracking in P2P24.",
+    "reason": "Budget tracking is complete; implement the remaining analytics page using the existing data hooks.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -105,25 +98,25 @@
       "results": [
         {
           "command": "npm run typecheck",
-          "result": "docs/ai/verification-logs/P2P23.log"
+          "result": "docs/ai/verification-logs/P2P24.log"
         },
         {
           "command": "npm run test",
-          "result": "docs/ai/verification-logs/P2P23.log",
+          "result": "docs/ai/verification-logs/P2P24.log",
           "detail": "45 files / 527 tests (17 new search, filter, sort and sale-total tests)"
         },
         {
           "command": "npm run build",
-          "result": "docs/ai/verification-logs/P2P23.log",
+          "result": "docs/ai/verification-logs/P2P24.log",
           "detail": "vite build, single ~515 kB chunk warning only"
         },
         {
           "command": "npm run verify:imports",
-          "result": "docs/ai/verification-logs/P2P23.log"
+          "result": "docs/ai/verification-logs/P2P24.log"
         },
         {
           "command": "npm run verify:ai",
-          "result": "docs/ai/verification-logs/P2P23.log"
+          "result": "docs/ai/verification-logs/P2P24.log"
         }
       ]
     },

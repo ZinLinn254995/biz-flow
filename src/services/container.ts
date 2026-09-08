@@ -53,7 +53,7 @@ export function createServiceContainer(): ServiceContainer {
     personalIncomeService: new PersonalIncomeService(personalIncomeRepository, new AccountService(accountRepository), financeTransactionRunner),
     personalExpenseService: new PersonalExpenseService(personalExpenseRepository, new AccountService(accountRepository), financeTransactionRunner),
     categoryService: new CategoryService(categoryRepository),
-    budgetService: new BudgetService(budgetRepository),
+    budgetService: new BudgetService(budgetRepository, businessExpenseRepository, personalExpenseRepository),
     accountService: new AccountService(accountRepository),
   };
 }

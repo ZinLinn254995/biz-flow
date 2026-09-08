@@ -1,6 +1,7 @@
 export {
   useBudgets,
   useBudget,
+  useBudgetSpending,
 } from '@/hooks/budgets/useBudgets';
 export {
   useCreateBudget,

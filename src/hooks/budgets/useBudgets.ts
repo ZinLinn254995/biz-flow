@@ -15,3 +15,8 @@ export function useBudget(id: EntityId | null) {
     [id],
   );
 }
+
+export function useBudgetSpending(budget: Budget) {
+  const { budgetService } = useServiceContainer();
+  return useAsync(() => budgetService.getSpending(budget), [budgetService, budget]);
+}

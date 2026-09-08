@@ -1,4 +1,5 @@
-import { Pencil, Trash2, Target } from 'lucide-react';
+import { Pencil, Trash2, Target, Loader2 } from 'lucide-react';
+import { useBudgetSpending } from '@/hooks/budgets';
 import type { Budget } from '@/types/domain/budget';
 
 interface BudgetCardProps {
@@ -27,6 +28,8 @@ const periodConfig: Record<string, { label: string; bg: string; text: string }> 
 
 export function BudgetCard({ budget, categoryName, onEdit, onDelete }: BudgetCardProps) {
   const period = periodConfig[budget.period] ?? { label: budget.period, bg: 'bg-gray-100', text: 'text-gray-600' };
+  const spendingQuery = useBudgetSpending(budget);
+  const spending = spendingQuery.data;
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-3">
@@ -58,6 +61,28 @@ export function BudgetCard({ budget, categoryName, onEdit, onDelete }: BudgetCar
           {budget.notes}
         </p>
       )}
+
+      <div className="space-y-2" aria-label="Budget spending progress">
+        <div className="flex items-center justify-between text-xs text-gray-600">
+          <span>Spent</span>
+          {spendingQuery.isLoading ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" aria-label="Loading spending" />
+          ) : (
+            <span>
+              {formatMoney(spending?.spent.amountMinor ?? 0, budget.limit.currency)} of {formatMoney(budget.limit.amountMinor, budget.limit.currency)}
+            </span>
+          )}
+        </div>
+        <div className="h-2 overflow-hidden rounded-full bg-gray-100" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={spending?.percentUsed ?? 0}>
+          <div className={`h-full rounded-full transition-all ${spending?.isOverLimit ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: `${spending?.percentUsed ?? 0}%` }} />
+        </div>
+        {spending && (
+          <p className={`text-xs ${spending.isOverLimit ? 'text-red-600' : 'text-gray-500'}`}>
+            {spending.isOverLimit ? 'Over budget by ' : 'Remaining '}
+            {formatMoney(Math.abs(spending.remaining.amountMinor), budget.limit.currency)}
+          </p>
+        )}
+      </div>
 
       <div className="flex items-center gap-2 pt-1">
         <button

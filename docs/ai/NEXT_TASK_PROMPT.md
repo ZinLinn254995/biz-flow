@@ -2,7 +2,7 @@
 
 ## NEXT TASK
 
-P2P23 — Account Balance Updates
+P2P25 — Analytics Page
 
 > This file is the single source of truth for the next task. A new Coding AI needs nothing else
 > from a human. Read `AGENTS.md` and `docs/ai/AI_STATE.json` first, then implement exactly this.
