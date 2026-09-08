@@ -386,7 +386,18 @@ pushed together in one commit. Read `docs/ai/GITHUB_SYNC.md` before committing.
 If your environment cannot push to GitHub, say so explicitly and list every
 changed file so the human can commit. Never claim a push happened when it did not.
 
+Whenever a milestone status changes to `COMPLETE` in `docs/ai/AI_STATE.json`,
+create the annotated git tag `milestone/<milestone-id>` on the completion commit
+and push that tag to GitHub. The tag must point to the same commit that updates
+the milestone state; never move or overwrite an existing milestone tag.
+
 ## W. Same-Chat Continuation
+
+At the start of every session, check `docs/ai/SESSION_LOCK.json` before writing
+or modifying files. If it exists and `expiresAt` is in the future, stop and report
+a session conflict instead of proceeding. A new session lock must contain
+`lockedBy`, `taskId`, `startedAt`, and `expiresAt`, with `expiresAt` exactly two
+hours after `startedAt`.
 
 If the human simply says "continue", do not restart the project and do not ask for
 an explanation. Instead:
@@ -395,6 +406,9 @@ an explanation. Instead:
 2. If `currentTask` is not null, resume it from `currentTask.remainingWork`.
 3. If `currentTask` is null, start `nextTask` using `docs/ai/NEXT_TASK_PROMPT.md`.
 4. Verify the documented state against the actual source before writing code.
+
+At session end, and on failure or an unrecoverable blocker, clear/delete
+`docs/ai/SESSION_LOCK.json` before finishing the session.
 
 ## X. Mandatory Chat Reporting Rule
 

@@ -69,6 +69,13 @@ In that case:
 
 **Never claim a push or sync happened unless it actually happened.**
 
+## Milestone tags
+
+When a milestone changes to `COMPLETE` in `docs/ai/AI_STATE.json`, create the
+annotated tag `milestone/<milestone-id>` on that same completion commit and push
+it to GitHub. Verify the tag resolves to the completion commit; milestone tags
+are immutable and must never be moved or overwritten.
+
 ## 5. Commit message convention
 
 ```
