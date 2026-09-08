@@ -382,3 +382,50 @@ an explanation. Instead:
 2. If `currentTask` is not null, resume it from `currentTask.remainingWork`.
 3. If `currentTask` is null, start `nextTask` using `docs/ai/NEXT_TASK_PROMPT.md`.
 4. Verify the documented state against the actual source before writing code.
+
+## X. Mandatory Chat Reporting Rule
+
+This reporting rule applies to every future Coding AI session, on top of (not instead of) the existing Handoff Requirements section that updates `docs/ai/*` files.
+
+### 1. Session Start Report
+
+Before writing or modifying any code in a session, the Coding AI must post a message in the chat containing:
+
+- Current milestone and task status (from `docs/ai/AI_STATE.json`)
+- A brief list of what has already been completed (from `docs/ai/CHANGELOG.md`)
+- What remains (from `docs/ai/ROADMAP.md`)
+- The exact task about to be started now, and why (from `docs/ai/NEXT_TASK_PROMPT.md`)
+
+### 2. End-of-Task Report
+
+After completing each individual task, and **before** committing or pushing to GitHub, the Coding AI must post a report in the chat using exactly this structure:
+
+```text
+## Task: <task id and name>
+
+**Objective:** <what this task was supposed to achieve>
+
+**Files changed:**
+- created: <list, or "none">
+- modified: <list>
+- deleted: <list, or "none">
+
+**What changed (before -> after):** <concrete description of the logic/behavior change, not just filenames>
+
+**Tests:** <how many tests added/changed, what they cover>
+
+**Verification results:** typecheck: <pass/fail>, test: <pass/fail>, build: <pass/fail>
+
+**Known issues resolved:** <list, or "none">
+
+**New issues found:** <list, or "none">
+
+**Next task:** <what the next task will be>
+```
+
+### 3. Rules
+
+- Do NOT commit or push to GitHub until the end-of-task report has been posted in the chat.
+- If a session completes multiple tasks, repeat the End-of-Task Report separately for EACH task — never merge tasks into one summary.
+- This applies even to small or trivial changes.
+- This chat report does not replace the file updates already required elsewhere in `AGENTS.md` — both must happen.
