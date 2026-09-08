@@ -456,3 +456,8 @@ After completing each individual task, and **before** committing or pushing to G
 - If a session completes multiple tasks, repeat the End-of-Task Report separately for EACH task — never merge tasks into one summary.
 - This applies even to small or trivial changes.
 - This chat report does not replace the file updates already required elsewhere in `AGENTS.md` — both must happen.
+- A task is not considered complete until its commit has been merged onto `main` and pushed to `origin/main`. A completed commit that only exists on a feature branch (e.g. `v0/<task-id>-<description>`) does NOT satisfy the End-of-Task Report or the Handoff Requirements in Section O. Before posting the End-of-Task Report or updating `docs/ai/AI_STATE.json` to mark a task COMPLETE, the AI must:
+  1. Merge the working branch into main with a normal (non-force) merge.
+  2. Push main to origin.
+  3. Fetch fresh from GitHub (not from local cache) and confirm main's HEAD SHA matches the commit just pushed.
+  4. Only then include that verified main HEAD SHA in the End-of-Task Report — a SHA from a feature branch must never be reported as if it were on main.
