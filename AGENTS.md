@@ -160,7 +160,10 @@ Then inspect the actual source code before making changes.
 | All completed pages | PROTECTED | Working, tested | Add features only, never break |
 | All existing tests | PROTECTED | Regression safety | Add tests, do not delete assertions |
 
-If a locked file genuinely must change for a task, the AI must explicitly explain why in the handoff report.
+  If a locked file genuinely must change for a task, the AI must explicitly explain why in the handoff report. `npm run verify:locked` enforces this list against working-tree, index, and current-commit changes; LOCKED files always fail, while PROTECTED files require a non-empty `currentTask.lockedFileOverrideReason`.
+
+  A single task must not modify more than 10 source files, excluding `docs/ai/*`. If more are naturally required, split the work into separately recorded subtasks (for example P2P23a and P2P23b) in `AI_STATE.json` and `ROADMAP.md`. This reduces the blast radius of a bad change.
+
 
 ## I. Business Rules
 
@@ -249,7 +252,9 @@ If a locked file genuinely must change for a task, the AI must explicitly explai
 
 ## O. Handoff Requirements
 
-After completing a task, the Coding AI MUST update:
+  After completing a task, the Coding AI MUST update:
+  - `docs/ai/handoffs/<task-id>-handoff.md` with the final report; this archive is append-only and must never overwrite an existing report.
+
 1. `docs/ai/AI_STATE.json` — machine-readable state (milestone, tests, next task, etc.)
 2. `docs/ai/CURRENT_STATE.md` — completed tasks, test status, technical debt
 3. `docs/ai/AI_HANDOFF.md` — milestone, status, next task, next AI instructions
@@ -257,7 +262,9 @@ After completing a task, the Coding AI MUST update:
 5. `docs/ai/CHANGELOG.md` — append new milestone entry (do not rewrite history)
 6. `docs/ai/KNOWN_ISSUES.md` — mark resolved issues, add new ones
 7. `docs/ai/ROADMAP.md` — move completed task, update next/future sections
-8. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+  8. Produce a handoff report using `docs/ai/HANDOFF_TEMPLATE.md`
+  9. Copy the final report to `docs/ai/handoffs/<task-id>-handoff.md`; archives are append-only and must never overwrite an existing report.
+
 
 The AI must generate the next task automatically. Do NOT leave "TODO: decide next task" or "Ask ChatGPT what to do next." That is forbidden.
 
@@ -323,7 +330,9 @@ A task is COMPLETE only when ALL of the following are true:
 7. No architecture constraint violations (all `*UiConstraints.test.ts` pass)
 8. All handoff documentation updated
 9. Next task defined in `NEXT_TASK_PROMPT.md` (not a placeholder)
-10. `docs/ai/QUALITY_GATE.md` checklist completed
+  10. `docs/ai/QUALITY_GATE.md` checklist completed
+  11. `npm run verify` has run end to end and `quality.verificationRun.results` references the captured stdout/stderr log in `docs/ai/verification-logs/<task-id>.log`, rather than self-reported PASS/FAIL text.
+
 
 If any check fails, the task is NOT complete. Fix the issue before declaring completion.
 
@@ -356,7 +365,11 @@ Runs, in order:
 | 2 | `npm run test` | Vitest suite |
 | 3 | `npm run build` | Production build |
 | 4 | `npm run verify:imports` | Every relative import in `src/` resolves (catches dangling imports after deletions) |
-| 5 | `npm run verify:ai` | `AI_STATE.json` is valid, complete, uses legal statuses, references only existing files, and agrees with `NEXT_TASK_PROMPT.md`, `AI_HANDOFF.md` and `CURRENT_STATE.md` |
+  | 5 | `npm run verify:locked` | Changed LOCKED/PROTECTED areas are rejected unless explicitly overridden |
+  | 6 | `npm run verify:ai` | `AI_STATE.json` is valid, complete, uses legal statuses, confidence flags, verification-log evidence, references only existing files, and agrees with `NEXT_TASK_PROMPT.md`, `AI_HANDOFF.md` and `CURRENT_STATE.md` |
+
+  Before declaring completion, run `node scripts/capture-verification.mjs` to capture real typecheck/test/build stdout and stderr into `docs/ai/verification-logs/<task-id>.log`, then record that path in `quality.verificationRun.results`.
+
 
 The same five steps run in CI on every push via `.github/workflows/ai-verify.yml`.
 Use **Node 22** — the architecture constraint tests call `node:fs` `globSync`, which does not exist on Node 20.

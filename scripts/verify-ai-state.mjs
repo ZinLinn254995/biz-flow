@@ -23,6 +23,7 @@ const has = (rel) => existsSync(resolve(root, rel));
 
 const TASK_STATUSES = ['PLANNED', 'IN_PROGRESS', 'BLOCKED', 'PARTIAL', 'COMPLETE', 'FAILED'];
 const VERIFICATION_STATUSES = ['passing', 'failing', 'unknown'];
+const CONFIDENCE_VALUES = ['high', 'medium', 'low'];
 
 const REQUIRED_DOCS = [
   'AGENTS.md',
@@ -90,6 +91,13 @@ checkStatus('currentMilestone.status', need('currentMilestone.status'));
 checkStatus('nextTask.status', need('nextTask.status'));
 checkStatus('lastCompletedTask.status', need('lastCompletedTask.status'));
 checkStatus('currentTask.status', need('currentTask.status'));
+
+for (const [label, task] of [['lastCompletedTask', need('lastCompletedTask')], ['currentTask', need('currentTask')]]) {
+  if (!task) continue;
+  if (!CONFIDENCE_VALUES.includes(task.confidence)) fail(`${label}.confidence must be high, medium, or low.`);
+  if (typeof task.needsHumanReview !== 'boolean') fail(`${label}.needsHumanReview must be boolean.`);
+  if (task.needsHumanReview && typeof task.reviewReason !== 'string' || task.needsHumanReview && !task.reviewReason.trim()) fail(`${label}.reviewReason is required when needsHumanReview is true.`);
+}
 
 const lastCompleted = need('lastCompletedTask');
 if (lastCompleted && lastCompleted.status !== 'COMPLETE') {

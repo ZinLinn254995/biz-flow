@@ -2,6 +2,10 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## Continuation infrastructure — 2026-09-08
+
+Added locked-file enforcement, captured verification evidence, append-only handoff archives, task-size limits, confidence/review flags, milestone tag rules, and session locking. No feature milestone state changed.
+
 ---
 
 ## P2P21 + P2P22 — 2026-09-07

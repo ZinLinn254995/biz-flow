@@ -42,5 +42,8 @@ jobs:
       - name: Dangling import check
         run: npm run verify:imports
 
+      - name: Locked-area guard
+        run: npm run verify:locked
+
       - name: AI state and handoff consistency
         run: npm run verify:ai

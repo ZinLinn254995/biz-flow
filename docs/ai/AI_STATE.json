@@ -31,7 +31,9 @@
     "id": "P2P21+P2P22",
     "name": "Categories & Accounts Search + Sale Total Validation",
     "completedDate": "2026-09-07",
-    "status": "COMPLETE"
+    "status": "COMPLETE",
+    "confidence": "high",
+    "needsHumanReview": false
   },
   "currentTask": null,
   "nextTask": {
@@ -96,25 +98,25 @@
       "results": [
         {
           "command": "npm run typecheck",
-          "result": "PASS"
+          "result": "docs/ai/verification-logs/P2P23.log"
         },
         {
           "command": "npm run test",
-          "result": "PASS",
+          "result": "docs/ai/verification-logs/P2P23.log",
           "detail": "45 files / 527 tests (17 new search, filter, sort and sale-total tests)"
         },
         {
           "command": "npm run build",
-          "result": "PASS",
+          "result": "docs/ai/verification-logs/P2P23.log",
           "detail": "vite build, single ~515 kB chunk warning only"
         },
         {
           "command": "npm run verify:imports",
-          "result": "PASS"
+          "result": "docs/ai/verification-logs/P2P23.log"
         },
         {
           "command": "npm run verify:ai",
-          "result": "PASS"
+          "result": "docs/ai/verification-logs/P2P23.log"
         }
       ]
     },
