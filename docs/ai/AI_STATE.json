@@ -22,28 +22,28 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P2P26",
-    "name": "Settings Page",
+    "id": "P2P27",
+    "name": "Data Export and Import",
     "status": "COMPLETE",
     "verifiedDate": "2026-09-08"
   },
   "lastCompletedTask": {
-    "id": "P2P26",
-    "name": "Settings Page",
+    "id": "P2P27",
+    "name": "Data Export and Import",
     "completedDate": "2026-09-08",
     "status": "COMPLETE",
-    "confidence": "medium",
+    "confidence": "high",
     "needsHumanReview": false
   },
   "currentTask": null,
   "nextTask": {
-    "id": "P2P27",
-    "name": "Data Export and Import",
+    "id": "P2P28",
+    "name": "Future roadmap task",
     "priority": "P3",
-    "complexity": "MEDIUM",
+    "complexity": "TBD",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "All planned P2P1-P2P26 milestones are complete; add user-controlled JSON backup and restore for the offline-first dataset.",
+    "reason": "P2P27 is complete; select the next roadmap task.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -78,10 +78,10 @@
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 527,
-      "files": 45,
+      "count": 530,
+      "files": 46,
       "framework": "Vitest 4.1.11",
-      "verifiedDate": "2026-09-07"
+      "verifiedDate": "2026-09-08"
     },
     "typescript": {
       "status": "passing",
