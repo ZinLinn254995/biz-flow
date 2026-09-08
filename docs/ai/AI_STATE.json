@@ -22,14 +22,14 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P2P25",
-    "name": "Analytics Page",
+    "id": "P2P26",
+    "name": "Settings Page",
     "status": "COMPLETE",
     "verifiedDate": "2026-09-08"
   },
   "lastCompletedTask": {
-    "id": "P2P25",
-    "name": "Analytics Page",
+    "id": "P2P26",
+    "name": "Settings Page",
     "completedDate": "2026-09-08",
     "status": "COMPLETE",
     "confidence": "medium",
@@ -37,13 +37,13 @@
   },
   "currentTask": null,
   "nextTask": {
-    "id": "P2P26",
-    "name": "Settings Page",
-    "priority": "P2",
+    "id": "P2P27",
+    "name": "Data Export and Import",
+    "priority": "P3",
     "complexity": "MEDIUM",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "Analytics is complete; implement the remaining settings placeholder page.",
+    "reason": "All planned P2P1-P2P26 milestones are complete; add user-controlled JSON backup and restore for the offline-first dataset.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -62,15 +62,18 @@
       "P2P19",
       "P2P20",
       "P2P21",
-      "P2P22"
+      "P2P22",
+      "P2P23",
+      "P2P24",
+      "P2P25",
+      "P2P26"
     ],
     "remainingMilestones": [
-      "P2P23",
-      "P2P24"
+      "P2P27"
     ],
-    "totalCompleted": 16,
-    "totalRemaining": 2,
-    "percentage": 89
+    "totalCompleted": 20,
+    "totalRemaining": 1,
+    "percentage": 95
   },
   "quality": {
     "tests": {
@@ -233,10 +236,37 @@
     {
       "path": "/settings",
       "page": "SettingsPage",
-      "status": "placeholder"
+      "status": "complete"
     }
   ],
   "nextTaskInstructions": {
+    "id": "P2P27",
+    "name": "Data Export and Import",
+    "objective": "Add user-controlled JSON export and validated restore for the complete offline-first dataset.",
+    "scope": [
+      "src/pages/SettingsPage.tsx",
+      "src/services/",
+      "src/repositories/",
+      "src/test/"
+    ],
+    "acceptanceCriteria": [
+      "Users can export all BizFlow entities as a versioned JSON backup",
+      "Users can select a JSON backup file and validate its schema before writing data",
+      "Restore does not partially overwrite data when validation fails",
+      "Import/export preserves integer minor-unit money values, currencies, IDs and timestamps",
+      "The implementation remains offline-first and respects the UI/service/repository boundaries",
+      "npm run verify passes end to end",
+      "No changes to locked files"
+    ],
+    "verificationCommands": [
+      "npm run typecheck",
+      "npm run test",
+      "npm run build",
+      "npm run verify:imports",
+      "npm run verify:ai"
+    ]
+  },
+  "previousNextTaskInstructions": {
     "id": "P2P23",
     "name": "Account Balance Updates",
     "objective": "Keep Account.balance in sync with the transactions that reference accountId, applied atomically alongside the transaction write.",
@@ -378,15 +408,19 @@
       "id": "ISSUE-003",
       "title": "Account balances never update from transactions",
       "severity": "medium",
-      "status": "open",
-      "addressedBy": "P2P23"
+      "status": "resolved",
+      "addressedBy": "P2P23",
+      "resolvedBy": "P2P23",
+      "resolvedDate": "2026-09-08"
     },
     {
       "id": "ISSUE-004",
       "title": "No budget actual-vs-limit tracking",
       "severity": "medium",
-      "status": "open",
-      "addressedBy": "P2P24"
+      "status": "resolved",
+      "addressedBy": "P2P24",
+      "resolvedBy": "P2P24",
+      "resolvedDate": "2026-09-08"
     },
     {
       "id": "ISSUE-005",

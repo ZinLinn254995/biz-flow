@@ -2,6 +2,22 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## P2P26 — 2026-09-08
+
+### Completed history synchronized
+- P2P23 account balance updates are present in `AccountService` and the linked transaction services.
+- P2P24 budget actual-vs-limit tracking is present in `BudgetService`, `BudgetCard`, and budget hooks.
+
+
+### Added
+- Settings page replacing the placeholder with workspace preferences, appearance, local storage, and privacy information.
+
+### Verification
+- Browser preview verified at `/settings`.
+- The implementation is present in commit `ec36fbc` on `main`.
+
+---
+
 ## P2P25 — 2026-09-08
 
 ### Added

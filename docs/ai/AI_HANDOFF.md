@@ -34,7 +34,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P26 (Settings Page) — implement the remaining settings placeholder page.
+P2P27 (Data Export and Import) — add validated JSON backup and restore for the offline-first dataset.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
@@ -42,9 +42,9 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 | Metric | Value |
 |--------|-------|
-| Completed milestones | 16 (P2P1 through P2P25) |
-| Remaining milestones | 1 (P2P26) |
-| Progress | 94% |
+| Completed milestones | 20 (P2P1 through P2P26) |
+| Remaining milestones | 1 (P2P27) |
+| Progress | 95% |
 | Tests | 527 passing (45 files) |
 | TypeScript | PASS |
 | Build | PASS |

@@ -145,9 +145,32 @@
 
 ---
 
+## Completed after P2P22
+
+### P2P23 — Account Balance Updates (COMPLETE)
+- **Status:** COMPLETE — linked income and expense transactions adjust account balances with currency validation and injected transaction execution.
+
+### P2P24 — Budget Tracking (COMPLETE)
+- **Status:** COMPLETE — budgets compute category/date/currency-matched spending and display actual-vs-limit progress.
+
+### P2P25 — Analytics Page (COMPLETE)
+- **Status:** COMPLETE — analytics aggregates multi-currency inflow/outflow and monthly activity.
+
+### P2P26 — Settings Page
+- **Status:** COMPLETE — settings now documents workspace preferences, appearance, local storage, and privacy behavior.
+
 ## Next Tasks
 
-### P2P23 — Account Balance Updates
+### P2P27 — Data Export and Import
+- **Objective:** Add user-controlled JSON backup and validated restore for the complete offline-first dataset.
+- **Priority:** P3 — important user functionality
+- **Complexity:** MEDIUM
+- **Scope:** Settings page actions plus service/repository validation and focused tests.
+- **Status:** PLANNED
+- **Acceptance:** Export is versioned and complete; import validates before mutation; invalid backups cannot partially overwrite data; IDs, timestamps, currencies, and integer minor units are preserved.
+
+
+### P2P23 — Account Balance Updates (COMPLETE)
 - **Objective:** Update Account.balance when transactions reference accountId
 - **Scope:** Service layer (BusinessExpenseService, PersonalIncomeService, PersonalExpenseService)
 - **Dependencies:** None
@@ -156,7 +179,7 @@
 - **UI impact:** None
 - **Database impact:** Account balances change on transaction create/delete
 
-### P2P24 — Budget Tracking
+### P2P24 — Budget Tracking (COMPLETE)
 - **Objective:** Compute actual spending vs budget limit per period
 - **Scope:** `BudgetService.ts`, `BudgetsPage.tsx`, `BudgetCard.tsx`
 - **Dependencies:** P2P23 (for accurate account tracking)
@@ -164,7 +187,7 @@
 - **Complexity:** HIGH
 - **UI impact:** Budget cards show progress bars
 
-### P2P25 — Analytics Page
+### P2P25 — Analytics Page (COMPLETE)
 - **Objective:** Implement real analytics with charts and insights
 - **Scope:** `src/pages/AnalyticsPage.tsx`
 - **Dependencies:** All data hooks
@@ -172,7 +195,7 @@
 - **Complexity:** HIGH
 - **UI impact:** Replaces placeholder
 
-### Future — Settings Page
+### P2P26 — Settings Page (COMPLETE)
 - **Objective:** Implement settings (currency, data management, export/import)
 - **Scope:** `src/pages/SettingsPage.tsx`
 - **Dependencies:** None
