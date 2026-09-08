@@ -38,12 +38,12 @@
   "currentTask": null,
   "nextTask": {
     "id": "P2P28",
-    "name": "Future roadmap task",
-    "priority": "P3",
-    "complexity": "TBD",
+    "name": "Business Cascade Delete",
+    "priority": "P2",
+    "complexity": "MEDIUM",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "P2P27 is complete; select the next roadmap task.",
+    "reason": "P2P27 is complete; address the open data-integrity issue where deleting a business leaves orphaned child records.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -51,9 +51,16 @@
       "P2P1",
       "P2P2",
       "P2P3",
+      "P2P4",
       "P2P5",
       "P2P6",
-      "P2P7-P2P13",
+      "P2P7",
+      "P2P8",
+      "P2P9",
+      "P2P10",
+      "P2P11",
+      "P2P12",
+      "P2P13",
       "P2P14",
       "P2P15",
       "P2P16",
@@ -66,14 +73,13 @@
       "P2P23",
       "P2P24",
       "P2P25",
-      "P2P26"
-    ],
-    "remainingMilestones": [
+      "P2P26",
       "P2P27"
     ],
-    "totalCompleted": 20,
-    "totalRemaining": 1,
-    "percentage": 95
+    "remainingMilestones": [],
+    "totalCompleted": 27,
+    "totalRemaining": 0,
+    "percentage": 100
   },
   "quality": {
     "tests": {
