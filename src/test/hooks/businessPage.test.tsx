@@ -17,6 +17,7 @@ function createMockRepo(): BusinessRepository {
     create: vi.fn(),
     update: vi.fn(),
     remove: vi.fn(),
+    removeCascade: vi.fn(),
   };
 }
 
@@ -217,7 +218,7 @@ describe('BusinessPage — delete', () => {
   it('deletes a business after confirmation', async () => {
     const repo = createMockRepo();
     repo.getAll = vi.fn().mockResolvedValue([sampleBusiness]);
-    repo.remove = vi.fn().mockResolvedValue(undefined);
+    repo.removeCascade = vi.fn().mockResolvedValue(undefined);
     const container = createContainer(repo);
 
     renderBusinessPage(container);
@@ -229,7 +230,7 @@ describe('BusinessPage — delete', () => {
 
     fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Delete' }));
 
-    await waitFor(() => expect(repo.remove).toHaveBeenCalledWith('biz-1'));
+    await waitFor(() => expect(repo.removeCascade).toHaveBeenCalledWith('biz-1'));
   });
 
   it('cancel does not delete', async () => {
@@ -247,13 +248,13 @@ describe('BusinessPage — delete', () => {
     fireEvent.click(screen.getByText('Cancel'));
 
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
-    expect(repo.remove).not.toHaveBeenCalled();
+    expect(repo.removeCascade).not.toHaveBeenCalled();
   });
 
   it('shows error on delete failure', async () => {
     const repo = createMockRepo();
     repo.getAll = vi.fn().mockResolvedValue([sampleBusiness]);
-    repo.remove = vi.fn().mockRejectedValue(new Error('Delete failed'));
+    repo.removeCascade = vi.fn().mockRejectedValue(new Error('Delete failed'));
     const container = createContainer(repo);
 
     renderBusinessPage(container);
@@ -302,7 +303,7 @@ describe('BusinessPage — refresh after mutation', () => {
       callCount++;
       return callCount === 1 ? [sampleBusiness] : [];
     });
-    repo.remove = vi.fn().mockResolvedValue(undefined);
+    repo.removeCascade = vi.fn().mockResolvedValue(undefined);
     const container = createContainer(repo);
 
     renderBusinessPage(container);

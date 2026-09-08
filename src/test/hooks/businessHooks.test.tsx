@@ -22,6 +22,7 @@ function createMockRepo(): BusinessRepository {
     create: vi.fn(),
     update: vi.fn(),
     remove: vi.fn(),
+    removeCascade: vi.fn(),
   };
 }
 
@@ -192,7 +193,7 @@ describe('useUpdateBusiness', () => {
 describe('useDeleteBusiness', () => {
   it('calls service.deleteBusiness', async () => {
     const repo = createMockRepo();
-    repo.remove = vi.fn().mockResolvedValue(undefined);
+    repo.removeCascade = vi.fn().mockResolvedValue(undefined);
     const container = createContainer(repo);
 
     const { result } = renderHook(() => useDeleteBusiness(), {
@@ -203,6 +204,6 @@ describe('useDeleteBusiness', () => {
       await result.current.mutate('biz-1' as EntityId);
     });
 
-    expect(repo.remove).toHaveBeenCalledWith('biz-1');
+    expect(repo.removeCascade).toHaveBeenCalledWith('biz-1');
   });
 });

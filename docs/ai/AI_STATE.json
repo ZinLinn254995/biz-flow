@@ -22,28 +22,34 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P2P27",
-    "name": "Data Export and Import",
+    "id": "P2P28",
+    "name": "Business Cascade Delete",
     "status": "COMPLETE",
     "verifiedDate": "2026-09-08"
   },
   "lastCompletedTask": {
-    "id": "P2P27",
-    "name": "Data Export and Import",
+    "id": "P2P28",
+    "name": "Business Cascade Delete",
     "completedDate": "2026-09-08",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P2P29",
+    "status": "PLANNED",
+    "confidence": "high",
+    "needsHumanReview": false,
+    "lockedFileOverrideReason": "The completed P2P28 implementation extended the protected business repository contract to expose the required atomic cascade-delete operation."
+  },
   "nextTask": {
-    "id": "P2P28",
-    "name": "Business Cascade Delete",
-    "priority": "P2",
-    "complexity": "MEDIUM",
+    "id": "P2P29",
+    "name": "Remove unused Supabase dependency",
+    "priority": "P3",
+    "complexity": "LOW",
     "canCombineWith": null,
     "status": "PLANNED",
-    "reason": "P2P27 is complete; address the open data-integrity issue where deleting a business leaves orphaned child records.",
+    "reason": "P2P28 is complete; remove the unused Supabase client to reduce dependency and bundle overhead.",
     "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
@@ -74,18 +80,19 @@
       "P2P24",
       "P2P25",
       "P2P26",
-      "P2P27"
+      "P2P27",
+      "P2P28"
     ],
     "remainingMilestones": [],
-    "totalCompleted": 27,
+    "totalCompleted": 28,
     "totalRemaining": 0,
     "percentage": 100
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 530,
-      "files": 46,
+      "count": 532,
+      "files": 47,
       "framework": "Vitest 4.1.11",
       "verifiedDate": "2026-09-08"
     },

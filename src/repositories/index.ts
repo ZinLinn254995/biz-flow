@@ -27,7 +27,11 @@ export {
   DexieRepository,
 } from '@/repositories/dexieRepository';
 
-export { financeTransactionRunner, salesTransactionRunner } from '@/repositories/salesTransactionRunner';
+export {
+  businessCascadeTransactionRunner,
+  financeTransactionRunner,
+  salesTransactionRunner,
+} from '@/repositories/salesTransactionRunner';
 
 export {
   DexieBusinessRepository,

@@ -174,7 +174,7 @@
 - **Priority:** P2 — data integrity
 - **Complexity:** MEDIUM
 - **Scope:** Business service, repository interfaces/implementations as required, transaction wiring, and focused tests.
-- **Status:** PLANNED
+- **Status:** COMPLETE (2026-09-08)
 - **Acceptance:** Deleting a business removes its inventory items, sales, customers, and business expenses; unrelated businesses and personal records remain intact; the operation is atomic through the injected transaction boundary; repeated deletion is safe; tests cover success, isolation, and failure behavior.
 
 

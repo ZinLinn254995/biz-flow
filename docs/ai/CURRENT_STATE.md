@@ -1,16 +1,16 @@
 # BizFlow — Current State
 
-**Last verified:** 2026-09-07
+**Last verified:** 2026-09-08
 **Verified by:** Source code inspection + test execution
 
 ## Current Milestone
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P2P25 |
+| Current milestone | P2P28 |
 | Status | COMPLETE |
-| Next milestone | P2P28 (future roadmap task) |
-| Implementation status | P2P1-P2P27 are complete; offline JSON data export/import is available from Settings |
+| Next milestone | P2P29 — Remove unused Supabase dependency |
+| Implementation status | P2P1-P2P28 are complete; business deletion cascades atomically to all business-owned records |
 
 ## Completed Tasks
 

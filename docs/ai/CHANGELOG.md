@@ -2,6 +2,18 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## P2P28 — 2026-09-08
+
+### Added
+- Atomic business cascade deletion for inventory items, sales, customers, and business expenses.
+- Injected Dexie transaction runner and focused isolation/personal-data preservation tests.
+
+### Notes
+- Resolved ISSUE-010. The next priority is removing the unused Supabase dependency.
+- Verified: typecheck PASS, 532 tests PASS, build PASS, import check PASS, AI state check PASS.
+
+---
+
 ## P2P26 — 2026-09-08
 
 ### Completed history synchronized

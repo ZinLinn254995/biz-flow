@@ -118,7 +118,7 @@ None.
 - **Possible solution:** Add cascade logic in service layer or UI confirmation.
 - **Affected files:** `BusinessService.ts`
 - **Dependencies:** None
-- **Status:** Open — future
+- **Status:** RESOLVED in P2P28 (2026-09-08) — business deletion now removes all business-owned child records atomically through the injected transaction boundary.
 
 ## Future
 

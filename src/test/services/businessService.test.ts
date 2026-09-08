@@ -12,6 +12,7 @@ function createMockRepo(): BusinessRepository {
     create: vi.fn(),
     update: vi.fn(),
     remove: vi.fn(),
+    removeCascade: vi.fn(),
   };
 }
 
@@ -87,11 +88,11 @@ describe('BusinessService', () => {
 
   it('deleteBusiness delegates to repository', async () => {
     const repo = createMockRepo();
-    (repo.remove as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
+    (repo.removeCascade as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
     const service = new BusinessService(repo);
 
     await service.deleteBusiness('id' as EntityId);
-    expect(repo.remove).toHaveBeenCalledWith('id');
+    expect(repo.removeCascade).toHaveBeenCalledWith('id');
   });
 
   it('repository errors propagate (not swallowed)', async () => {
