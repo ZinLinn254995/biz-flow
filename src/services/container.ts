@@ -43,7 +43,7 @@ export interface ServiceContainer {
   categoryService: CategoryService;
   budgetService: BudgetService;
   accountService: AccountService;
-  dataBackupService: DataBackupService;
+  dataBackupService?: DataBackupService;
 }
 
 export function createServiceContainer(): ServiceContainer {
