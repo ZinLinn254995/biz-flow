@@ -9,7 +9,8 @@
 |-------|-------|
 | Current milestone | P2P28 |
 | Status | COMPLETE |
-| Next milestone | P2P29 — Remove unused Supabase dependency |
+| Next milestone | Phase 3 — READY / awaiting user requirements
+  | Development status | PAUSED_AWAITING_INSTRUCTIONS |
 | Implementation status | P2P1-P2P28 are complete; business deletion cascades atomically to all business-owned records |
 
 ## Completed Tasks
@@ -36,7 +37,7 @@
 
 ## In Progress
 
-None. All tasks through P2P22 are complete.
+None. All planned P2P1-P2P28 milestones are complete. Phase 3 is READY / awaiting explicit user requirements; implementation has not started and no AI may invent its scope.
 
 ## Not Started
 

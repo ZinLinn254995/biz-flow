@@ -1,68 +1,36 @@
 # NEXT TASK
 
-## NEXT TASK
+## Status
 
-P2P29 — Remove unused Supabase dependency
+Phase 3 — READY / AWAITING USER REQUIREMENTS.
 
-> This file is the single source of truth for the next task. Read `AGENTS.md` and `docs/ai/AI_STATE.json` first, then implement exactly this task.
+Phase 3 is the next planned development phase, but its implementation scope is currently pending user-defined requirements. Phase 3 implementation has NOT started. The Coding AI must not invent or assume a Phase 3 feature list.
 
-## Context
+## Required next action
 
-P2P1–P2P27 are complete and verified. ISSUE-010 remains open: deleting a business removes only the business row, leaving inventory items, sales, customers, and business expenses orphaned in IndexedDB. This is the next concrete data-integrity task. The unused Supabase dependency and bundle-size/code-splitting concern remain lower-priority follow-up work.
+Wait for the project owner to provide the actual Phase 3 requirements. Do not select a task from old roadmap items, known issues, or AI suggestions, even if asked to continue.
 
-## OBJECTIVE
+## Future direction only
 
-Make business deletion remove the business and every business-owned child record as one atomic operation, without affecting unrelated businesses or personal finance records.
+After Phase 3 or in a suitable later phase, BizFlow may evolve toward:
 
-## Scope
+**Offline-First + User Account + Cloud Sync + Multi-Device App**
 
-- `src/services/business/BusinessService.ts`
-- `src/types/repositories/` — only if a repository contract must be extended
-- `src/repositories/` — cascade implementation and injected transaction wiring
-- `src/services/container.ts` — wiring only if required
-- Focused tests under `src/test/`
+Future Cloud Readiness is not Current Cloud Implementation. A future phase may introduce user accounts, authentication, cloud sync, and multi-device synchronization, but none of those are current scope. Do not add cloud services, authentication, sync infrastructure, migrations, APIs, or speculative architecture changes now.
 
-Do not touch locked files listed in `AI_STATE.json` unless explicitly justified. Do not introduce network calls or cloud sync.
+## Session handoff record
 
-## Rules
+**Purpose:** Update the persistent AI-to-AI Handoff System with the Phase 3 waiting state and future expansion direction.
 
-- Preserve the UI → hooks → services → repository architecture.
-- Services must depend on repository interfaces, never import `@/db` directly.
-- Use the injected `TransactionRunner` boundary for atomic deletion, following the P2P19 pattern.
-- Deletion must be scoped by the target `businessId`; unrelated businesses and personal records must remain unchanged.
-- Repeated deletion of a missing business should be safe and should not remove unrelated records.
+**Work performed:**
+- Inspected the existing project AI state and handoff system.
+- Recorded Phase 3 as ready and awaiting user requirements.
+- Recorded the future Offline-First + Account + Cloud Sync + Multi-Device direction.
+- Explicitly recorded that future capabilities are not being implemented now.
 
-## Behaviour to implement
+**Work not performed:**
+- No Phase 3 feature implementation.
+- No cloud, account, authentication, sync, or multi-device implementation.
+- No speculative architecture migration or source-code behavior change.
 
-| Operation | Expected effect |
-|-----------|-----------------|
-| Delete business | Remove the business, its inventory items, sales, customers, and business expenses atomically |
-| Delete missing business | No-op or domain-appropriate not-found behavior, with no unrelated deletions |
-| Delete one of multiple businesses | Remove only the selected business's children |
-| Delete business with personal data present | Preserve personal incomes, personal expenses, categories, budgets, and accounts |
-
-## ACCEPTANCE CRITERIA
-
-- All business-owned child records are removed when their business is deleted.
-- No orphaned inventory, sale, customer, or business-expense records remain for the deleted business.
-- Records belonging to other businesses and all personal records remain intact.
-- The cascade runs through the injected transaction boundary and cannot leave a partial delete on failure.
-- Focused tests cover successful cascade deletion, business isolation, personal-data preservation, and failure/rollback behavior.
-- `npm run verify` passes end to end.
-- No application code outside the approved scope is changed, and no existing assertions are removed.
-
-## VERIFICATION COMMANDS
-
-```bash
-npm run verify
-```
-
-Runs typecheck, tests, build, import checks, and AI-state validation in order. All must exit 0.
-
-## After finishing
-
-1. Run `npm run verify`.
-2. Set `currentTask` to `null` and record P2P28 as COMPLETE only if verification passes.
-3. Update `AI_STATE.json`, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ROADMAP.md`, `CHANGELOG.md`, and `KNOWN_ISSUES.md`.
-4. Define the next task from the remaining low-priority issues, prioritizing either removal of the unused Supabase dependency or bundle/code-splitting improvements.
-5. Commit the code and state together and push to `main` according to `docs/ai/GITHUB_SYNC.md`.
+**Next action:** Wait for the user to provide the actual Phase 3 requirements.

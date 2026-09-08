@@ -25,7 +25,7 @@ items now derive the total; no assertion was removed.
 ## CURRENT TASK
 
 `AI_STATE.json` -> `currentTask` is `null`. Nothing is in flight; the working tree is
-consistent and fully verified. Start the next task.
+consistent and fully verified. Development status is `PAUSED_AWAITING_INSTRUCTIONS`. Phase 3 is READY but awaiting explicit user-defined requirements; do not select or start a task.
 
 ## TASK STATUS VOCABULARY
 
@@ -34,7 +34,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P29 — Remove the unused `@supabase/supabase-js` dependency from the offline-first app.
+None — wait for the project owner to provide Phase 3 requirements. Phase 3 implementation has not started; do not invent features or implement cloud, account, authentication, sync, or multi-device behavior.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
@@ -43,7 +43,7 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 | Metric | Value |
 |--------|-------|
 | Completed milestones | 28 (P2P1 through P2P28) |
-| Remaining milestones | 1 (P2P29) |
+| Remaining milestones | 0 |
 | Progress | 100% |
 | Tests | 532 passing (47 files) |
 | TypeScript | PASS |
