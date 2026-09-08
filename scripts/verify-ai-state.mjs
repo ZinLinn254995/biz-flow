@@ -67,8 +67,6 @@ for (const key of [
   'currentMilestone.status',
   'lastCompletedTask',
   'currentTask',
-  'nextTask.id',
-  'nextTask.status',
   'progress',
   'quality',
   'architecture',

@@ -1,5 +1,7 @@
 {
   "schemaVersion": "2.0.0",
+  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
+  "pauseNote": "All planned milestones are complete. The project owner is designing a new phase for account-based sync between offline Dexie/IndexedDB data and an online backend and will provide new task definitions later. No AI should invent or start new work in the meantime.",
   "stateContract": {
     "validator": "scripts/verify-ai-state.mjs",
     "validateCommand": "npm run verify:ai",
@@ -42,16 +44,7 @@
     "needsHumanReview": false,
     "lockedFileOverrideReason": "The completed P2P28 implementation extended the protected business repository contract to expose the required atomic cascade-delete operation."
   },
-  "nextTask": {
-    "id": "P2P29",
-    "name": "Remove unused Supabase dependency",
-    "priority": "P3",
-    "complexity": "LOW",
-    "canCombineWith": null,
-    "status": "PLANNED",
-    "reason": "P2P28 is complete; remove the unused Supabase client to reduce dependency and bundle overhead.",
-    "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
-  },
+  "nextTask": null,
   "progress": {
     "completedMilestones": [
       "P2P1",
