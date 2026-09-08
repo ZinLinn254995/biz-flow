@@ -2,64 +2,54 @@
 
 ## NEXT TASK
 
-P2P28 — Select the next roadmap task
+P2P28 — Business Cascade Delete
 
-> This file is the single source of truth for the next task. A new Coding AI needs nothing else
-> from a human. Read `AGENTS.md` and `docs/ai/AI_STATE.json` first, then implement exactly this.
+> This file is the single source of truth for the next task. Read `AGENTS.md` and `docs/ai/AI_STATE.json` first, then implement exactly this task.
 
 ## Context
 
-Everything through P2P22 is COMPLETE and verified (typecheck, 527 tests, build, import check,
-AI state check all PASS). `Account` entities store a `balance`, but no service ever changes it:
-creating an expense or income that names an `accountId` leaves the account balance untouched
-(ISSUE-003). This is the highest remaining item and blocks accurate budget tracking in P2P24.
+P2P1–P2P27 are complete and verified. ISSUE-010 remains open: deleting a business removes only the business row, leaving inventory items, sales, customers, and business expenses orphaned in IndexedDB. This is the next concrete data-integrity task. The unused Supabase dependency and bundle-size/code-splitting concern remain lower-priority follow-up work.
 
 ## OBJECTIVE
 
-Keep `Account.balance` in sync with the transactions that reference `accountId`, applied atomically
-with the transaction write.
+Make business deletion remove the business and every business-owned child record as one atomic operation, without affecting unrelated businesses or personal finance records.
 
 ## Scope
 
-- `src/services/businessExpenses/BusinessExpenseService.ts`
-- `src/services/personalFinance/PersonalIncomeService.ts`
-- `src/services/personalFinance/PersonalExpenseService.ts`
-- `src/services/accounts/AccountService.ts`
-- `src/services/container.ts` (wiring only)
-- `src/repositories/` — a transaction runner covering `[db.accounts, ...]` if a new one is needed
-- Tests under `src/test/services/`
+- `src/services/business/BusinessService.ts`
+- `src/types/repositories/` — only if a repository contract must be extended
+- `src/repositories/` — cascade implementation and injected transaction wiring
+- `src/services/container.ts` — wiring only if required
+- Focused tests under `src/test/`
 
-Do not touch any locked or protected file listed in `AI_STATE.json` -> `lockedAreas`.
+Do not touch locked files listed in `AI_STATE.json` unless explicitly justified. Do not introduce network calls or cloud sync.
 
 ## Rules
 
-- Money is integer minor units. Never floating-point.
-- A service must not import `@/db`. Atomicity comes from the injected `TransactionRunner` port
-  (`src/services/common/transaction.ts`), implemented in the repository layer, exactly as P2P19 did.
-  Services constructed without a runner must still work (direct execution) so mock-repository unit
-  tests keep passing.
-- A transaction whose currency differs from the account currency must be rejected with
-  `ValidationError` from `@/services/common`, before any balance change.
-- `accountId` remains optional. A transaction without one changes no balance.
+- Preserve the UI → hooks → services → repository architecture.
+- Services must depend on repository interfaces, never import `@/db` directly.
+- Use the injected `TransactionRunner` boundary for atomic deletion, following the P2P19 pattern.
+- Deletion must be scoped by the target `businessId`; unrelated businesses and personal records must remain unchanged.
+- Repeated deletion of a missing business should be safe and should not remove unrelated records.
 
 ## Behaviour to implement
 
-| Operation | Effect on `Account.balance` |
-|-----------|-----------------------------|
-| Create expense (business or personal) with `accountId` | decrease by the expense amount |
-| Create income with `accountId` | increase by the income amount |
-| Update amount or `accountId` | reverse the previous effect, then apply the new one |
-| Delete | reverse the effect |
+| Operation | Expected effect |
+|-----------|-----------------|
+| Delete business | Remove the business, its inventory items, sales, customers, and business expenses atomically |
+| Delete missing business | No-op or domain-appropriate not-found behavior, with no unrelated deletions |
+| Delete one of multiple businesses | Remove only the selected business's children |
+| Delete business with personal data present | Preserve personal incomes, personal expenses, categories, budgets, and accounts |
 
 ## ACCEPTANCE CRITERIA
 
-- All four table rows above are implemented for business expenses, personal expenses and personal income.
-- Currency mismatch between transaction and account is rejected with `ValidationError`.
-- Balance change and transaction write are applied through the injected `TransactionRunner`.
-- No service imports `@/db`; all `*UiConstraints` and architecture tests still pass.
-- New tests cover create, update and delete for both directions, plus the currency-mismatch rejection.
+- All business-owned child records are removed when their business is deleted.
+- No orphaned inventory, sale, customer, or business-expense records remain for the deleted business.
+- Records belonging to other businesses and all personal records remain intact.
+- The cascade runs through the injected transaction boundary and cannot leave a partial delete on failure.
+- Focused tests cover successful cascade deletion, business isolation, personal-data preservation, and failure/rollback behavior.
 - `npm run verify` passes end to end.
-- No changes to locked files and no removed assertions in existing tests.
+- No application code outside the approved scope is changed, and no existing assertions are removed.
 
 ## VERIFICATION COMMANDS
 
@@ -67,14 +57,12 @@ Do not touch any locked or protected file listed in `AI_STATE.json` -> `lockedAr
 npm run verify
 ```
 
-Runs `typecheck`, `test`, `build`, `verify:imports` and `verify:ai` in order. All must exit 0.
+Runs typecheck, tests, build, import checks, and AI-state validation in order. All must exit 0.
 
 ## After finishing
 
-1. Re-run `npm run verify`.
-2. Set `currentTask` to `null` and `lastCompletedTask` to P2P23 with status `COMPLETE` — only if
-   verification actually passed.
-3. Update `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ROADMAP.md`, `CHANGELOG.md`, `KNOWN_ISSUES.md`
-   (mark ISSUE-003 resolved) and `AI_STATE.json`.
-4. Rewrite this file for P2P24 (Budget Tracking).
-5. Commit code and state together and push to `main` — see `docs/ai/GITHUB_SYNC.md`.
+1. Run `npm run verify`.
+2. Set `currentTask` to `null` and record P2P28 as COMPLETE only if verification passes.
+3. Update `AI_STATE.json`, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ROADMAP.md`, `CHANGELOG.md`, and `KNOWN_ISSUES.md`.
+4. Define the next task from the remaining low-priority issues, prioritizing either removal of the unused Supabase dependency or bundle/code-splitting improvements.
+5. Commit the code and state together and push to `main` according to `docs/ai/GITHUB_SYNC.md`.

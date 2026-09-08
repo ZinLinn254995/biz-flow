@@ -166,8 +166,16 @@
 - **Priority:** P3 — important user functionality
 - **Complexity:** MEDIUM
 - **Scope:** Settings page actions plus service/repository validation and focused tests.
-- **Status:** PLANNED
+- **Status:** COMPLETE (2026-09-08)
 - **Acceptance:** Export is versioned and complete; import validates before mutation; invalid backups cannot partially overwrite data; IDs, timestamps, currencies, and integer minor units are preserved.
+
+### P2P28 — Business Cascade Delete
+- **Objective:** Delete a business and all business-owned child records without leaving orphaned IndexedDB data.
+- **Priority:** P2 — data integrity
+- **Complexity:** MEDIUM
+- **Scope:** Business service, repository interfaces/implementations as required, transaction wiring, and focused tests.
+- **Status:** PLANNED
+- **Acceptance:** Deleting a business removes its inventory items, sales, customers, and business expenses; unrelated businesses and personal records remain intact; the operation is atomic through the injected transaction boundary; repeated deletion is safe; tests cover success, isolation, and failure behavior.
 
 
 ### P2P23 — Account Balance Updates (COMPLETE)
