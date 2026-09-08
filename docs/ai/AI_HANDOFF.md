@@ -6,11 +6,13 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P2P21+P2P22 — COMPLETE
+P2P25 — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P2P21 — Categories & Accounts Search + P2P22 — Sale Total Validation.
+P2P25 — Analytics Page.
+
+Analytics now combines sales, personal income, business expenses, and personal expenses into multi-currency totals, six-month activity bars, and net position cards.
 
 `CategoriesPage` gained a search box and a name/created sort; `AccountsPage` gained a search box
 (name or institution), an account-type filter, a name/balance sort, and a filtered empty state.
@@ -32,7 +34,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-P2P23 (Account Balance Updates) — keep `Account.balance` in sync with the transactions that reference `accountId`.
+P2P26 (Settings Page) — implement the remaining settings placeholder page.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
@@ -40,9 +42,9 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
 | Metric | Value |
 |--------|-------|
-| Completed milestones | 15 (P2P1 through P2P22) |
-| Remaining milestones | 3 (P2P23 through P2P25) |
-| Progress | 83% |
+| Completed milestones | 16 (P2P1 through P2P25) |
+| Remaining milestones | 1 (P2P26) |
+| Progress | 94% |
 | Tests | 527 passing (45 files) |
 | TypeScript | PASS |
 | Build | PASS |
@@ -57,7 +59,8 @@ See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 - Personal Income/Expense CRUD with category and account references
 - Category CRUD scoped to business/personal
 - Account CRUD (cash, bank, wallet, other) with balance
-- Budget CRUD with category, limit, period, date range
+- Budget CRUD with category, limit, period, date range and actual-spending progress
+- Analytics page with multi-currency totals, monthly activity, and net position
 - Dashboard with real-time financial summaries (business + personal), recent activity, low-stock alerts
 - Multi-currency support (per-currency totals, never combined)
 - Search, filter, sort, date-range on 8 list pages (all of them)

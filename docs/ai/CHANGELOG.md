@@ -2,6 +2,18 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## P2P25 — 2026-09-08
+
+### Added
+- Real analytics page with multi-currency inflow/outflow totals, six-month activity bars, and net position cards.
+- Analytics aggregates sales, personal income, business expenses, and personal expenses through existing hooks.
+
+### Verification
+- Browser preview verified at `/analytics`.
+- TypeScript, tests, and production build captured in `docs/ai/verification-logs/P2P25.log`.
+
+---
+
 ## Continuation infrastructure — 2026-09-08
 
 Added locked-file enforcement, captured verification evidence, append-only handoff archives, task-size limits, confidence/review flags, milestone tag rules, and session locking. No feature milestone state changed.

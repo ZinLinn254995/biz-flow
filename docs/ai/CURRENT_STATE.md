@@ -7,10 +7,10 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P2P21+P2P22 |
+| Current milestone | P2P25 |
 | Status | COMPLETE |
-| Next milestone | P2P23 (Account Balance Updates) |
-| Implementation status | All planned tasks through P2P22 are complete |
+| Next milestone | P2P26 (Settings Page) |
+| Implementation status | All planned tasks through P2P25 are complete |
 
 ## Completed Tasks
 
@@ -42,10 +42,11 @@ None. All tasks through P2P22 are complete.
 
 | Task | Description |
 |------|-------------|
-| P2P23 (proposed) | Account balance updates on transactions |
-| P2P24 (proposed) | Budget actual-vs-limit tracking |
-| P2P25 (proposed) | Analytics page implementation |
-| Future | Settings page, cloud sync, data export/import, PWA |
+| P2P23 | Account balance updates on transactions |
+| P2P24 | Budget actual-vs-limit tracking |
+| P2P25 | Analytics page implementation |
+| P2P26 (proposed) | Settings page implementation |
+| Future | Cloud sync, data export/import, PWA |
 
 ## In-Flight Work
 
