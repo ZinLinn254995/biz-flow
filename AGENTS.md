@@ -80,9 +80,9 @@ Device storage (browser IndexedDB)
 
 ## D. Current Milestone
 
-**P2P18 — COMPLETE** (verified 2026-09-07)
+**P2P28 — COMPLETE** (verified 2026-09-08)
 
-All tasks through P2P18 are implemented. 507 tests pass, TypeScript passes, production build passes.
+All planned P2P1–P2P28 milestones are implemented. 532 tests pass, TypeScript passes, production build passes.
 
 See `docs/ai/AI_STATE.json` for machine-readable state and `docs/ai/CURRENT_STATE.md` for full details.
 

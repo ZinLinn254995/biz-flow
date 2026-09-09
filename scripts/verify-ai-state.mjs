@@ -11,6 +11,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEVELOPMENT_STATUSES, collectContinuityDocuments, validateContinuity } from './ai-state-validation.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
@@ -149,15 +150,13 @@ for (const issue of need('knownIssues') ?? []) {
   }
 }
 
-// Cross-document consistency.
+// Cross-document continuity and authorization checks.
 const nextId = need('nextTask.id');
+const prompt = has('docs/ai/NEXT_TASK_PROMPT.md') ? read('docs/ai/NEXT_TASK_PROMPT.md') : '';
 if (nextId) {
-  const prompt = has('docs/ai/NEXT_TASK_PROMPT.md') ? read('docs/ai/NEXT_TASK_PROMPT.md') : '';
-  const handoff = has('docs/ai/AI_HANDOFF.md') ? read('docs/ai/AI_HANDOFF.md') : '';
   const idParts = nextId.split('+').map((p) => p.trim()).filter(Boolean);
   for (const part of idParts) {
     if (!prompt.includes(part)) fail(`NEXT_TASK_PROMPT.md does not mention next task "${part}".`);
-    if (!handoff.includes(part)) fail(`AI_HANDOFF.md does not mention next task "${part}".`);
   }
   if (/TODO:\s*decide next task|TBD\s*next task|placeholder/i.test(prompt)) {
     fail('NEXT_TASK_PROMPT.md contains a placeholder instead of a real next task.');
@@ -167,13 +166,15 @@ if (nextId) {
   }
 }
 
-const milestoneId = need('currentMilestone.id');
-if (milestoneId) {
-  const currentStateDoc = has('docs/ai/CURRENT_STATE.md') ? read('docs/ai/CURRENT_STATE.md') : '';
-  if (!currentStateDoc.includes(milestoneId)) {
-    fail(`CURRENT_STATE.md does not mention the current milestone "${milestoneId}".`);
-  }
+if (state.developmentStatus !== undefined && !DEVELOPMENT_STATUSES.includes(state.developmentStatus)) {
+  fail(`developmentStatus has invalid value "${state.developmentStatus}". Allowed: ${DEVELOPMENT_STATUSES.join(', ')}`);
 }
+
+const continuityErrors = validateContinuity({
+  state,
+  documents: collectContinuityDocuments(read, has),
+});
+for (const error of continuityErrors) fail(error);
 
 if (!/^\d{4}-\d{2}-\d{2}$/.test(String(need('lastUpdated')))) {
   fail('lastUpdated must be an ISO date (YYYY-MM-DD).');
