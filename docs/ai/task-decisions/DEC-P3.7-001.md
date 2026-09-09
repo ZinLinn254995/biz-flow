@@ -13,7 +13,7 @@ P3.7 — AI Continuity Documentation & State Hygiene Hardening
 
 Align the canonical AI-facing state documents so P3.7 is represented as complete and the paused state has no executable next task. Preserve the existing offline-first application architecture and the P3.1-P3.6 historical records.
 
-## Context
+## Context / Problem
 
 After P3.6, the repository was verified and paused, but startup and next-task documents still described an obsolete P3.7 objective that duplicated completed verification work. This created a risk that a future Coding AI would select stale work or infer an unauthorized milestone.
 

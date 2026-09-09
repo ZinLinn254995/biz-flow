@@ -1,4 +1,4 @@
-# P3.7 Handoff — AI Continuity Documentation & State Hygiene Hardening
+# P3.7 — AI Continuity Documentation & State Hygiene Hardening
 
 ## TASK ID
 
