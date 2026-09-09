@@ -8,7 +8,7 @@
  *
  * Exit code 0 = state is usable by the next Coding AI. Non-zero = do not hand off.
  */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inspectGitFreshness } from './git-freshness.mjs';
@@ -22,6 +22,7 @@ import {
   validateHandoffArchive,
   validateVerificationEvidence,
 } from './ai-state-validation.mjs';
+import { validateDecisionReferences, validateTaskDecisions } from './task-decision-validation.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
@@ -211,6 +212,27 @@ const continuityErrors = validateContinuity({
 for (const error of continuityErrors) fail(error);
 
 const completedTaskId = need('lastCompletedTask.id');
+const knownTaskIds = new Set([
+  ...((state.progress?.completedMilestones ?? []).map(String)),
+  ...[state.currentMilestone?.id, state.lastCompletedTask?.id, state.currentTask?.id, state.nextTask?.id].filter(Boolean).map(String),
+  'P3.1', 'P3.2', 'P3.3', 'P3.4', 'P3.5', 'P3.6',
+]);
+const decisionDirectory = resolve(root, 'docs/ai/task-decisions');
+if (existsSync(decisionDirectory)) {
+  const records = readdirSync(decisionDirectory)
+    .filter((name) => name.toLowerCase().endsWith('.md'))
+    .map((name) => ({ path: `docs/ai/task-decisions/${name}`, text: read(`docs/ai/task-decisions/${name}`) }));
+  const decisionValidation = validateTaskDecisions({ records, knownTaskIds: [...knownTaskIds] });
+  for (const error of decisionValidation.errors) fail(error);
+  const archiveDirectory = resolve(root, 'docs/ai/handoffs');
+  if (existsSync(archiveDirectory)) {
+    for (const name of readdirSync(archiveDirectory).filter((entry) => entry.toLowerCase().endsWith('.md'))) {
+      const archivePath = `docs/ai/handoffs/${name}`;
+      for (const error of validateDecisionReferences({ text: read(archivePath), knownDecisionIds: decisionValidation.ids, source: archivePath })) fail(error);
+    }
+  }
+}
+
 if (requiresHandoffArchive(completedTaskId)) {
   const archivePaths = handoffArchivePaths(completedTaskId);
   const archivePath = archivePaths.find((candidate) => has(candidate));

@@ -2,35 +2,36 @@
 
 ## Status
 
-Phase 3 — READY / AWAITING USER REQUIREMENTS.
+P3.6 — AUTHORIZED / NOT STARTED.
 
-Phase 3 is the next planned development phase, but its implementation scope is currently pending user-defined requirements. Phase 3 implementation has NOT started. The Coding AI must not invent or assume a Phase 3 feature list.
+## NEXT TASK
 
-## Required next action
+P3.6 — Integrated Verification and Handoff
 
-Wait for the project owner to provide the actual Phase 3 requirements. Do not select a task from old roadmap items, known issues, or AI suggestions, even if asked to continue.
+## OBJECTIVE
 
-## Future direction only
+Integrate the continuity validators, decision records, verification evidence, handoff archives, and Git freshness checks into one documented end-to-end verification path without changing BizFlow application behavior.
 
-After Phase 3 or in a suitable later phase, BizFlow may evolve toward:
+## ACCEPTANCE CRITERIA
 
-**Offline-First + User Account + Cloud Sync + Multi-Device App**
+- Read the repository instructions and current AI state before changes.
+- Preserve P3.1–P3.5 behavior and historical records.
+- Add focused tests for any integration behavior changed.
+- Keep application/business code untouched unless explicitly required.
+- Run the complete verification suite and capture evidence.
+- Create the required P3.6 handoff.
 
-Future Cloud Readiness is not Current Cloud Implementation. A future phase may introduce user accounts, authentication, cloud sync, and multi-device synchronization, but none of those are current scope. Do not add cloud services, authentication, sync infrastructure, migrations, APIs, or speculative architecture changes now.
+## VERIFICATION COMMANDS
 
-## Session handoff record
+- `npm run typecheck`
+- `npm run test`
+- `npm run build`
+- `npm run verify:imports`
+- `npm run verify:locked`
+- `npm run verify:ai`
+- `npm run verify:git-freshness`
+- `npm run verify`
 
-**Purpose:** Update the persistent AI-to-AI Handoff System with the Phase 3 waiting state and future expansion direction.
+## RESTRICTIONS
 
-**Work performed:**
-- Inspected the existing project AI state and handoff system.
-- Recorded Phase 3 as ready and awaiting user requirements.
-- Recorded the future Offline-First + Account + Cloud Sync + Multi-Device direction.
-- Explicitly recorded that future capabilities are not being implemented now.
-
-**Work not performed:**
-- No Phase 3 feature implementation.
-- No cloud, account, authentication, sync, or multi-device implementation.
-- No speculative architecture migration or source-code behavior change.
-
-**Next action:** Wait for the user to provide the actual Phase 3 requirements.
+Do not start cloud sync, authentication, accounts, Supabase, Firebase, or application features. Do not rewrite historical decision records or weaken P3.2, P3.3, P3.4, or P3.5 validation.

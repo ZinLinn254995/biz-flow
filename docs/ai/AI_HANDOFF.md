@@ -6,11 +6,11 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P3.3 — COMPLETE
+P3.5 — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P3.3 — Captured Verification Evidence.
+P3.5 — Task-Level Decision Records.
 
 The existing `verify:ai` workflow now requires a machine-validated archive for completed Phase 3 tasks, including task identity and required continuity sections.
 
