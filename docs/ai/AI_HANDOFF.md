@@ -6,7 +6,7 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P4.1 — Sync-Ready Domain Contracts — COMPLETE
+P3.7 — AI Continuity Documentation & State Hygiene Hardening — COMPLETE
 
 ## LAST COMPLETED TASK
 
@@ -28,7 +28,7 @@ items now derive the total; no assertion was removed.
 
 ## CURRENT TASK
 
-`AI_STATE.json` -> `currentTask` is `null` and `nextTask` is `null`. P4.1 is complete and verified. The implementation was limited to provider-neutral sync-ready contracts, focused tests, and continuity documentation; no authentication, network, cloud, queue, or multi-device behavior is authorized.
+`AI_STATE.json` -> `currentTask` and `nextTask` are both `null`. P3.7 is complete, the working tree is consistent and fully verified, and development status is `PAUSED_AWAITING_INSTRUCTIONS`. Do not select or invent another task; wait for explicit owner requirements.
 
 ## TASK STATUS VOCABULARY
 
@@ -37,7 +37,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-None — P4.1 is complete and the project is paused. Do not begin P4.2 or implement authentication, cloud transport, sync queues, migration execution, conflict UI, or multi-device behavior.
+None — P3.7 is complete and the project is paused awaiting explicit owner requirements. Do not invent P3.8, revive historical P2P tasks, or implement cloud, account, authentication, sync, or multi-device behavior.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
