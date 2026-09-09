@@ -1,0 +1,26 @@
+P3.1 verification evidence
+Date: 2026-09-09
+
+npm run typecheck
+PASS — tsc --noEmit -p tsconfig.app.json
+
+npm run test -- --run src/test/aiStateValidation.test.ts
+PASS — 1 test file, 11 tests
+
+npm run test -- --run
+PASS — 48 test files, 543 tests
+
+npm run build
+PASS — vite production build completed; existing >500 kB chunk warning remains
+
+npm run verify:imports
+PASS — all relative imports resolve
+
+npm run verify:locked
+PASS — 8 changed paths inspected
+
+npm run verify:ai
+PASS — AI state validation passed (17 docs checked, 0 warnings)
+
+npm run verify
+PASS — typecheck, tests, build, import checks, locked-area checks, and AI-state checks all passed

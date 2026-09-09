@@ -15,9 +15,11 @@ import {
   DEVELOPMENT_STATUSES,
   collectContinuityDocuments,
   handoffArchivePaths,
+  isCapturedVerificationEvidence,
   requiresHandoffArchive,
   validateContinuity,
   validateHandoffArchive,
+  validateVerificationEvidence,
 } from './ai-state-validation.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -126,6 +128,23 @@ for (const gate of ['tests', 'typescript', 'productionBuild']) {
 const allGreen = ['tests', 'typescript', 'productionBuild'].every((g) => quality[g]?.status === 'passing');
 if (need('currentMilestone.status') === 'COMPLETE' && !allGreen) {
   fail('currentMilestone is COMPLETE but quality gates are not all "passing". Verification must succeed first.');
+}
+
+const verificationResults = quality.verificationRun?.results ?? [];
+for (const result of verificationResults) {
+  const evidencePath = typeof result?.result === 'string' ? result.result : '';
+  if (!evidencePath || !has(evidencePath) || !isCapturedVerificationEvidence(read(evidencePath))) continue;
+  const evidenceErrors = validateVerificationEvidence({
+    taskId: need('lastCompletedTask.id'),
+    commitSha: result.commitSha,
+    text: read(evidencePath),
+  });
+  for (const error of evidenceErrors) fail(error);
+}
+
+if (requiresHandoffArchive(need('lastCompletedTask.id')) && String(need('lastCompletedTask.id')).toUpperCase() === 'P3.3') {
+  const evidencePath = verificationResults.map((result) => result?.result).find((path) => typeof path === 'string' && /P3\.3\.log$/i.test(path));
+  if (!evidencePath || !has(evidencePath)) fail('Completed P3.3 requires captured verification evidence at docs/ai/verification-logs/P3.3.log.');
 }
 
 // Referenced files must exist.

@@ -149,3 +149,55 @@ export function handoffArchivePaths(taskId) {
 export function requiresHandoffArchive(taskId) {
   return /^P3\.\d+$/i.test(String(taskId ?? ''));
 }
+
+export const REQUIRED_VERIFICATION_COMMANDS = [
+  'typecheck',
+  'test',
+  'build',
+  'verify:imports',
+  'verify:locked',
+  'verify:ai',
+  'verify',
+];
+
+export function validateVerificationEvidence({ taskId, commitSha, text, requiredCommands = REQUIRED_VERIFICATION_COMMANDS }) {
+  const errors = [];
+  let evidence;
+  try {
+    evidence = JSON.parse(String(text ?? ''));
+  } catch {
+    return [`Verification evidence for ${taskId} is not machine-readable captured evidence.`];
+  }
+
+  if (evidence.schemaVersion !== 1) errors.push(`Verification evidence for ${taskId} has an unsupported schemaVersion.`);
+  if (evidence.taskId !== taskId) errors.push(`Verification evidence task ID does not match ${taskId}.`);
+  if (!/^[0-9a-f]{40}$/i.test(String(evidence.commitSha ?? ''))) errors.push(`Verification evidence for ${taskId} has no valid commit SHA.`);
+  if (commitSha && evidence.commitSha !== commitSha) errors.push(`Verification evidence commit SHA does not match ${commitSha}.`);
+  if (evidence.status !== 'PASS') errors.push(`Verification evidence for ${taskId} must have overall status PASS.`);
+  if (!Array.isArray(evidence.commands) || evidence.commands.length === 0) {
+    errors.push(`Verification evidence for ${taskId} has no command records.`);
+    return errors;
+  }
+
+  const byCommand = new Map(evidence.commands.map((command) => [command.name, command]));
+  for (const name of requiredCommands) {
+    const command = byCommand.get(name);
+    if (!command) {
+      errors.push(`Verification evidence for ${taskId} is missing command "npm run ${name}".`);
+      continue;
+    }
+    if (command.exitCode !== 0) errors.push(`Verification command "npm run ${name}" did not pass.`);
+    if (typeof command.stdout !== 'string' && typeof command.stderr !== 'string') errors.push(`Verification command "npm run ${name}" has no captured output.`);
+    if (!String(command.stdout ?? '').trim() && !String(command.stderr ?? '').trim()) errors.push(`Verification command "npm run ${name}" has empty captured output.`);
+  }
+  return errors;
+}
+
+export function isCapturedVerificationEvidence(text) {
+  try {
+    const evidence = JSON.parse(String(text ?? ''));
+    return evidence?.schemaVersion === 1 && Array.isArray(evidence.commands);
+  } catch {
+    return false;
+  }
+}
