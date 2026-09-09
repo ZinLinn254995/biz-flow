@@ -6,11 +6,11 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P3.6 — COMPLETE
+P3.7 — AI Continuity Documentation & State Hygiene Hardening — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P3.6 — Integrated Verification and Handoff.
+P3.7 — AI Continuity Documentation & State Hygiene Hardening.
 
 The existing `verify:ai` workflow now requires a machine-validated archive for completed Phase 3 tasks, including task identity and required continuity sections.
 
@@ -28,8 +28,7 @@ items now derive the total; no assertion was removed.
 
 ## CURRENT TASK
 
-`AI_STATE.json` -> `currentTask` is `null`. Nothing is in flight; the working tree is
-consistent and fully verified. Development status is `PAUSED_AWAITING_INSTRUCTIONS`. Phase 3 is READY but awaiting explicit user-defined requirements; do not select or start a task.
+`AI_STATE.json` -> `currentTask` and `nextTask` are both `null`. P3.7 is complete, the working tree is consistent and fully verified, and development status is `PAUSED_AWAITING_INSTRUCTIONS`. Do not select or invent another task; wait for explicit owner requirements.
 
 ## TASK STATUS VOCABULARY
 
@@ -38,7 +37,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-None — wait for the project owner to provide Phase 3 requirements. Phase 3 implementation has not started; do not invent features or implement cloud, account, authentication, sync, or multi-device behavior.
+None — P3.7 is complete and the project is paused awaiting explicit owner requirements. Do not invent P3.8, revive historical P2P tasks, or implement cloud, account, authentication, sync, or multi-device behavior.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
