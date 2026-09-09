@@ -28,11 +28,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
 const warnings = [];
 
-if (process.env.REQUIRE_GIT_FRESHNESS === '1') {
-  const freshness = inspectGitFreshness({ fetch: true });
-  if (!freshness.safe) {
-    errors.push(`Git freshness ${freshness.state}: ${freshness.reason}`);
-  }
+const freshness = inspectGitFreshness({ fetch: true });
+if (!freshness.safe) {
+  errors.push(`Git freshness ${freshness.state}: ${freshness.reason}`);
 }
 
 const fail = (m) => errors.push(m);

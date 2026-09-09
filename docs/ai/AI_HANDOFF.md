@@ -6,7 +6,7 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P3.5 — COMPLETE
+P3.6 — COMPLETE
 
 ## LAST COMPLETED TASK
 

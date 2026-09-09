@@ -156,6 +156,7 @@ export const REQUIRED_VERIFICATION_COMMANDS = [
   'build',
   'verify:imports',
   'verify:locked',
+  'verify:git-freshness',
   'verify:ai',
   'verify',
 ];
