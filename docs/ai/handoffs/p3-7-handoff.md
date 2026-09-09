@@ -10,6 +10,7 @@ Align canonical AI-facing state documents so completed P3.7 work cannot be mista
 
 ## TASK COMPLETION
 
+- **Task ID:** P3.7
 - **Task Name:** AI Continuity Documentation & State Hygiene Hardening
 - **Status:** COMPLETE
 
