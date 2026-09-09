@@ -8,10 +8,10 @@
 
 ## Current State
 
-- **Milestone:** P3.7 — AI Continuity Documentation & State Hygiene Hardening COMPLETE
+- **Milestone:** P4.1 — Sync-Ready Domain Contracts COMPLETE
 - **Development status:** `PAUSED_AWAITING_INSTRUCTIONS`
-- **Phase 3:** P3.7 is complete; no implementation task is active
-- **Tests:** 568 passing (50 files)
+- **Phase 4:** P4.1 is complete; no implementation task is active
+- **Tests:** 572 passing (51 files)
 - **TypeScript:** PASS
 - **Build:** PASS
 - **Next task:** None — wait for the user to define Phase 3 requirements

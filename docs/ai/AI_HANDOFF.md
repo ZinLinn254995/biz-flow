@@ -6,7 +6,7 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P4.1 — Sync-Ready Domain Contracts — IN_PROGRESS
+P4.1 — Sync-Ready Domain Contracts — COMPLETE
 
 ## LAST COMPLETED TASK
 
@@ -28,7 +28,7 @@ items now derive the total; no assertion was removed.
 
 ## CURRENT TASK
 
-`AI_STATE.json` -> `currentTask` is P4.1 and `nextTask` is `null`. P4.1 is authorized and in progress. The implementation is limited to provider-neutral sync-ready contracts, focused tests, and continuity documentation; no authentication, network, cloud, queue, or multi-device behavior is authorized.
+`AI_STATE.json` -> `currentTask` is `null` and `nextTask` is `null`. P4.1 is complete and verified. The implementation was limited to provider-neutral sync-ready contracts, focused tests, and continuity documentation; no authentication, network, cloud, queue, or multi-device behavior is authorized.
 
 ## TASK STATUS VOCABULARY
 
@@ -37,7 +37,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-None — P4.1 is the only active milestone. Do not begin P4.2 or implement authentication, cloud transport, sync queues, migration execution, conflict UI, or multi-device behavior.
+None — P4.1 is complete and the project is paused. Do not begin P4.2 or implement authentication, cloud transport, sync queues, migration execution, conflict UI, or multi-device behavior.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 

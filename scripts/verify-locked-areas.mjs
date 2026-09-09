@@ -18,7 +18,7 @@ for (const file of changed) {
   const area = lockedAreas.find((entry) => matches(file, entry.path));
   if (!area) continue;
   if (area.status === 'LOCKED') errors.push(`${file} is LOCKED (${area.reason ?? 'no reason'})`);
-  if (area.status === 'PROTECTED' && !state.currentTask?.lockedFileOverrideReason?.trim()) errors.push(`${file} is PROTECTED and currentTask.lockedFileOverrideReason is missing`);
+  if (area.status === 'PROTECTED' && !(state.currentTask?.lockedFileOverrideReason ?? state.lockedFileOverrideReason)?.trim()) errors.push(`${file} is PROTECTED and a locked-file override reason is missing`);
 }
 if (errors.length) { for (const error of errors) console.error(`FAIL ${error}`); process.exit(1); }
 console.log(`Locked-area guard PASSED (${changed.size} changed path(s) inspected).`);
