@@ -2,6 +2,17 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## P3.2 — 2026-09-09
+
+### Added
+- Machine-validated per-task handoff archive enforcement for completed Phase 3 tasks.
+- Required archive sections, task identity checks, and compatibility with the existing P3.1 archive name.
+
+### Verification
+- Focused validator tests and full repository verification are recorded in the P3.2 handoff and verification log.
+
+---
+
 ## P2P28 — 2026-09-08
 
 ### Added

@@ -4,6 +4,20 @@ export const DEVELOPMENT_STATUSES = [
   'BLOCKED_ON_HUMAN_DECISION',
 ];
 
+export const HANDOFF_REQUIRED_HEADINGS = [
+  'TASK ID',
+  'OBJECTIVE',
+  'WHAT WAS CHANGED',
+  'FILES CHANGED',
+  'RATIONALE',
+  'VERIFICATION',
+  'KNOWN ISSUES',
+  'REMAINING WORK',
+  'NEXT TASK',
+  'RESTRICTIONS',
+  'GIT STATE',
+];
+
 const firstMatch = (text, patterns) => {
   for (const pattern of patterns) {
     const match = text.match(pattern);
@@ -92,4 +106,46 @@ export function collectContinuityDocuments(read, has) {
     'AI_HANDOFF.md': has('docs/ai/AI_HANDOFF.md') ? read('docs/ai/AI_HANDOFF.md') : '',
     'CURRENT_STATE.md': has('docs/ai/CURRENT_STATE.md') ? read('docs/ai/CURRENT_STATE.md') : '',
   };
+}
+
+export function validateHandoffArchive({ taskId, text }) {
+  const errors = [];
+  const fail = (message) => errors.push(message);
+  const content = String(text ?? '').trim();
+
+  if (!content) {
+    fail(`Handoff archive for ${taskId} is empty.`.replace('empty', 'empty'));
+    return errors;
+  }
+
+  const taskIdMatch = content.match(/(?:task id|task identity)\s*[:：-]\s*(?:[*`_\s]|\[[^\]]*\])*([A-Za-z0-9._-]+)/i)
+    ?? content.match(/(?:^|\n)#+\s*(?:task id|task identity)\s*\n+\s*([A-Za-z0-9._-]+)/i);
+  if (!taskIdMatch || taskIdMatch[1] !== taskId) {
+    fail(`Handoff archive task identity does not match ${taskId}.`);
+  }
+
+  for (const heading of HANDOFF_REQUIRED_HEADINGS) {
+    const headingPattern = new RegExp(`(?:^|\\n)#+\\s*(?:${heading.replace(/ /g, '\\s+')})(?:\\s|$)`, 'i');
+    if (!headingPattern.test(content)) {
+      fail(`Handoff archive for ${taskId} is missing required section "${heading}".`);
+    }
+  }
+
+  return errors;
+}
+
+export function handoffArchivePath(taskId) {
+  return `docs/ai/handoffs/${String(taskId).toLowerCase().replace(/[^a-z0-9]+/g, '-')}-handoff.md`;
+}
+
+export function handoffArchivePaths(taskId) {
+  const canonical = handoffArchivePath(taskId);
+  if (String(taskId).toUpperCase() === 'P3.1') {
+    return [canonical, 'docs/ai/handoffs/P3.1-state-handoff-consistency.md'];
+  }
+  return [canonical];
+}
+
+export function requiresHandoffArchive(taskId) {
+  return /^P3\.\d+$/i.test(String(taskId ?? ''));
 }
