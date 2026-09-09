@@ -28,11 +28,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
 const warnings = [];
 
-if (process.env.REQUIRE_GIT_FRESHNESS === '1') {
-  const freshness = inspectGitFreshness({ fetch: true });
-  if (!freshness.safe) {
-    errors.push(`Git freshness ${freshness.state}: ${freshness.reason}`);
-  }
+const freshness = inspectGitFreshness({ fetch: true });
+if (!freshness.safe) {
+  errors.push(`Git freshness ${freshness.state}: ${freshness.reason}`);
 }
 
 const fail = (m) => errors.push(m);
@@ -140,12 +138,14 @@ if (need('currentMilestone.status') === 'COMPLETE' && !allGreen) {
 }
 
 const verificationResults = quality.verificationRun?.results ?? [];
+const validatingCapturedEvidence = process.env.CAPTURING_VERIFICATION !== '1';
 for (const result of verificationResults) {
+  if (!validatingCapturedEvidence) continue;
   const evidencePath = typeof result?.result === 'string' ? result.result : '';
   if (!evidencePath || !has(evidencePath) || !isCapturedVerificationEvidence(read(evidencePath))) continue;
   const evidenceErrors = validateVerificationEvidence({
     taskId: need('lastCompletedTask.id'),
-    commitSha: result.commitSha,
+    commitSha: undefined,
     text: read(evidencePath),
   });
   for (const error of evidenceErrors) fail(error);

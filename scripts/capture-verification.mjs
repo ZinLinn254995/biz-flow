@@ -10,13 +10,17 @@ const taskId = process.env.VERIFICATION_TASK_ID ?? state.currentTask?.id ?? stat
 const safeId = String(taskId).replace(/[^A-Za-z0-9._+-]/g, '_');
 const logPath = resolve(root, 'docs/ai/verification-logs', `${safeId}.log`);
 mkdirSync(dirname(logPath), { recursive: true });
-const commands = ['typecheck', 'test', 'build', 'verify:imports', 'verify:locked', 'verify:ai', 'verify'];
+const commands = ['typecheck', 'test', 'build', 'verify:imports', 'verify:locked', 'verify:git-freshness', 'verify:ai', 'verify'];
 const startedAt = new Date().toISOString();
 const commitSha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim();
 const branch = spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim();
 const records = [];
 for (const command of commands) {
-  const result = spawnSync('npm', ['run', command], { cwd: root, encoding: 'utf8' });
+  const result = spawnSync('npm', ['run', command], {
+    cwd: root,
+    encoding: 'utf8',
+    env: { ...process.env, CAPTURING_VERIFICATION: '1' },
+  });
   records.push({
     name: command,
     command: `npm run ${command}`,

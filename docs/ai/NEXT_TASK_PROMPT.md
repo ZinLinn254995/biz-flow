@@ -2,11 +2,11 @@
 
 ## Status
 
-P3.6 — AUTHORIZED / NOT STARTED.
+P3.7 — NOT STARTED; await explicit owner requirements.
 
 ## NEXT TASK
 
-P3.6 — Integrated Verification and Handoff
+P3.7 — Phase 3 Continuation Requirements
 
 ## OBJECTIVE
 

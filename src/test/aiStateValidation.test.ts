@@ -142,7 +142,7 @@ describe('captured verification evidence validation', () => {
     taskId: 'P3.3',
     commitSha,
     status: 'PASS',
-    commands: ['typecheck', 'test', 'build', 'verify:imports', 'verify:locked', 'verify:ai', 'verify'].map((name) => ({
+    commands: ['typecheck', 'test', 'build', 'verify:imports', 'verify:locked', 'verify:git-freshness', 'verify:ai', 'verify'].map((name) => ({
       name,
       command: `npm run ${name}`,
       exitCode: 0,
@@ -162,6 +162,12 @@ describe('captured verification evidence validation', () => {
     expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ taskId: 'P3.2' }) }).some((error: string) => error.includes('task ID'))).toBe(true);
     expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ commitSha: 'b'.repeat(40) }) }).some((error: string) => error.includes('commit SHA'))).toBe(true);
     expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ commands: [] }) }).some((error: string) => error.includes('no command records'))).toBe(true);
+  });
+
+  it('requires Git freshness in the default evidence contract', () => {
+    const commands = JSON.parse(evidence()).commands.filter(({ name }: { name: string }) => name !== 'verify:git-freshness');
+    const errors = validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ commands }) });
+    expect(errors.some((error: string) => error.includes('verify:git-freshness'))).toBe(true);
   });
 
   it('rejects missing output, exit status, and failed commands', () => {
