@@ -6,11 +6,13 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P2P28 — COMPLETE
+P3.1 — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P2P25 — Analytics Page.
+P3.1 — State and Handoff Consistency Validator.
+
+Business deletion now removes all business-owned child records atomically through the injected transaction boundary.
 
 Analytics now combines sales, personal income, business expenses, and personal expenses into multi-currency totals, six-month activity bars, and net position cards.
 
