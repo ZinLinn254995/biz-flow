@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P3.7 is complete. No implementation task is active; preserve the continuity contract and await explicit owner requirements.",
+  "developmentStatus": "ACTIVE",
+  "pauseNote": null,
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -39,10 +39,9 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P3.7",
-    "name": "AI Continuity Documentation & State Hygiene Hardening",
-    "status": "COMPLETE",
-    "verifiedDate": "2026-09-09"
+    "id": "P4.1",
+    "name": "Sync-Ready Domain Contracts",
+    "status": "IN_PROGRESS"
   },
   "lastCompletedTask": {
     "id": "P3.7",
@@ -52,7 +51,19 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P4.1",
+    "name": "Sync-Ready Domain Contracts",
+    "status": "IN_PROGRESS",
+    "startedDate": "2026-09-09",
+    "confidence": "high",
+    "needsHumanReview": false,
+    "filesTouched": ["src/types/syncContracts.ts", "src/types/index.ts", "src/test/syncContracts.test.ts", "docs/ai/P4.1_SYNC_READY_CONTRACTS.md"],
+    "completedWork": ["Defined provider-neutral synchronization metadata, entity classification, ownership, revision, tombstone, state, schema, and migration contracts."],
+    "remainingWork": ["Run authoritative verification, finalize handoff, and synchronize the merged main branch."],
+    "lockedFileOverrideReason": "P4.1 adds the provider-neutral sync contract export to the protected type barrel so the new contract is part of the public type surface; no existing domain or repository contract is changed.",
+    "verification": { "typecheck": "not run", "tests": "not run", "build": "not run" }
+  },
   "nextTask": null,
   "progress": {
     "completedMilestones": [
@@ -92,10 +103,10 @@
       "P3.6",
       "P3.7"
     ],
-    "remainingMilestones": [],
+    "remainingMilestones": ["P4.1"],
     "totalCompleted": 35,
-    "totalRemaining": 0,
-    "percentage": 100
+    "totalRemaining": 1,
+    "percentage": 97
   },
   "quality": {
     "tests": {
