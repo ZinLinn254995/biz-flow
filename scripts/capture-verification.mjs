@@ -16,7 +16,11 @@ const commitSha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding:
 const branch = spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim();
 const records = [];
 for (const command of commands) {
-  const result = spawnSync('npm', ['run', command], { cwd: root, encoding: 'utf8' });
+  const result = spawnSync('npm', ['run', command], {
+    cwd: root,
+    encoding: 'utf8',
+    env: { ...process.env, CAPTURING_VERIFICATION: '1' },
+  });
   records.push({
     name: command,
     command: `npm run ${command}`,

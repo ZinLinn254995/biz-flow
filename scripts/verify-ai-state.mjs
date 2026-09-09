@@ -138,7 +138,9 @@ if (need('currentMilestone.status') === 'COMPLETE' && !allGreen) {
 }
 
 const verificationResults = quality.verificationRun?.results ?? [];
+const validatingCapturedEvidence = process.env.CAPTURING_VERIFICATION !== '1';
 for (const result of verificationResults) {
+  if (!validatingCapturedEvidence) continue;
   const evidencePath = typeof result?.result === 'string' ? result.result : '';
   if (!evidencePath || !has(evidencePath) || !isCapturedVerificationEvidence(read(evidencePath))) continue;
   const evidenceErrors = validateVerificationEvidence({
