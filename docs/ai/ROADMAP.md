@@ -1,6 +1,14 @@
 # BizFlow — Development Roadmap
 
-> **Development paused:** All planned milestones are complete. Development is paused pending a new roadmap phase for account-based online/offline sync; do not pick a next task from old low-priority issues or invent Phase 3 features without new instructions. Phase 3 is READY / awaiting user requirements; its implementation has not started. Future direction only: Offline-First + User Account + Cloud Sync + Multi-Device App; future cloud readiness is not current cloud implementation.
+> **Development paused:** P3.1-P3.7 are complete. Development is paused pending explicit owner requirements for a new roadmap phase; do not pick a next task from old issues, invent P3.8, or treat the future account/sync direction as authorization. Future direction only: Offline-First + User Account + Cloud Sync + Multi-Device App; future cloud readiness is not current cloud implementation.
+
+## Phase 3 Continuity Hardening
+
+### P3.7 — AI Continuity Documentation & State Hygiene Hardening
+- **Status:** COMPLETE
+- **Objective:** Align startup, handoff, state, roadmap, and next-task documentation so paused state cannot be mistaken for executable work.
+- **Scope:** AI-facing documentation and narrowly scoped continuity validation only; no application behavior changes.
+- **Historical note:** P3.1-P3.6 remain preserved in their original records.
 
 ## Completed Tasks
 
