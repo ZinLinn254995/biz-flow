@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:ai": "node scripts/verify-ai-state.mjs",
+    "verify:git-freshness": "node scripts/git-freshness.mjs",
     "verify:capture": "node scripts/capture-verification.mjs",
     "verify:imports": "node scripts/check-dangling-imports.mjs",
     "verify:locked": "node scripts/verify-locked-areas.mjs",

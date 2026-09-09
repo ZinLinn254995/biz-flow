@@ -11,6 +11,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inspectGitFreshness } from './git-freshness.mjs';
 import {
   DEVELOPMENT_STATUSES,
   collectContinuityDocuments,
@@ -25,6 +26,13 @@ import {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
 const warnings = [];
+
+if (process.env.REQUIRE_GIT_FRESHNESS === '1') {
+  const freshness = inspectGitFreshness({ fetch: true });
+  if (!freshness.safe) {
+    errors.push(`Git freshness ${freshness.state}: ${freshness.reason}`);
+  }
+}
 
 const fail = (m) => errors.push(m);
 const warn = (m) => warnings.push(m);
