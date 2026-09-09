@@ -6,20 +6,35 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const state = JSON.parse(readFileSync(resolve(root, 'docs/ai/AI_STATE.json'), 'utf8'));
-const taskId = state.currentTask?.id ?? state.nextTask?.id ?? state.currentMilestone?.id ?? 'verification';
+const taskId = process.env.VERIFICATION_TASK_ID ?? state.currentTask?.id ?? state.nextTask?.id ?? state.currentMilestone?.id ?? 'verification';
 const safeId = String(taskId).replace(/[^A-Za-z0-9._+-]/g, '_');
 const logPath = resolve(root, 'docs/ai/verification-logs', `${safeId}.log`);
 mkdirSync(dirname(logPath), { recursive: true });
-const commands = ['typecheck', 'test', 'build'];
-const chunks = [`Verification started ${new Date().toISOString()}`, ''];
-let exitCode = 0;
+const commands = ['typecheck', 'test', 'build', 'verify:imports', 'verify:locked', 'verify:ai', 'verify'];
+const startedAt = new Date().toISOString();
+const commitSha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim();
+const branch = spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim();
+const records = [];
 for (const command of commands) {
-  chunks.push(`$ npm run ${command}`);
   const result = spawnSync('npm', ['run', command], { cwd: root, encoding: 'utf8' });
-  chunks.push(result.stdout ?? '', result.stderr ?? '', `exitCode=${result.status ?? 1}`, '');
-  if (result.status !== 0) exitCode = result.status ?? 1;
+  records.push({
+    name: command,
+    command: `npm run ${command}`,
+    exitCode: result.status ?? 1,
+    stdout: result.stdout ?? '',
+    stderr: result.stderr ?? '',
+  });
 }
-chunks.push(`Verification finished ${new Date().toISOString()}`);
-writeFileSync(logPath, chunks.join('\n'));
+const evidence = {
+  schemaVersion: 1,
+  taskId,
+  commitSha,
+  branch,
+  startedAt,
+  finishedAt: new Date().toISOString(),
+  status: records.every(({ exitCode }) => exitCode === 0) ? 'PASS' : 'FAIL',
+  commands: records,
+};
+writeFileSync(logPath, `${JSON.stringify(evidence, null, 2)}\n`);
 console.log(`Verification evidence written to ${logPath.replace(`${root}/`, '')}`);
-process.exit(exitCode);
+process.exit(evidence.status === 'PASS' ? 0 : 1);

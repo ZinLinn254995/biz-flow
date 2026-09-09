@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-ignore The validator is an executable Node module outside the app TypeScript project.
-import { DEVELOPMENT_STATUSES, handoffArchivePath, requiresHandoffArchive, validateContinuity, validateHandoffArchive } from '../../scripts/ai-state-validation.mjs';
+import { DEVELOPMENT_STATUSES, handoffArchivePath, isCapturedVerificationEvidence, requiresHandoffArchive, validateContinuity, validateHandoffArchive, validateVerificationEvidence } from '../../scripts/ai-state-validation.mjs';
 
 const state = (overrides: Record<string, unknown> = {}) => ({
   developmentStatus: 'PAUSED_AWAITING_INSTRUCTIONS',
@@ -132,5 +132,47 @@ Merged to main after verification.
     expect(requiresHandoffArchive('P3.2')).toBe(true);
     expect(requiresHandoffArchive('P2P28')).toBe(false);
     expect(handoffArchivePath('P3.2')).toBe('docs/ai/handoffs/p3-2-handoff.md');
+  });
+});
+
+describe('captured verification evidence validation', () => {
+  const commitSha = 'a'.repeat(40);
+  const evidence = (overrides: Record<string, unknown> = {}) => JSON.stringify({
+    schemaVersion: 1,
+    taskId: 'P3.3',
+    commitSha,
+    status: 'PASS',
+    commands: ['typecheck', 'test', 'build', 'verify:imports', 'verify:locked', 'verify:ai', 'verify'].map((name) => ({
+      name,
+      command: `npm run ${name}`,
+      exitCode: 0,
+      stdout: `${name} output`,
+      stderr: '',
+    })),
+    ...overrides,
+  });
+
+  it('accepts complete captured evidence with matching task and commit', () => {
+    expect(isCapturedVerificationEvidence(evidence())).toBe(true);
+    expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence() })).toEqual([]);
+  });
+
+  it('rejects missing, mismatched, or incomplete provenance', () => {
+    expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: '' }).length).toBeGreaterThan(0);
+    expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ taskId: 'P3.2' }) }).some((error: string) => error.includes('task ID'))).toBe(true);
+    expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ commitSha: 'b'.repeat(40) }) }).some((error: string) => error.includes('commit SHA'))).toBe(true);
+    expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ commands: [] }) }).some((error: string) => error.includes('no command records'))).toBe(true);
+  });
+
+  it('rejects missing output, exit status, and failed commands', () => {
+    const commands = JSON.parse(evidence()).commands;
+    commands[0].stdout = '';
+    commands[1].exitCode = undefined;
+    commands[2].exitCode = 1;
+    expect(validateVerificationEvidence({ taskId: 'P3.3', commitSha, text: evidence({ commands, status: 'PASS' }) }).length).toBeGreaterThan(0);
+  });
+
+  it('does not treat legacy prose summaries as captured evidence', () => {
+    expect(isCapturedVerificationEvidence('Command: npm run test\nResult: PASS')).toBe(false);
   });
 });

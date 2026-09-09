@@ -1,0 +1,22 @@
+P3.2 verification evidence
+
+Command: npm run typecheck
+Result: PASS
+
+Command: npm run test
+Result: PASS — 48 test files, 548 tests
+
+Command: npm run build
+Result: PASS — existing 537.67 kB bundle warning
+
+Command: npm run verify:imports
+Result: PASS — all relative imports resolve
+
+Command: npm run verify:locked
+Result: PASS
+
+Command: npm run verify:ai
+Result: PASS — 17 documents checked, 0 warnings
+
+Command: npm run verify
+Result: PASS

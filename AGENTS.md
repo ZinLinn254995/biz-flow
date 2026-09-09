@@ -376,9 +376,11 @@ The same five steps run in CI on every push via `.github/workflows/ai-verify.yml
 Use **Node 22** — the architecture constraint tests call `node:fs` `globSync`, which does not exist on Node 20.
 The workflow is verification only — it never modifies source and never generates code.
 
-## V. GitHub Source of Truth
+  ## V. GitHub Source of Truth
 
-The repository `https://github.com/ZinLinn254995/biz-flow` (branch `main`) is the
+  Before committing or pushing an operation that requires current state, the AI must run `npm run verify:git-freshness` (or `REQUIRE_GIT_FRESHNESS=1 npm run verify:ai`). Fresh means a successful fetch established that the clean local history is either `main` at `origin/main` or a feature branch whose merge base is the current `origin/main`. Stale means local history is behind, diverged means histories have no current merge base, dirty means uncommitted changes exist, and remote-unavailable/unknown means freshness was not established. These states never silently pass; the AI must stop and reassess rather than guess. Reading or local testing may use non-strict verification, but commit/push/synchronization claims require strict freshness and a fetch/re-check.
+
+  The repository `https://github.com/ZinLinn254995/biz-flow` (branch `main`) is the
 only source of truth for project state. Chat transcripts are not.
 
 A handoff is complete only when code, tests, and updated `docs/ai/*` state are
