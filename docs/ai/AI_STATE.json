@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "ACTIVE",
-  "pauseNote": "P3.4 is explicitly authorized. Git freshness must be established before operations that require current authoritative state.",
+  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
+  "pauseNote": "P3.4 is complete. Before committing or pushing where freshness matters, AI sessions must establish current origin/main state using the Git freshness checker. The future direction remains account-based sync; no AI should invent or start work in the meantime.",
   "phase3": {
   "status": "P3.4_IN_PROGRESS",
   "implementationStarted": true,

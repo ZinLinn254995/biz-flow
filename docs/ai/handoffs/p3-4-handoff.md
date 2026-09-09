@@ -1,7 +1,7 @@
 # P3.4 — Git Freshness Safety Checks
 
 ## Status
-IN PROGRESS until the final commit is created and captured verification is regenerated.
+COMPLETE. Captured evidence was generated after the implementation commit and records the actual verification commands, output, and exit codes.
 
 ## Implementation
 Added `scripts/git-freshness.mjs`, which safely fetches `origin/main`, inspects branch/HEAD/remote/base/working-tree state, and classifies freshness as FRESH, STALE, DIVERGED, DIRTY, REMOTE_UNAVAILABLE, or UNKNOWN. Added `verify:git-freshness` and an opt-in strict gate to `verify:ai` via `REQUIRE_GIT_FRESHNESS=1`.
