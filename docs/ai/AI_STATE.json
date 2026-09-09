@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "ACTIVE",
+  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
   "pauseNote": "P3.6 is complete. P3.7 is not started; preserve the integrated verification contract and await explicit requirements.",
   "phase3": {
   "status": "P3.6_COMPLETE",
@@ -53,11 +53,7 @@
     "needsHumanReview": false
   },
   "currentTask": null,
-  "nextTask": {
-    "id": "P3.7",
-    "name": "Phase 3 Continuation Requirements",
-    "status": "PLANNED"
-  },
+  "nextTask": null,
   "progress": {
     "completedMilestones": [
       "P2P1",
