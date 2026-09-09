@@ -115,21 +115,22 @@
       "command": "npm run build",
       "verifiedDate": "2026-09-07"
     },
-    "verificationRun": {
-      "date": "2026-09-09",
-      "runBy": "P3.6 captured verification process",
-      "evidence": "docs/ai/verification-logs/P3.6.log",
-      "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b",
-      "environment": "clean working tree on the P3.6 feature branch",
+"verificationRun": {
+      "type": "captured",
+      "runAt": "2026-09-09T15:19:26Z",
+      "runBy": "P3.7 captured verification process",
+      "evidence": "docs/ai/verification-logs/P3.7.log",
+      "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710",
+      "environment": "clean working tree on the P3.7 continuity-hardening branch",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P3.6.log", "commitSha": "d4db68bb8f74ad9a580a5d63272aa55596c7000b" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" }
       ]
     },
     "qualityGates": {
