@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-ignore The validator is an executable Node module outside the app TypeScript project.
-import { DEVELOPMENT_STATUSES, validateContinuity } from '../../scripts/ai-state-validation.mjs';
+import { DEVELOPMENT_STATUSES, handoffArchivePath, requiresHandoffArchive, validateContinuity, validateHandoffArchive } from '../../scripts/ai-state-validation.mjs';
 
 const state = (overrides: Record<string, unknown> = {}) => ({
   developmentStatus: 'PAUSED_AWAITING_INSTRUCTIONS',
@@ -81,5 +81,56 @@ describe('AI state continuity validation', () => {
       documents: documents({ 'CURRENT_STATE.md': '| Current milestone | P2P25 |' }),
     });
     expect(result.some((error: string) => error.includes('CURRENT_STATE.md'))).toBe(true);
+  });
+});
+
+describe('task handoff archive validation', () => {
+  const validHandoff = `
+## Task ID
+P3.2
+## Objective
+Enforce durable task handoffs.
+## What Was Changed
+Added archive validation.
+## Files Changed
+- scripts/verify-ai-state.mjs
+## Rationale
+Make continuity machine-verifiable.
+## Verification
+npm run verify:ai passed.
+## Known Issues
+None.
+## Remaining Work
+P3.3.
+## Next Task
+P3.3 — Captured Verification Evidence.
+## Restrictions
+Do not implement cloud sync.
+## Git State
+Merged to main after verification.
+`;
+
+  it('accepts a complete matching handoff', () => {
+    expect(validateHandoffArchive({ taskId: 'P3.2', text: validHandoff })).toEqual([]);
+  });
+
+  it('rejects an empty handoff', () => {
+    expect(validateHandoffArchive({ taskId: 'P3.2', text: '   ' }).some((error: string) => error.includes('empty'))).toBe(true);
+  });
+
+  it('rejects a mismatched task identity', () => {
+    const errors = validateHandoffArchive({ taskId: 'P3.2', text: validHandoff.replace('P3.2', 'P3.1') });
+    expect(errors.some((error: string) => error.includes('does not match'))).toBe(true);
+  });
+
+  it('rejects a missing required section', () => {
+    const errors = validateHandoffArchive({ taskId: 'P3.2', text: validHandoff.replace('## Rationale', '') });
+    expect(errors.some((error: string) => error.includes('RATIONALE'))).toBe(true);
+  });
+
+  it('requires archives for Phase 3 tasks but preserves legacy tasks', () => {
+    expect(requiresHandoffArchive('P3.2')).toBe(true);
+    expect(requiresHandoffArchive('P2P28')).toBe(false);
+    expect(handoffArchivePath('P3.2')).toBe('docs/ai/handoffs/p3-2-handoff.md');
   });
 });

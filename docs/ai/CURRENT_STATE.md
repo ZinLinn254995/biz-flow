@@ -7,10 +7,10 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P3.1 |
-  | Last completed task | P3.1 — State and Handoff Consistency Validator |
+| Current milestone | P3.2 |
+  | Last completed task | P3.2 — Mandatory Per-Task Handoff Archive Enforcement |
   | Status | COMPLETE |
-| Next milestone | Phase 3 — READY / awaiting user requirements
+| Next milestone | P3.3 — Real Verification Evidence / awaiting explicit authorization
   | Development status | PAUSED_AWAITING_INSTRUCTIONS |
 | Implementation status | P2P1-P2P28 are complete; business deletion cascades atomically to all business-owned records |
 

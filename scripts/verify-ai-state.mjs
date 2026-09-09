@@ -11,7 +11,14 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DEVELOPMENT_STATUSES, collectContinuityDocuments, validateContinuity } from './ai-state-validation.mjs';
+import {
+  DEVELOPMENT_STATUSES,
+  collectContinuityDocuments,
+  handoffArchivePaths,
+  requiresHandoffArchive,
+  validateContinuity,
+  validateHandoffArchive,
+} from './ai-state-validation.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const errors = [];
@@ -175,6 +182,17 @@ const continuityErrors = validateContinuity({
   documents: collectContinuityDocuments(read, has),
 });
 for (const error of continuityErrors) fail(error);
+
+const completedTaskId = need('lastCompletedTask.id');
+if (requiresHandoffArchive(completedTaskId)) {
+  const archivePaths = handoffArchivePaths(completedTaskId);
+  const archivePath = archivePaths.find((candidate) => has(candidate));
+  if (!archivePath) {
+    fail(`Required handoff archive is missing for completed task ${completedTaskId}: ${archivePaths[0]}`);
+  } else {
+    for (const error of validateHandoffArchive({ taskId: completedTaskId, text: read(archivePath) })) fail(error);
+  }
+}
 
 if (!/^\d{4}-\d{2}-\d{2}$/.test(String(need('lastUpdated')))) {
   fail('lastUpdated must be an ISO date (YYYY-MM-DD).');

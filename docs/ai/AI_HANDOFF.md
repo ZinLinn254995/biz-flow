@@ -6,11 +6,13 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P3.1 — COMPLETE
+P3.2 — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P3.1 — State and Handoff Consistency Validator.
+P3.2 — Mandatory Per-Task Handoff Archive Enforcement.
+
+The existing `verify:ai` workflow now requires a machine-validated archive for completed Phase 3 tasks, including task identity and required continuity sections.
 
 Business deletion now removes all business-owned child records atomically through the injected transaction boundary.
 
