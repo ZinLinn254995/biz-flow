@@ -7,7 +7,7 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P3.2 |
+| Current milestone | P3.5 |
   | Last completed task | P3.2 — Mandatory Per-Task Handoff Archive Enforcement |
   | Status | COMPLETE |
 | Next milestone | P3.3 — Real Verification Evidence / awaiting explicit authorization

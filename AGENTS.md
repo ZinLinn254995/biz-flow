@@ -252,6 +252,8 @@ Then inspect the actual source code before making changes.
 
 ## O. Handoff Requirements
 
+  Important task-level implementation decisions MUST leave a persistent record in `docs/ai/task-decisions/` using the validated contract. Record architecture, workflow, verification, dependency, compatibility, safety, or deliberate trade-off decisions; do not record trivial renames, formatting, or mechanical edits. Link the decision ID from the task handoff, and read the task decision archive when reconstructing why the current state exists.
+
   After completing a task, the Coding AI MUST update:
   - `docs/ai/handoffs/<task-id>-handoff.md` with the final report; this archive is append-only and must never overwrite an existing report.
 
