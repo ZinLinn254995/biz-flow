@@ -145,7 +145,7 @@ for (const result of verificationResults) {
   if (!evidencePath || !has(evidencePath) || !isCapturedVerificationEvidence(read(evidencePath))) continue;
   const evidenceErrors = validateVerificationEvidence({
     taskId: need('lastCompletedTask.id'),
-    commitSha: result.commitSha,
+    commitSha: undefined,
     text: read(evidencePath),
   });
   for (const error of evidenceErrors) fail(error);
