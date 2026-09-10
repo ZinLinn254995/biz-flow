@@ -229,6 +229,14 @@
 - **Dependencies:** None
 - **Complexity:** MEDIUM
 
+### Future — AI-Assisted Financial Record Management
+- **Objective:** Allow users to interact with financial data through natural language, voice, and receipt photos using a tool-based AI interaction layer.
+- **Status:** FUTURE_DIRECTION_ONLY — not started, not authorized
+- **Dependencies:** All current milestones complete; explicit owner authorization required
+- **Complexity:** HIGH
+- **Note:** AI will be an interaction layer over the existing data model, not a separate ledger. See `docs/ai/FUTURE_AI_DIRECTION.md` for the full product and architecture vision.
+- **Key principles:** Database remains source of truth; AI uses predefined BizFlow tools; token cost minimized via small structured results; OpenRouter planned as model gateway (not integrated yet).
+
 ### Future — Cloud Sync
 - **Objective:** Optional Supabase sync layer
 - **Dependencies:** All P2P phases complete

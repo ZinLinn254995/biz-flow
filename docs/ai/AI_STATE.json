@@ -18,12 +18,15 @@
     "scope": "Installable offline PWA with manifest, service worker, precache, and update prompt is complete and published to origin/main."
   },
   "futureDirection": {
-    "description": "Offline-First + User Account + Cloud Sync + Multi-Device App",
+    "description": "Offline-First + User Account + Cloud Sync + Multi-Device App + AI-Assisted Financial Record Management",
     "status": "FUTURE_DIRECTION_ONLY",
     "cloudReadinessIsNotCurrentCloudImplementation": true,
+    "aiDirectionIsNotCurrentAiImplementation": true,
     "rules": [
       "Future phases may introduce user accounts, cloud sync, and multi-device synchronization.",
       "Do not implement accounts, authentication, cloud services, sync infrastructure, or multi-device behavior during the current paused state.",
+      "Future phases may introduce AI-assisted financial record management via a tool-based interaction layer. See docs/ai/FUTURE_AI_DIRECTION.md for the full vision.",
+      "Do not implement AI code, OpenRouter integration, AI SDKs, API keys, AI database tables, or AI tools during the current paused state.",
       "Future compatibility may be considered only when explicit Phase 3 requirements require an architectural decision."
     ]
   },
@@ -501,6 +504,7 @@
       "docs/ai/ROADMAP.md",
       "docs/ai/KNOWN_ISSUES.md",
       "docs/ai/ARCHITECTURE.md",
+      "docs/ai/FUTURE_AI_DIRECTION.md",
       "docs/ai/AI_CONTINUATION_PROTOCOL.md",
       "docs/ai/GITHUB_SYNC.md"
     ],

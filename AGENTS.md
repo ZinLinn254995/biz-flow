@@ -108,6 +108,7 @@ All AI continuation documentation is in `docs/ai/`:
 | `CHANGELOG.md` | Historical changelog |
 | `QUALITY_GATE.md` | Mandatory quality checklist |
 | `GITHUB_SYNC.md` | GitHub source-of-truth, commit and synchronization protocol |
+| `FUTURE_AI_DIRECTION.md` | Future AI product and architecture vision (not implemented) |
 
 ## F. Mandatory Reading Order
 
@@ -122,6 +123,7 @@ All AI continuation documentation is in `docs/ai/`:
 9. `docs/ai/KNOWN_ISSUES.md` — known issues and risks
 10. `docs/ai/AI_CONTINUATION_PROTOCOL.md` — how to continue
 11. `docs/ai/AI_TASK_SELECTION.md` — how to choose the next task
+12. `docs/ai/FUTURE_AI_DIRECTION.md` — future AI product and architecture vision (not implemented)
 
 Then inspect the actual source code before making changes.
 

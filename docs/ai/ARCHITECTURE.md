@@ -200,3 +200,11 @@ otherwise                              → 'in_stock'
 - **fake-indexeddb** for in-memory IndexedDB in repository/integration tests
 - **@testing-library/react** for component testing
 - No mocking of service layer — tests use mock repositories injected into real services
+
+## Future Direction
+
+- **AI-Assisted Financial Record Management:** BizFlow will eventually support natural-language, voice, and receipt-photo input through a tool-based AI interaction layer. AI will use predefined BizFlow tools (not unrestricted database access) and the existing data layer remains the source of truth. The 5-layer architecture, dependency rules, and constraint tests remain in force. See `docs/ai/FUTURE_AI_DIRECTION.md` for the full architecture vision, tool categories, token-cost strategy, and OpenRouter plan.
+- **Cloud sync:** Architecture is designed for future sync (stable UUIDs, `createdAt`/`updatedAt`, `SyncStatus` type defined but unused). Supabase is available.
+- **Account balance automation:** Services could be extended to update account balances when transactions reference `accountId`.
+- **Budget tracking:** Budget service could compute actual spending vs limits.
+- **Multi-user:** Not currently architected; would require auth + data partitioning.

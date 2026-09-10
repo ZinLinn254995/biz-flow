@@ -194,6 +194,7 @@ Liquid asset account.
 
 ## Future Direction
 
+- **AI-Assisted Financial Record Management:** BizFlow will eventually evolve toward an AI-assisted system where users can record data, ask questions, search, edit, and submit receipts via natural language, voice, and photos. AI will be an interaction layer over the existing data model — not a separate ledger. The database remains the source of truth. See `docs/ai/FUTURE_AI_DIRECTION.md` for the full product and architecture vision.
 - **Cloud sync:** Architecture is designed for future sync (stable UUIDs, `createdAt`/`updatedAt`, `SyncStatus` type defined but unused). Supabase is available.
 - **Analytics:** Analytics page placeholder exists, can be implemented with existing data hooks.
 - **Account balance automation:** Services could be extended to update account balances when transactions reference `accountId`.

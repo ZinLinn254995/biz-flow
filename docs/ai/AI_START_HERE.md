@@ -16,7 +16,7 @@
 - **Build:** PASS
 - **Next task:** None — wait for explicit owner authorization before P4.2
 
-Long-term direction is future-only: BizFlow may evolve toward an Offline-First + User Account + Cloud Sync + Multi-Device App. Future Cloud Readiness does not mean current cloud implementation; do not add accounts, authentication, cloud services, sync, or multi-device infrastructure now.
+Long-term direction is future-only: BizFlow may evolve toward an Offline-First + User Account + Cloud Sync + Multi-Device App, and eventually toward AI-Assisted Financial Record Management (natural language, voice, receipt photos via a tool-based interaction layer). See `docs/ai/FUTURE_AI_DIRECTION.md` for the full AI vision. Future Cloud Readiness and AI direction do not mean current implementation; do not add accounts, authentication, cloud services, sync, multi-device infrastructure, AI code, OpenRouter, or AI SDKs now.
 
 ## What to Read (in order)
 
@@ -29,6 +29,7 @@ Long-term direction is future-only: BizFlow may evolve toward an Offline-First +
 7. `docs/ai/KNOWN_ISSUES.md` — known issues
 8. `docs/ai/ARCHITECTURE.md` — architecture reference
 9. `docs/ai/GITHUB_SYNC.md` — commit and synchronization protocol
+10. `docs/ai/FUTURE_AI_DIRECTION.md` — future AI product and architecture vision (not implemented)
 
 Then inspect the actual source code before making changes.
 

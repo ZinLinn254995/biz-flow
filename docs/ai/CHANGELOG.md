@@ -2,6 +2,22 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## Future AI Direction Documentation — 2026-09-10
+
+### Added
+- `docs/ai/FUTURE_AI_DIRECTION.md` — comprehensive future AI product and architecture vision document.
+- Cross-references from `AGENTS.md`, `docs/ai/AI_START_HERE.md`, `docs/ai/AI_STATE.json`, `docs/ai/ARCHITECTURE.md`, `docs/ai/PROJECT_CONTEXT.md`, and `docs/ai/ROADMAP.md`.
+
+### Notes
+- Documentation-only task. No application code, tests, dependencies, environment variables, or database changes.
+- Documents future AI-Assisted Financial Record Management direction: natural language, voice, receipt photo input via tool-based architecture.
+- AI will be an interaction layer over existing data model; database remains source of truth.
+- OpenRouter planned as model gateway (not integrated).
+- Token cost optimization via predefined tools and small structured results.
+- None of this is implemented. Development remains paused.
+
+---
+
 ## P-PWA1 — 2026-09-10
 
 ### Added
