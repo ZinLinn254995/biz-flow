@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BizFlow">
+  <rect width="512" height="512" rx="112" fill="#3B82F6"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="150" y="300" width="44" height="70" rx="8" fill="#FFFFFF" stroke="none"/>
+    <rect x="234" y="252" width="44" height="118" rx="8" fill="#FFFFFF" stroke="none"/>
+    <rect x="318" y="196" width="44" height="174" rx="8" fill="#FFFFFF" stroke="none"/>
+    <path d="M150 236 L244 190 L318 214 L388 150"/>
+    <path d="M348 150 H388 V190"/>
+  </g>
+</svg>
