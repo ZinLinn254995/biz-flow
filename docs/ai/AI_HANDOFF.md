@@ -1,11 +1,5 @@
 # BizFlow AI Development Handoff
 
-## PROJECT AI CONTEXT LAYER
-
-The repository now includes `docs/ai/PROJECT_AI_CONTEXT.md`, a navigation and decision layer for new Coding AIs. It points to the authoritative governance, state, implementation, verification, Git, handoff, decision, and roadmap sources without creating a competing state system.
-
-The context layer task is complete. Do not infer a new milestone from its existence; read `AI_STATE.json`, verify the actual repository, and wait for explicit authorization when `currentTask` and `nextTask` are null.
-
 ## PROJECT
 
 BizFlow — offline-first business and personal finance management application.

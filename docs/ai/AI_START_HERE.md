@@ -21,17 +21,14 @@ Long-term direction is future-only: BizFlow may evolve toward an Offline-First +
 ## What to Read (in order)
 
 1. `AGENTS.md` — canonical instructions (repository root)
-2. `docs/ai/PROJECT_AI_CONTEXT.md` — deterministic source map and continuation protocol
-3. `docs/ai/AI_STATE.json` — machine-readable state
-4. `docs/ai/AI_HANDOFF.md` — latest handoff
-5. `docs/ai/NEXT_TASK_PROMPT.md` — exact next task instructions or safety boundary
-6. `docs/ai/CURRENT_STATE.md` — detailed state
-7. `docs/ai/ROADMAP.md` — roadmap
-8. `docs/ai/KNOWN_ISSUES.md` — known issues
-9. `docs/ai/ARCHITECTURE.md` — architecture reference
-10. `docs/ai/GITHUB_SYNC.md` — commit and synchronization protocol
-
-`PROJECT_AI_CONTEXT.md` is a navigation layer only. `AGENTS.md`, `AI_STATE.json`, actual source code, tests, and Git remain authoritative for their respective concerns.
+2. `docs/ai/AI_STATE.json` — machine-readable state
+3. `docs/ai/AI_HANDOFF.md` — latest handoff
+4. `docs/ai/NEXT_TASK_PROMPT.md` — exact next task instructions
+5. `docs/ai/CURRENT_STATE.md` — detailed state
+6. `docs/ai/ROADMAP.md` — roadmap
+7. `docs/ai/KNOWN_ISSUES.md` — known issues
+8. `docs/ai/ARCHITECTURE.md` — architecture reference
+9. `docs/ai/GITHUB_SYNC.md` — commit and synchronization protocol
 
 Then inspect the actual source code before making changes.
 
