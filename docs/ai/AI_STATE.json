@@ -1,11 +1,16 @@
 {
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P3.7 is complete. No implementation task is active; preserve the continuity contract and await explicit owner requirements.",
+  "pauseNote": null,
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
     "scope": "P3.1-P3.7 continuity foundations and documentation hygiene are complete."
+  },
+  "phase4": {
+    "status": "P4.1_COMPLETE",
+    "implementationStarted": true,
+    "scope": "P4.1 sync-ready domain contracts are complete; P4.2 is not started or authorized."
   },
   "futureDirection": {
     "description": "Offline-First + User Account + Cloud Sync + Multi-Device App",
@@ -39,69 +44,35 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P3.7",
-    "name": "AI Continuity Documentation & State Hygiene Hardening",
-    "status": "COMPLETE",
-    "verifiedDate": "2026-09-09"
+    "id": "P4.1",
+    "name": "Sync-Ready Domain Contracts",
+    "status": "COMPLETE"
   },
   "lastCompletedTask": {
-    "id": "P3.7",
-    "name": "AI Continuity Documentation & State Hygiene Hardening",
-    "completedDate": "2026-09-09",
+    "id": "P4.1",
+    "name": "Sync-Ready Domain Contracts",
+    "completedDate": "2026-09-10",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
   },
   "currentTask": null,
+  "lockedFileOverrideReason": "P4.1 introduced the protected public sync contract export and its focused contract implementation; these changes are part of the finalized P4.1 milestone.",
   "nextTask": null,
   "progress": {
     "completedMilestones": [
-      "P2P1",
-      "P2P2",
-      "P2P3",
-      "P2P4",
-      "P2P5",
-      "P2P6",
-      "P2P7",
-      "P2P8",
-      "P2P9",
-      "P2P10",
-      "P2P11",
-      "P2P12",
-      "P2P13",
-      "P2P14",
-      "P2P15",
-      "P2P16",
-      "P2P17",
-      "P2P18",
-      "P2P19",
-      "P2P20",
-      "P2P21",
-      "P2P22",
-      "P2P23",
-      "P2P24",
-      "P2P25",
-      "P2P26",
-      "P2P27",
-      "P2P28",
-      "P3.1",
-      "P3.2",
-      "P3.3",
-      "P3.4",
-      "P3.5",
-      "P3.6",
-      "P3.7"
+      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1"
     ],
-    "remainingMilestones": [],
-    "totalCompleted": 35,
-    "totalRemaining": 0,
-    "percentage": 100
+    "remainingMilestones": ["P4.2", "P4.3", "P4.4", "P4.5"],
+    "totalCompleted": 36,
+    "totalRemaining": 4,
+    "percentage": 90
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 568,
-      "files": 50,
+      "count": 572,
+      "files": 51,
       "framework": "Vitest 4.1.11",
       "verifiedDate": "2026-09-09"
     },
@@ -117,20 +88,20 @@
     },
 "verificationRun": {
       "type": "captured",
-      "runAt": "2026-09-09T15:19:26Z",
-      "runBy": "P3.7 captured verification process",
-      "evidence": "docs/ai/verification-logs/P3.7.log",
-      "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710",
+      "runAt": "2026-09-10T00:00:00Z",
+      "runBy": "P4.1 captured verification process",
+      "evidence": "docs/ai/verification-logs/P4.1.log",
+      "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5",
       "environment": "clean working tree on the P3.7 continuity-hardening branch",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P3.7.log", "commitSha": "1eb6a36d83fd8da8629175fedb199d0bb6642710" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" }
       ]
     },
     "qualityGates": {
@@ -250,7 +221,8 @@
       "status": "complete"
     }
   ],
-  "nextTaskInstructions": {
+  "nextTaskInstructions": null,
+  "previousNextTaskInstructions": {
     "id": "P2P27",
     "name": "Data Export and Import",
     "objective": "Add user-controlled JSON export and validated restore for the complete offline-first dataset.",
@@ -307,7 +279,7 @@
     ]
   },
   "lastTaskFilesChanged": {
-    "task": "P2P21 Categories & Accounts Search + P2P22 Sale Total Validation",
+    "task": "P4.1 Sync-Ready Domain Contracts",
     "created": [],
     "modified": [
       "src/pages/CategoriesPage.tsx",

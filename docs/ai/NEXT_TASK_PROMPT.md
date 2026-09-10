@@ -2,7 +2,7 @@
 
 # Next Task
 
-No implementation task is authorized. P3.7 is complete and the project is paused awaiting explicit owner requirements for a future milestone.
+No implementation task is authorized. P4.1 is complete and the project is paused. P4.2 is the next roadmap milestone, but it is not started or authorized.
 
 ## Current State
 

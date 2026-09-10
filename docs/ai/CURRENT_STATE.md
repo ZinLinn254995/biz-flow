@@ -1,16 +1,16 @@
 # BizFlow — Current State
 
-**Last verified:** 2026-09-08
-**Verified by:** Source code inspection + test execution
+**Last verified:** 2026-09-10
+**Verified by:** P4.1 implementation and verification evidence
 
 ## Current Milestone
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P3.7 — AI Continuity Documentation & State Hygiene Hardening |
-| Last completed task | P3.7 — AI Continuity Documentation & State Hygiene Hardening |
+| Current milestone | P4.1 — Sync-Ready Domain Contracts |
+| Last completed task | P4.1 — Sync-Ready Domain Contracts |
 | Status | COMPLETE |
-| Next milestone | None — awaiting explicit owner requirements |
+| Next milestone | P4.2 — Account + Device Foundation (not started; explicit authorization required) |
 | Development status | PAUSED_AWAITING_INSTRUCTIONS |
 | Implementation status | P2P1-P2P28 and P3.1-P3.7 are complete; no implementation task is active |
 
