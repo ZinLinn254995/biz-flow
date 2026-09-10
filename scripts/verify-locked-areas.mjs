@@ -11,7 +11,9 @@ const changed = new Set();
 const run = (args) => { try { return execFileSync('git', args, { cwd: root, encoding: 'utf8' }); } catch { return ''; } };
 for (const line of run(['diff', '--name-only', '--diff-filter=ACMR']).split('\n')) if (line) changed.add(line.trim());
 for (const line of run(['diff', '--cached', '--name-only', '--diff-filter=ACMR']).split('\n')) if (line) changed.add(line.trim());
-for (const line of run(['show', '--pretty=', '--name-only', 'HEAD']).split('\n')) if (line) changed.add(line.trim());
+if (state.currentTask) {
+  for (const line of run(['show', '--pretty=', '--name-only', 'HEAD']).split('\n')) if (line) changed.add(line.trim());
+}
 const matches = (file, area) => area.endsWith('/') ? file.startsWith(area) : file === area;
 const errors = [];
 for (const file of changed) {

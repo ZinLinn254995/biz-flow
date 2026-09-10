@@ -8,13 +8,13 @@
 
 ## Current State
 
-- **Milestone:** P3.7 — AI Continuity Documentation & State Hygiene Hardening COMPLETE
+- **Milestone:** P4.1 — Sync-Ready Domain Contracts COMPLETE
 - **Development status:** `PAUSED_AWAITING_INSTRUCTIONS`
-- **Phase 3:** P3.7 is complete; no implementation task is active
-- **Tests:** 568 passing (50 files)
+- **Phase 4:** P4.1 is complete; P4.2 is not started or authorized
+- **Tests:** 572 passing (51 files)
 - **TypeScript:** PASS
 - **Build:** PASS
-- **Next task:** None — wait for the user to define Phase 3 requirements
+- **Next task:** None — wait for explicit owner authorization before P4.2
 
 Long-term direction is future-only: BizFlow may evolve toward an Offline-First + User Account + Cloud Sync + Multi-Device App. Future Cloud Readiness does not mean current cloud implementation; do not add accounts, authentication, cloud services, sync, or multi-device infrastructure now.
 

@@ -6,13 +6,13 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P3.7 — AI Continuity Documentation & State Hygiene Hardening — COMPLETE
+P4.1 — Sync-Ready Domain Contracts — COMPLETE
 
 ## LAST COMPLETED TASK
 
-P3.7 — AI Continuity Documentation & State Hygiene Hardening.
+P4.1 — Sync-Ready Domain Contracts.
 
-The existing `verify:ai` workflow now requires a machine-validated archive for completed Phase 3 tasks, including task identity and required continuity sections.
+P4.1 added provider-neutral synchronization contracts, focused tests, and continuity evidence while preserving the offline-first architecture. The existing `verify:ai` workflow remains the machine-validated state gate.
 
 Business deletion now removes all business-owned child records atomically through the injected transaction boundary.
 
@@ -28,7 +28,7 @@ items now derive the total; no assertion was removed.
 
 ## CURRENT TASK
 
-`AI_STATE.json` -> `currentTask` and `nextTask` are both `null`. P3.7 is complete, the working tree is consistent and fully verified, and development status is `PAUSED_AWAITING_INSTRUCTIONS`. Do not select or invent another task; wait for explicit owner requirements.
+`AI_STATE.json` -> `currentTask` is `null` and `nextTask` is `null`. P4.1 is complete and verified. The implementation was limited to provider-neutral sync-ready contracts, focused tests, and continuity documentation; no authentication, network, cloud, queue, or multi-device behavior is authorized.
 
 ## TASK STATUS VOCABULARY
 
@@ -37,7 +37,7 @@ Never record `COMPLETE` unless `npm run verify` actually passed.
 
 ## NEXT TASK
 
-None — P3.7 is complete and the project is paused awaiting explicit owner requirements. Do not invent P3.8, revive historical P2P tasks, or implement cloud, account, authentication, sync, or multi-device behavior.
+None — P4.1 is complete and the project is paused. Do not begin P4.2 or implement authentication, cloud transport, sync queues, migration execution, conflict UI, or multi-device behavior.
 
 See `docs/ai/NEXT_TASK_PROMPT.md` for exact implementation instructions.
 
