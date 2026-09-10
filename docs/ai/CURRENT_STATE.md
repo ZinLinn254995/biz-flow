@@ -7,12 +7,12 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P4.1 — Sync-Ready Domain Contracts |
-| Last completed task | P4.1 — Sync-Ready Domain Contracts |
+| Current milestone | P-PWA1 — Installable Offline PWA |
+| Last completed task | P-PWA1 — Installable Offline PWA |
 | Status | COMPLETE |
 | Next milestone | P4.2 — Account + Device Foundation (not started; explicit authorization required) |
 | Development status | PAUSED_AWAITING_INSTRUCTIONS |
-| Implementation status | P2P1-P2P28 and P3.1-P3.7 are complete; no implementation task is active |
+| Implementation status | P2P1-P2P28, P3.1-P3.7, P4.1, and P-PWA1 are complete; no implementation task is active |
 
 ## Completed Tasks
 
@@ -33,6 +33,7 @@
 | P2P20 | COMPLETE | Deleted 7 orphaned dashboard components and the unused `useFilters` hook | `src/components/dashboard/*`, `src/hooks/common/useFilters.ts` | `npm run verify:imports` |
 | P2P21 | COMPLETE | Search/filter/sort on CategoriesPage and AccountsPage | `src/pages/CategoriesPage.tsx`, `src/pages/AccountsPage.tsx` | `categoryPage.test.tsx`, `accountPage.test.tsx` (+10 tests) |
 | P2P22 | COMPLETE | `totalAmount` validated against the sum of line totals, mixed currencies rejected | `src/services/sales/SalesService.ts` | `salesService.test.ts` (+7 tests) |
+| P-PWA1 | COMPLETE | Installable offline PWA (manifest, icons, service worker, update prompt) | `vite.config.ts`, `src/pwa/PWAUpdatePrompt.tsx`, `public/pwa-*.png` | `pwaConfig.test.ts` (+9 tests) |
 
 **Note:** P2P4 is not documented in `architecture.md` and no evidence of it exists in the codebase. It may have been skipped or merged into P2P5.
 
@@ -48,28 +49,31 @@ None. All planned P2P1-P2P28 milestones are complete. Phase 3 is READY / awaitin
 | P2P24 | Budget actual-vs-limit tracking |
 | P2P25 | Analytics page implementation |
 | P2P26 (proposed) | Settings page implementation |
-| Future | Cloud sync, data export/import, PWA |
+| Future | Cloud sync, data export/import |
 
 ## In-Flight Work
 
 `AI_STATE.json` -> `currentTask` is `null`. No task is partially implemented, and the
 working tree matches the last verified state.
 
-## Verification Baseline (2026-09-07, clean `npm ci`)
+## Verification Baseline (2026-09-10, P-PWA1 merge commit 8318ef0)
 
 | Command | Result |
 |---------|--------|
 | `npm run typecheck` | PASS |
-| `npm run test` | PASS (45 files, 510 tests) |
-| `npm run build` | PASS |
+| `npm run test` | PASS (52 files, 581 tests) |
+| `npm run build` | PASS (PWA artifacts: sw.js, manifest.webmanifest, 15 precache entries) |
 | `npm run verify:imports` | PASS |
+| `npm run verify:locked` | PASS |
+| `npm run verify:git-freshness` | PASS |
 | `npm run verify:ai` | PASS |
+| `npm run verify` | PASS |
 
-Run all five at once with `npm run verify`.
+Run all at once with `npm run verify`.
 
 ## Known Bugs
 
-No confirmed bugs. All 510 tests pass, TypeScript passes, production build passes.
+No confirmed bugs. All 581 tests pass, TypeScript passes, production build passes.
 
 ## Technical Debt
 
@@ -92,9 +96,9 @@ No confirmed bugs. All 510 tests pass, TypeScript passes, production build passe
 | Metric | Value | Verified |
 |--------|-------|----------|
 | Test framework | Vitest 4.1.11 | Yes |
-| Test files | 45 | Yes |
-| Total tests | 507 | Yes |
-| Passing | 507 | Yes |
+| Test files | 52 | Yes |
+| Total tests | 581 | Yes |
+| Passing | 581 | Yes |
 | Failing | 0 | Yes |
 | Skipped | 0 | Yes |
 | TypeScript | PASS (`tsc --noEmit -p tsconfig.app.json`) | Yes |

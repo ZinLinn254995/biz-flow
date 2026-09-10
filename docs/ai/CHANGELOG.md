@@ -2,6 +2,28 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+## P-PWA1 — 2026-09-10
+
+### Added
+- Installable offline PWA using `vite-plugin-pwa` (generateSW mode).
+- Web manifest (`manifest.webmanifest`) with standalone display, theme color, and PWA icons.
+- PWA icons: `pwa-192x192.png`, `pwa-512x512.png`, `maskable-icon-512x512.png`, `apple-touch-icon.png`, `favicon.svg`.
+- Service worker (`sw.js` + `workbox-9c191d2f.js`) precaching 15 entries (775.55 KiB).
+- `PWAUpdatePrompt` component using `virtual:pwa-register/react` for update notifications.
+- `pwaConfig.test.ts` — 9 tests validating PWA configuration.
+- `vite-plugin-pwa` added to `package.json` devDependencies.
+
+### Notes
+- Implementation by v0 on branch `v0/pwa-installable-offline` (commit `9decb01`).
+- Merged to `main` via non-destructive `--no-ff` merge (commit `8318ef0`).
+- Published to `origin/main` at `8318ef0`.
+- Resolved ISSUE-012 (No PWA / Service Worker).
+- Verification: typecheck PASS, 581/581 tests PASS (52 files), build PASS, imports PASS, locked-area PASS, git-freshness PASS, AI verification PASS, `npm run verify` PASS.
+- Evidence: `docs/ai/verification-logs/P-PWA1.log`.
+- P4.2 is NOT STARTED or authorized. Development remains paused.
+
+---
+
 ## P3.2 — 2026-09-09
 
 ### Added

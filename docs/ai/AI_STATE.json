@@ -12,6 +12,11 @@
     "implementationStarted": true,
     "scope": "P4.1 sync-ready domain contracts are complete; P4.2 is not started or authorized."
   },
+  "pwa": {
+    "status": "P-PWA1_COMPLETE",
+    "implementationStarted": true,
+    "scope": "Installable offline PWA with manifest, service worker, precache, and update prompt is complete and published to origin/main."
+  },
   "futureDirection": {
     "description": "Offline-First + User Account + Cloud Sync + Multi-Device App",
     "status": "FUTURE_DIRECTION_ONLY",
@@ -44,64 +49,64 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P4.1",
-    "name": "Sync-Ready Domain Contracts",
+    "id": "P-PWA1",
+    "name": "Installable Offline PWA",
     "status": "COMPLETE"
   },
   "lastCompletedTask": {
-    "id": "P4.1",
-    "name": "Sync-Ready Domain Contracts",
+    "id": "P-PWA1",
+    "name": "Installable Offline PWA",
     "completedDate": "2026-09-10",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
   },
   "currentTask": null,
-  "lockedFileOverrideReason": "P4.1 introduced the protected public sync contract export and its focused contract implementation; these changes are part of the finalized P4.1 milestone.",
+  "lockedFileOverrideReason": "P-PWA1 added the vite-plugin-pwa configuration to vite.config.ts and the PWA update prompt registration in src/main.tsx; these changes are part of the finalized P-PWA1 milestone.",
   "nextTask": null,
   "progress": {
     "completedMilestones": [
-      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1"
+      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1", "P-PWA1"
     ],
     "remainingMilestones": ["P4.2", "P4.3", "P4.4", "P4.5"],
-    "totalCompleted": 36,
+    "totalCompleted": 37,
     "totalRemaining": 4,
     "percentage": 90
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 572,
-      "files": 51,
+      "count": 581,
+      "files": 52,
       "framework": "Vitest 4.1.11",
-      "verifiedDate": "2026-09-09"
+      "verifiedDate": "2026-09-10"
     },
     "typescript": {
       "status": "passing",
       "command": "npm run typecheck",
-      "verifiedDate": "2026-09-07"
+      "verifiedDate": "2026-09-10"
     },
     "productionBuild": {
       "status": "passing",
       "command": "npm run build",
-      "verifiedDate": "2026-09-07"
+      "verifiedDate": "2026-09-10"
     },
 "verificationRun": {
       "type": "captured",
-      "runAt": "2026-09-10T00:00:00Z",
-      "runBy": "P4.1 captured verification process",
-      "evidence": "docs/ai/verification-logs/P4.1.log",
-      "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5",
-      "environment": "clean working tree on the P3.7 continuity-hardening branch",
+      "runAt": "2026-09-10T12:53:00Z",
+      "runBy": "P-PWA1 publication verification",
+      "evidence": "docs/ai/verification-logs/P-PWA1.log",
+      "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a",
+      "environment": "clean working tree on main at the P-PWA1 merge commit",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P-PWA1.log", "commitSha": "8318ef098586658f98f6b39ad0c2f91dae7c122a" }
       ]
     },
     "qualityGates": {
@@ -279,27 +284,27 @@
     ]
   },
   "lastTaskFilesChanged": {
-    "task": "P4.1 Sync-Ready Domain Contracts",
-    "created": [],
+    "task": "P-PWA1 Installable Offline PWA",
+    "created": [
+      "public/apple-touch-icon.png",
+      "public/favicon.svg",
+      "public/maskable-icon-512x512.png",
+      "public/pwa-192x192.png",
+      "public/pwa-512x512.png",
+      "src/pwa/PWAUpdatePrompt.tsx",
+      "src/test/pwaConfig.test.ts"
+    ],
     "modified": [
-      "src/pages/CategoriesPage.tsx",
-      "src/pages/AccountsPage.tsx",
-      "src/services/sales/SalesService.ts",
-      "src/test/hooks/categoryPage.test.tsx",
-      "src/test/hooks/accountPage.test.tsx",
-      "src/test/services/salesService.test.ts",
-      "src/test/services/salesStockLogic.test.ts",
-      "docs/ai/AI_STATE.json",
-      "docs/ai/CURRENT_STATE.md",
-      "docs/ai/AI_HANDOFF.md",
-      "docs/ai/NEXT_TASK_PROMPT.md",
-      "docs/ai/CHANGELOG.md",
-      "docs/ai/KNOWN_ISSUES.md",
-      "docs/ai/ROADMAP.md"
+      "index.html",
+      "package.json",
+      "package-lock.json",
+      "src/main.tsx",
+      "src/vite-env.d.ts",
+      "vite.config.ts"
     ],
     "deleted": [],
     "applicationSourceChanged": true,
-    "designNote": "Sale total validation lives in a module-level validateSaleTotal() helper in SalesService, called before any stock movement in both createSale and updateSale so a rejected sale never touches inventory. Fixtures in salesStockLogic.test.ts previously declared totals that did not match their line items; they now derive the total with a sumTotal() helper. No assertion was removed."
+    "designNote": "P-PWA1 adds vite-plugin-pwa (generateSW mode) for service worker generation, a web manifest, PWA icons (192/512/maskable/apple-touch), and a PWAUpdatePrompt component using virtual:pwa-register/react. The service worker precaches 15 entries (775.55 KiB). Implementation by v0 on branch v0/pwa-installable-offline, merged to main via --no-ff merge commit 8318ef0."
   },
   "lockedAreas": [
     {
@@ -457,6 +462,15 @@
       "severity": "low",
       "status": "open",
       "addressedBy": null
+    },
+    {
+      "id": "ISSUE-012",
+      "title": "No PWA / Service Worker",
+      "severity": "Future",
+      "status": "resolved",
+      "addressedBy": "P-PWA1",
+      "resolvedBy": "P-PWA1",
+      "resolvedDate": "2026-09-10"
     }
   ],
   "risks": [
@@ -470,8 +484,8 @@
     "defaultBranch": "main",
     "sourceOfTruth": "GitHub repository ZinLinn254995/biz-flow",
     "syncMechanism": "Commits pushed directly to the GitHub repository. See docs/ai/GITHUB_SYNC.md.",
-    "lastSyncedTask": "P2P19+P2P20",
-    "lastSyncedDate": "2026-09-07",
+    "lastSyncedTask": "P-PWA1",
+    "lastSyncedDate": "2026-09-10",
     "ciWorkflow": ".github/workflows/ai-verify.yml",
     "nodeVersion": "22 (tests use node:fs globSync, which does not exist on Node 20)"
   },
@@ -495,19 +509,17 @@
     "note": "A new Coding AI needs nothing beyond this repository URL. The human only needs to say: continue the next task in docs/ai/NEXT_TASK_PROMPT.md."
   },
   "nextAIInstructions": {
-    "summary": "Implement P2P23 exactly as specified in docs/ai/NEXT_TASK_PROMPT.md.",
+    "summary": "No implementation task is authorized. P-PWA1 is complete and the project is paused. P4.2 is the next roadmap milestone but is not started or authorized.",
     "beforeStarting": [
       "npm ci",
       "npm run verify to confirm the documented baseline is real"
     ],
     "afterFinishing": [
-      "Re-run npm run verify",
-      "Set currentTask to null and lastCompletedTask to P2P23 with status COMPLETE only if verification passed",
-      "Update CURRENT_STATE.md, AI_HANDOFF.md, ROADMAP.md, CHANGELOG.md, KNOWN_ISSUES.md",
-      "Rewrite docs/ai/NEXT_TASK_PROMPT.md for P2P24",
-      "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
+      "Do not start P4.2 or any new implementation without explicit owner authorization",
+      "Do not add authentication, cloud sync, Supabase, Firebase, Capacitor, or hosting changes",
+      "Report the paused state and request written requirements from the project owner"
     ]
   },
-  "lastUpdated": "2026-09-07",
-  "lastUpdatedBy": "P2P21+P2P22 continuation agent (Lovable)"
+  "lastUpdated": "2026-09-10",
+  "lastUpdatedBy": "P-PWA1 publication finalization (Base44)"
 }

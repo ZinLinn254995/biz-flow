@@ -1,6 +1,16 @@
 # BizFlow — Development Roadmap
 
-> **Development paused:** P3.1-P3.7 are complete. Development is paused pending explicit owner requirements for a new roadmap phase; do not pick a next task from old issues, invent P3.8, or treat the future account/sync direction as authorization. Future direction only: Offline-First + User Account + Cloud Sync + Multi-Device App; future cloud readiness is not current cloud implementation.
+> **Development paused:** P3.1-P3.7, P4.1, and P-PWA1 are complete. Development is paused pending explicit owner requirements for a new roadmap phase; do not pick a next task from old issues, invent P3.8, start P4.2, or treat the future account/sync direction as authorization. Future direction only: Offline-First + User Account + Cloud Sync + Multi-Device App; future cloud readiness is not current cloud implementation.
+
+## P-PWA1 — Installable Offline PWA
+- **Status:** COMPLETE (2026-09-10)
+- **Objective:** Add an installable offline PWA with manifest, service worker, precache, and update prompt.
+- **Scope:** `vite.config.ts`, `src/pwa/PWAUpdatePrompt.tsx`, `src/main.tsx`, `public/pwa-*.png`, `src/test/pwaConfig.test.ts`
+- **Implementation:** By v0 on branch `v0/pwa-installable-offline` (commit `9decb01`), merged to `main` via `--no-ff` (commit `8318ef0`).
+- **Verification:** 581/581 tests, typecheck PASS, build PASS, `npm run verify` PASS. Evidence: `docs/ai/verification-logs/P-PWA1.log`.
+- **Resolved:** ISSUE-012 (No PWA / Service Worker).
+
+---
 
 ## Phase 3 Continuity Hardening
 
