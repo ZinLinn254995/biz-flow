@@ -22,7 +22,7 @@ Defining identity, ownership, revisions, tombstones, synchronization state, sche
 - Destructive account operations require export/recovery safeguards.
 - Provider evaluation and selection occur after P4.1.
 
-## Consequences
+## Consequences / Trade-offs
 The existing UI → hooks → services → repository interfaces → Dexie flow remains unchanged. P4.2 and later work are not authorized by completing P4.1.
 
 ## Status

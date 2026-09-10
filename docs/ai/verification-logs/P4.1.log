@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "taskId": "P4.1",
-  "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5",
+  "commitSha": "28935f026a70537b080be973cae6abd39588ab93",
   "branch": "v0/p4-1-sync-ready-contracts",
-  "startedAt": "2026-09-09T21:06:08.031Z",
-  "finishedAt": "2026-09-09T21:06:49.214Z",
+  "startedAt": "2026-09-10T05:48:19.520Z",
+  "finishedAt": "2026-09-10T05:49:14.725Z",
   "status": "FAIL",
   "commands": [
     {
@@ -18,14 +18,14 @@
       "name": "test",
       "command": "npm run test",
       "exitCode": 0,
-      "stdout": "\n> vite-react-typescript-starter@0.0.0 test\n> vitest run\n\n\n RUN  v4.1.11 /vercel/share/v0-project\n\n\n Test Files  51 passed (51)\n      Tests  572 passed (572)\n   Start at  21:06:12\n   Duration  12.70s (transform 1.98s, setup 4.43s, import 4.98s, tests 12.02s, environment 10.08s)\n\n",
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 test\n> vitest run\n\n\n RUN  v4.1.11 /vercel/share/v0-project\n\n\n Test Files  51 passed (51)\n      Tests  572 passed (572)\n   Start at  05:48:25\n   Duration  16.10s (transform 2.41s, setup 5.81s, import 6.29s, tests 15.13s, environment 12.86s)\n\n",
       "stderr": ""
     },
     {
       "name": "build",
       "command": "npm run build",
       "exitCode": 0,
-      "stdout": "\n> vite-react-typescript-starter@0.0.0 build\n> vite build\n\nvite v5.4.8 building for production...\ntransforming...\n✓ 1700 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.72 kB │ gzip:   0.40 kB\ndist/assets/index-C405YytJ.css   20.97 kB │ gzip:   4.74 kB\ndist/assets/index-BluInhlt.js   537.67 kB │ gzip: 127.44 kB\n✓ built in 2.66s\n",
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 build\n> vite build\n\nvite v5.4.8 building for production...\ntransforming...\n✓ 1700 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.72 kB │ gzip:   0.40 kB\ndist/assets/index-C405YytJ.css   20.97 kB │ gzip:   4.74 kB\ndist/assets/index-BluInhlt.js   537.67 kB │ gzip: 127.44 kB\n✓ built in 3.63s\n",
       "stderr": "Browserslist: caniuse-lite is outdated. Please run:\n  npx update-browserslist-db@latest\n  Why you should do it regularly: https://github.com/browserslist/update-db#readme\n\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n"
     },
     {
@@ -39,14 +39,14 @@
       "name": "verify:locked",
       "command": "npm run verify:locked",
       "exitCode": 0,
-      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:locked\n> node scripts/verify-locked-areas.mjs\n\nLocked-area guard PASSED (8 changed path(s) inspected).\n",
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:locked\n> node scripts/verify-locked-areas.mjs\n\nLocked-area guard PASSED (2 changed path(s) inspected).\n",
       "stderr": ""
     },
     {
       "name": "verify:git-freshness",
       "command": "npm run verify:git-freshness",
       "exitCode": 1,
-      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:git-freshness\n> node scripts/git-freshness.mjs\n\n{\n  \"state\": \"DIRTY\",\n  \"safe\": false,\n  \"reason\": \"The working tree contains uncommitted changes.\",\n  \"branch\": \"v0/p4-1-sync-ready-contracts\",\n  \"head\": \"839e5d7e5649fc133f91f36979e36c401090cbe5\",\n  \"originMain\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"mergeBase\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"fetched\": true\n}\n",
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:git-freshness\n> node scripts/git-freshness.mjs\n\n{\n  \"state\": \"DIRTY\",\n  \"safe\": false,\n  \"reason\": \"The working tree contains uncommitted changes.\",\n  \"branch\": \"v0/p4-1-sync-ready-contracts\",\n  \"head\": \"28935f026a70537b080be973cae6abd39588ab93\",\n  \"originMain\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"mergeBase\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"fetched\": true\n}\n",
       "stderr": ""
     },
     {
@@ -54,13 +54,13 @@
       "command": "npm run verify:ai",
       "exitCode": 1,
       "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:ai\n> node scripts/verify-ai-state.mjs\n\n",
-      "stderr": "FAIL Git freshness DIRTY: The working tree contains uncommitted changes.\nFAIL AI_HANDOFF.md presents last completed task \"P3.7\" but AI_STATE.json says \"P4.1\".\nFAIL docs/ai/task-decisions/DEC-P4.1-001.md: context / problem is required and cannot be empty.\nFAIL docs/ai/task-decisions/DEC-P4.1-001.md: rationale is required and cannot be empty.\nFAIL docs/ai/task-decisions/DEC-P4.1-001.md: consequences / trade-offs is required and cannot be empty.\nFAIL docs/ai/task-decisions/DEC-P4.1-001.md: task / milestone must name a task or milestone ID.\n\nAI state validation FAILED with 6 error(s).\n"
+      "stderr": "FAIL Git freshness DIRTY: The working tree contains uncommitted changes.\nFAIL docs/ai/task-decisions/DEC-P4.1-001.md: task / milestone must name a task or milestone ID.\n\nAI state validation FAILED with 2 error(s).\n"
     },
     {
       "name": "verify",
       "command": "npm run verify",
       "exitCode": 1,
-      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify\n> npm run typecheck && npm run test && npm run build && npm run verify:imports && npm run verify:locked && npm run verify:git-freshness && npm run verify:ai\n\n\n> vite-react-typescript-starter@0.0.0 typecheck\n> tsc --noEmit -p tsconfig.app.json\n\n\n> vite-react-typescript-starter@0.0.0 test\n> vitest run\n\n\n RUN  v4.1.11 /vercel/share/v0-project\n\n\n Test Files  51 passed (51)\n      Tests  572 passed (572)\n   Start at  21:06:33\n   Duration  12.35s (transform 1.86s, setup 4.38s, import 4.86s, tests 11.81s, environment 9.82s)\n\n\n> vite-react-typescript-starter@0.0.0 build\n> vite build\n\nvite v5.4.8 building for production...\ntransforming...\n✓ 1700 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.72 kB │ gzip:   0.40 kB\ndist/assets/index-C405YytJ.css   20.97 kB │ gzip:   4.74 kB\ndist/assets/index-BluInhlt.js   537.67 kB │ gzip: 127.44 kB\n✓ built in 2.76s\n\n> vite-react-typescript-starter@0.0.0 verify:imports\n> node scripts/check-dangling-imports.mjs\n\nDangling import check PASSED (all relative imports resolve).\n\n> vite-react-typescript-starter@0.0.0 verify:locked\n> node scripts/verify-locked-areas.mjs\n\nLocked-area guard PASSED (8 changed path(s) inspected).\n\n> vite-react-typescript-starter@0.0.0 verify:git-freshness\n> node scripts/git-freshness.mjs\n\n{\n  \"state\": \"DIRTY\",\n  \"safe\": false,\n  \"reason\": \"The working tree contains uncommitted changes.\",\n  \"branch\": \"v0/p4-1-sync-ready-contracts\",\n  \"head\": \"839e5d7e5649fc133f91f36979e36c401090cbe5\",\n  \"originMain\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"mergeBase\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"fetched\": true\n}\n",
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify\n> npm run typecheck && npm run test && npm run build && npm run verify:imports && npm run verify:locked && npm run verify:git-freshness && npm run verify:ai\n\n\n> vite-react-typescript-starter@0.0.0 typecheck\n> tsc --noEmit -p tsconfig.app.json\n\n\n> vite-react-typescript-starter@0.0.0 test\n> vitest run\n\n\n RUN  v4.1.11 /vercel/share/v0-project\n\n\n Test Files  51 passed (51)\n      Tests  572 passed (572)\n   Start at  05:48:53\n   Duration  16.61s (transform 2.42s, setup 5.80s, import 6.35s, tests 15.67s, environment 13.61s)\n\n\n> vite-react-typescript-starter@0.0.0 build\n> vite build\n\nvite v5.4.8 building for production...\ntransforming...\n✓ 1700 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.72 kB │ gzip:   0.40 kB\ndist/assets/index-C405YytJ.css   20.97 kB │ gzip:   4.74 kB\ndist/assets/index-BluInhlt.js   537.67 kB │ gzip: 127.44 kB\n✓ built in 3.58s\n\n> vite-react-typescript-starter@0.0.0 verify:imports\n> node scripts/check-dangling-imports.mjs\n\nDangling import check PASSED (all relative imports resolve).\n\n> vite-react-typescript-starter@0.0.0 verify:locked\n> node scripts/verify-locked-areas.mjs\n\nLocked-area guard PASSED (2 changed path(s) inspected).\n\n> vite-react-typescript-starter@0.0.0 verify:git-freshness\n> node scripts/git-freshness.mjs\n\n{\n  \"state\": \"DIRTY\",\n  \"safe\": false,\n  \"reason\": \"The working tree contains uncommitted changes.\",\n  \"branch\": \"v0/p4-1-sync-ready-contracts\",\n  \"head\": \"28935f026a70537b080be973cae6abd39588ab93\",\n  \"originMain\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"mergeBase\": \"a0e55a01e1a0c491642b20e099d6f4a42c195271\",\n  \"fetched\": true\n}\n",
       "stderr": "Browserslist: caniuse-lite is outdated. Please run:\n  npx update-browserslist-db@latest\n  Why you should do it regularly: https://github.com/browserslist/update-db#readme\n\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n"
     }
   ]
