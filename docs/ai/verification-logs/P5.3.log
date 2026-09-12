@@ -1,0 +1,13 @@
+P5.3 verification — 2026-09-13
+
+Scope: persisted SavedItem foundation, Dexie schema compatibility, legacy backup compatibility.
+
+Results:
+- npm run typecheck: PASS
+- npm run test: PASS — 55 files, 589 tests
+- npm run build: PASS
+- Dedicated persistence/schema tests: PASS — 2 tests
+- Legacy backup compatibility test: PASS
+
+Migration: Required. Dexie version 2 adds the savedItems table; existing tables and indexes remain unchanged.
+UI scope: No visible Saved Items, Quick Add, Favorites, Purchases, or other workflow UI.

@@ -1,9 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import { DataBackupService } from '@/services/dataBackup/DataBackupService';
+import type { BackupData } from '@/types/repositories/dataBackupRepository';
 
-const data = {
+const data: BackupData['data'] = {
   businesses: [], inventoryItems: [], sales: [], customers: [], businessExpenses: [],
-  personalIncomes: [], personalExpenses: [], categories: [], budgets: [], accounts: [],
+  personalIncomes: [], personalExpenses: [], categories: [], budgets: [], accounts: [], savedItems: [],
 };
 
 describe('DataBackupService', () => {
@@ -25,5 +26,18 @@ describe('DataBackupService', () => {
     const repository = { exportData: vi.fn(), replaceData: vi.fn().mockResolvedValue(undefined) };
     await new DataBackupService(repository).importData({ version: 1, exportedAt: new Date().toISOString(), data });
     expect(repository.replaceData).toHaveBeenCalledWith(data);
+  });
+
+  it('accepts legacy snapshots that predate savedItems', async () => {
+    const repository = { exportData: vi.fn(), replaceData: vi.fn().mockResolvedValue(undefined) };
+    const { savedItems: _savedItems, ...legacyData } = data;
+
+    await new DataBackupService(repository).importData({
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data: legacyData,
+    });
+
+    expect(repository.replaceData).toHaveBeenCalledWith(legacyData);
   });
 });
