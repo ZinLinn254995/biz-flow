@@ -9,7 +9,8 @@ Pre-commit checks:
 - npm run verify:imports: PASS
 - npm run verify:locked: PASS
 
-Expected publication checks after commit:
+Publication commit: a6b7a5e
+Expected final checks after metadata commit:
 - npm run verify:git-freshness: PASS on clean committed tree
 - npm run verify:ai: PASS with P-BP1 evidence
 - npm run verify: PASS

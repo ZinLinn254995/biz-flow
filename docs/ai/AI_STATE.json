@@ -91,17 +91,17 @@
       "runAt": "2026-09-10T00:00:00Z",
       "runBy": "P-BP1 captured verification process",
       "evidence": "docs/ai/verification-logs/P-BP1.log",
-      "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5",
+      "commitSha": "a6b7a5e",
       "environment": "clean working tree on the P3.7 continuity-hardening branch",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "839e5d7e5649fc133f91f36979e36c401090cbe5" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "a6b7a5e" }
       ]
     },
     "qualityGates": {
