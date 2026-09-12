@@ -96,21 +96,21 @@
       "verifiedDate": "2026-09-13"
     },
 "verificationRun": {
-      "type": "captured",
+      "type": "historical-captured",
       "runAt": "2026-09-13T17:50:09Z",
       "runBy": "P5.3 final compatibility verification",
       "evidence": "docs/ai/verification-logs/P5.3.log",
       "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0",
-      "environment": "clean working tree on v0/p-bp1-product-blueprint; origin/main refreshed",
+      "environment": "clean working tree on v0/p-bp1-product-blueprint; verification applies to 647e05a, not reconciliation HEAD 32ceb0f",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.3.log", "commitSha": "647e05a8355584f39ddae10d31ac0cbd7b8c52c0" }
       ]
     },
     "qualityGates": {
