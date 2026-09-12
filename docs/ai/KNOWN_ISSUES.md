@@ -139,7 +139,7 @@ The product blueprint is now recorded at `docs/ai/BIZFLOW_PRODUCT_BLUEPRINT.md`.
 - **ID:** ISSUE-012
 - **Title:** Application is not installable as a PWA
 - **Severity:** Future
-- **Description:** No service worker or web manifest exists.
-- **Impact:** Cannot be installed as a native app.
+- **Description:** No service worker or web manifest existed.
+- **Impact:** Could not be installed as a native app.
 - **Possible solution:** Add Vite PWA plugin, manifest, service worker.
-- **Status:** Open — future
+- **Status:** RESOLVED in P-PWA1 (2026-09-10) — `vite-plugin-pwa` (generateSW mode) added with web manifest, PWA icons (192/512/maskable/apple-touch), service worker precaching 15 entries (775.55 KiB), and `PWAUpdatePrompt` component using `virtual:pwa-register/react`. Implementation published to `origin/main` at merge commit `8318ef0`.
