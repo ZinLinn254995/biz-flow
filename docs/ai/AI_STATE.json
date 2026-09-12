@@ -49,37 +49,32 @@
     "status": "COMPLETE"
   },
   "lastCompletedTask": {
-    "id": "P5.1",
-    "name": "Product and Domain Contract Validation",
-    "completedDate": "2026-09-12",
+    "id": "P5.2",
+    "name": "Categories and Items — Generalize item/category foundations",
+    "completedDate": "2026-09-13",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": {
-    "id": "P5.2",
-    "name": "Categories and Items — Generalize item/category foundations",
-    "status": "COMPLETE",
-    "lockedFileOverrideReason": "P5.2 introduces the protected generic item contract as the explicitly authorized compatibility foundation; InventoryItem remains persisted and unchanged, and no Dexie migration is required."
-  },
-  "lockedFileOverrideReason": "P5.2 introduces the protected generic item contract as the explicitly authorized compatibility foundation; InventoryItem remains persisted and unchanged, and no Dexie migration is required.",
+  "currentTask": null,
+  "lockedFileOverrideReason": null,
   "nextTask": null,
   "progress": {
     "completedMilestones": [
-      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7",       "P4.1", "P5.1"
+      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7",       "P4.1", "P5.1", "P5.2"
     ],
     "remainingMilestones": ["P4.2", "P4.3", "P4.4", "P4.5"],
-    "totalCompleted": 37,
+    "totalCompleted": 38,
     "totalRemaining": 4,
     "percentage": 90
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 581,
-      "files": 52,
+      "count": 583,
+      "files": 53,
       "framework": "Vitest 4.1.11",
-      "verifiedDate": "2026-09-09"
+      "verifiedDate": "2026-09-13"
     },
     "typescript": {
       "status": "passing",
@@ -93,20 +88,20 @@
     },
 "verificationRun": {
       "type": "captured",
-      "runAt": "2026-09-10T00:00:00Z",
-      "runBy": "P-BP1 captured verification process",
-      "evidence": "docs/ai/verification-logs/P-BP1.log",
-      "commitSha": "ca44858",
-      "environment": "clean working tree on the P3.7 continuity-hardening branch",
+      "runAt": "2026-09-13T17:50:09Z",
+      "runBy": "P5.2 final verification",
+      "evidence": "docs/ai/verification-logs/P5.2.log",
+      "commitSha": "39c8739ea38066762f29e02417d192efe674a92e",
+      "environment": "clean working tree on v0/p-bp1-product-blueprint; origin/main refreshed",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "ca44858" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.2.log", "commitSha": "39c8739ea38066762f29e02417d192efe674a92e" }
       ]
     },
     "qualityGates": {
