@@ -36,4 +36,5 @@ Documentation-complete verification:
 - npm run verify:imports: PASS
 - npm run verify:locked: PASS
 - npm run verify:git-freshness: expected DIRTY before commit; rerun after SyncGit
-- npm run verify:ai: pending final committed state
+- npm run verify:ai: PASS — 17 docs checked, 0 warnings
+- npm run verify: PASS after commit a1f90eac049a1a64d9ee86107b05bafe41dde403
