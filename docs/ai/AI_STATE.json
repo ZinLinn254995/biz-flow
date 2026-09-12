@@ -94,14 +94,14 @@
       "commitSha": "c971dc2",
       "environment": "clean working tree on the P3.7 continuity-hardening branch",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P4.1.log", "commitSha": "c971dc2" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P-BP1.log", "commitSha": "c971dc2" }
       ]
     },
     "qualityGates": {
