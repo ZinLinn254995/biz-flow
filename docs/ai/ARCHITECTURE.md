@@ -183,7 +183,7 @@ otherwise                              → 'in_stock'
 ```
 
 ### Atomicity
-**Not atomic.** No Dexie `db.transaction()` is used. All operations are sequential with manual rollback. This is a known limitation (TD-03).
+Stock movement and sale persistence run through the injected transaction boundary backed by a Dexie read-write transaction. The previously documented manual-rollback-only limitation is historical and was resolved in P2P19.
 
 ## Testing Architecture
 

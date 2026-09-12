@@ -1,0 +1,39 @@
+P5.1 Product and Domain Contract Validation
+Date: 2026-09-12
+
+Scope: documentation and contract validation only.
+
+Baseline verification before documentation changes:
+- npm run typecheck: PASS
+- npm run test: PASS — 52 test files, 581 tests
+- npm run build: PASS — Vite production build completed
+- Build warning: main JavaScript chunk is 541.32 kB; no build failure.
+
+Reviewed:
+- docs/ai/BIZFLOW_PRODUCT_BLUEPRINT.md
+- src/types, src/db/database.ts, services, repositories, hooks, pages/routes, and relevant tests
+- docs/ai/PROJECT_CONTEXT.md and docs/ai/ARCHITECTURE.md for documentation drift
+
+Contract result:
+- Implemented: business, inventory, sales, business expenses, personal finance, categories, budgets, accounts, offline persistence, backup compatibility.
+- Partial: optional stock configuration and expanded reporting/period capabilities.
+- Future-only: purchases, bills, reserves, saved/quick items, favorites, Shopping Cart, and expanded reporting views.
+- Absent: Quick Add and corresponding future domain contracts.
+
+Guardrails:
+- No src/ changes.
+- No package/dependency changes.
+- No schema changes.
+- No network, auth, cloud, sync, Supabase/Firebase, Capacitor, or multi-device changes.
+- P5.2 not started or authorized.
+
+Final verification and commit SHA must be appended after documentation changes are complete.
+
+Documentation-complete verification:
+- npm run typecheck: PASS
+- npm run test: PASS — 52 test files, 581 tests
+- npm run build: PASS
+- npm run verify:imports: PASS
+- npm run verify:locked: PASS
+- npm run verify:git-freshness: expected DIRTY before commit; rerun after SyncGit
+- npm run verify:ai: pending final committed state

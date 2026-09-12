@@ -145,7 +145,7 @@ Liquid asset account.
 | Tables | 10 |
 | Primary keys | Domain entity `id` (client-generated UUID) |
 | Migration strategy | `this.version(N).stores({...})` — new version + upgrade function required for schema changes |
-| Transaction strategy | **None.** No Dexie transactions used. Stock operations use manual rollback. |
+| Transaction strategy | Injected Dexie transaction runner protects sale stock movement and persistence; other workflows use their service/repository transaction boundaries. |
 | Persistence | Browser IndexedDB, survives page reloads |
 | Seed data | None — database starts empty |
 

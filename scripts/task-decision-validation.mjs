@@ -44,7 +44,7 @@ export function validateTaskDecision({ text, knownTaskIds = [], source = 'decisi
   if (!record.rationale) fail('rationale is required and cannot be empty.');
   if (!record.consequences) fail('consequences / trade-offs is required and cannot be empty.');
   if (!DECISION_STATUSES.includes(record.status.toUpperCase())) fail(`status must be one of: ${DECISION_STATUSES.join(', ')}.`);
-  const taskIds = [...record.task.matchAll(/(?:P4\.\d+|P3\.\d+|P2P\d+)/gi)].map((match) => match[0].toUpperCase());
+  const taskIds = [...record.task.matchAll(/(?:P5\.\d+|P4\.\d+|P3\.\d+|P2P\d+)/gi)].map((match) => match[0].toUpperCase());
   if (!taskIds.length) fail('task / milestone must name a task or milestone ID.');
   if (knownTaskIds.length && taskIds.some((id) => !knownTaskIds.includes(id))) {
     fail(`task / milestone references an unknown task: ${taskIds.find((id) => !knownTaskIds.includes(id))}.`);

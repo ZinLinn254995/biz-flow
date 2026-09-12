@@ -39,7 +39,7 @@ None.
 - **Possible solution:** Add balance update logic in service layer (or use Dexie transaction).
 - **Affected files:** `BusinessExpenseService.ts`, `PersonalIncomeService.ts`, `PersonalExpenseService.ts`, `AccountService.ts`
 - **Dependencies:** None
-- **Status:** Open — proposed as P2P23
+- **Status:** RESOLVED in P2P23 (2026-09-08) — transaction-linked account balances are updated by the service layer
 
 ### ISSUE-004: No Budget Tracking
 - **ID:** ISSUE-004
@@ -50,7 +50,7 @@ None.
 - **Possible solution:** Add `computeBudgetUsage(budget, expenses)` to `financialCalculations.ts`, display progress in `BudgetCard`.
 - **Affected files:** `BudgetService.ts`, `BudgetsPage.tsx`, `BudgetCard.tsx`, `financialCalculations.ts`
 - **Dependencies:** None (but P2P23 improves accuracy)
-- **Status:** Open — proposed as P2P24
+- **Status:** RESOLVED in P2P24 (2026-09-08) — budget actual-vs-limit tracking is computed and displayed
 
 ### ISSUE-005: Sale Total Not Validated Against Line Items
 - **ID:** ISSUE-005
