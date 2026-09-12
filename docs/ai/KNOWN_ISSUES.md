@@ -120,6 +120,10 @@ None.
 - **Dependencies:** None
 - **Status:** RESOLVED in P2P28 (2026-09-08) — business deletion now removes all business-owned child records atomically through the injected transaction boundary.
 
+## P-BP1 status
+
+The product blueprint is now recorded at `docs/ai/BIZFLOW_PRODUCT_BLUEPRINT.md`. It is a documentation-only direction document; P5.1 and all account, cloud, sync, multi-device, Supabase/Firebase, and Capacitor work remain unauthorized.
+
 ## Future
 
 ### ISSUE-011: No Data Export/Import
