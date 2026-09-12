@@ -44,8 +44,8 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.1",
-    "name": "Product and Domain Contract Validation",
+    "id": "P5.2",
+    "name": "Categories and Items — Generalize item/category foundations",
     "status": "COMPLETE"
   },
   "lastCompletedTask": {
@@ -56,8 +56,13 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
-  "lockedFileOverrideReason": "P4.1 introduced the protected public sync contract export and its focused contract implementation; these changes are part of the finalized P4.1 milestone.",
+  "currentTask": {
+    "id": "P5.2",
+    "name": "Categories and Items — Generalize item/category foundations",
+    "status": "COMPLETE",
+    "lockedFileOverrideReason": "P5.2 introduces the protected generic item contract as the explicitly authorized compatibility foundation; InventoryItem remains persisted and unchanged, and no Dexie migration is required."
+  },
+  "lockedFileOverrideReason": "P5.2 introduces the protected generic item contract as the explicitly authorized compatibility foundation; InventoryItem remains persisted and unchanged, and no Dexie migration is required.",
   "nextTask": null,
   "progress": {
     "completedMilestones": [
