@@ -7,6 +7,7 @@ import type { Customer } from '@/types/domain/customer';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { PersonalExpense, PersonalIncome } from '@/types/domain/personalFinance';
 import type { Sale } from '@/types/domain/sale';
+import type { SavedItem } from '@/types/domain/savedItem';
 
 export const BACKUP_VERSION = 1 as const;
 
@@ -24,6 +25,7 @@ export interface BackupData {
     categories: Category[];
     budgets: Budget[];
     accounts: Account[];
+    savedItems?: SavedItem[];
   };
 }
 
@@ -45,4 +47,5 @@ export const BACKUP_ENTITIES: BackupEntity[] = [
   'categories',
   'budgets',
   'accounts',
+  'savedItems',
 ];

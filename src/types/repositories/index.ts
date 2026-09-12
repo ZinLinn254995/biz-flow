@@ -9,3 +9,4 @@ export type { PersonalExpenseRepository } from '@/types/repositories/personalExp
 export type { CategoryRepository } from '@/types/repositories/categoryRepository';
 export type { BudgetRepository } from '@/types/repositories/budgetRepository';
 export type { AccountRepository } from '@/types/repositories/accountRepository';
+export type { SavedItemRepository } from '@/types/repositories/savedItemRepository';

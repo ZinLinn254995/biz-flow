@@ -8,6 +8,7 @@ export { PersonalExpenseService } from '@/services/personalFinance/PersonalExpen
 export { CategoryService } from '@/services/categories/CategoryService';
 export { BudgetService } from '@/services/budgets/BudgetService';
 export { AccountService } from '@/services/accounts/AccountService';
+export { SavedItemService } from '@/services/items/SavedItemService';
 
 export { ValidationError, NotFoundError } from '@/services/common/errors';
 

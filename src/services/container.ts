@@ -8,6 +8,7 @@ import { PersonalExpenseService } from '@/services/personalFinance/PersonalExpen
 import { CategoryService } from '@/services/categories/CategoryService';
 import { BudgetService } from '@/services/budgets/BudgetService';
 import { AccountService } from '@/services/accounts/AccountService';
+import { SavedItemService } from '@/services/items/SavedItemService';
 
 import {
   businessRepository,
@@ -20,6 +21,7 @@ import {
   categoryRepository,
   budgetRepository,
   accountRepository,
+  savedItemRepository,
   dataBackupRepository,
   salesTransactionRunner,
   financeTransactionRunner,
@@ -43,6 +45,7 @@ export interface ServiceContainer {
   categoryService: CategoryService;
   budgetService: BudgetService;
   accountService: AccountService;
+  savedItemService?: SavedItemService;
   dataBackupService?: DataBackupService;
 }
 
@@ -58,6 +61,7 @@ export function createServiceContainer(): ServiceContainer {
     categoryService: new CategoryService(categoryRepository),
     budgetService: new BudgetService(budgetRepository, businessExpenseRepository, personalExpenseRepository),
     accountService: new AccountService(accountRepository),
+    savedItemService: new SavedItemService(savedItemRepository),
     dataBackupService: new DataBackupService(dataBackupRepository),
   };
 }

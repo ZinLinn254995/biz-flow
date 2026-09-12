@@ -9,6 +9,7 @@ import type { PersonalIncome, PersonalExpense } from '@/types/domain/personalFin
 import type { Category } from '@/types/domain/category';
 import type { Budget } from '@/types/domain/budget';
 import type { Account } from '@/types/domain/account';
+import type { SavedItem } from '@/types/domain/savedItem';
 
 /**
  * BizFlow's local IndexedDB database, accessed through Dexie.
@@ -28,6 +29,7 @@ export class BizFlowDB extends Dexie {
   categories!: Table<Category, EntityId>;
   budgets!: Table<Budget, EntityId>;
   accounts!: Table<Account, EntityId>;
+  savedItems!: Table<SavedItem, EntityId>;
 
   constructor(name = 'BizFlowDB') {
     super(name);
@@ -53,6 +55,10 @@ export class BizFlowDB extends Dexie {
       budgets: 'id, categoryId, period',
 
       accounts: 'id, type',
+    });
+
+    this.version(2).stores({
+      savedItems: 'id, scope, kind, categoryId, businessId',
     });
   }
 }

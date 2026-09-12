@@ -7,3 +7,5 @@ export type { PersonalIncome, PersonalExpense } from '@/types/domain/personalFin
 export type { Category } from '@/types/domain/category';
 export type { Budget } from '@/types/domain/budget';
 export type { Account } from '@/types/domain/account';
+export type { GenericItem, GenericItemKind } from '@/types/domain/item';
+export type { SavedItem, SavedItemInput, SavedItemKind } from '@/types/domain/savedItem';

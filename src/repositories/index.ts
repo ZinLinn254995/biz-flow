@@ -9,6 +9,7 @@ import { DexieCategoryRepository } from '@/repositories/dexieCategoryRepository'
 import { DexieBudgetRepository } from '@/repositories/dexieBudgetRepository';
 import { DexieAccountRepository } from '@/repositories/dexieAccountRepository';
 import { DexieDataBackupRepository } from '@/repositories/dexieDataBackupRepository';
+import { DexieSavedItemRepository } from '@/repositories/dexieSavedItemRepository';
 
 export type {
   BusinessRepository,
@@ -44,6 +45,7 @@ export {
   DexieCategoryRepository,
   DexieBudgetRepository,
   DexieAccountRepository,
+  DexieSavedItemRepository,
 };
 
 /**
@@ -62,3 +64,4 @@ export const categoryRepository = new DexieCategoryRepository();
 export const budgetRepository = new DexieBudgetRepository();
 export const accountRepository = new DexieAccountRepository();
 export const dataBackupRepository = new DexieDataBackupRepository();
+export const savedItemRepository = new DexieSavedItemRepository();

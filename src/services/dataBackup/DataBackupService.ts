@@ -21,6 +21,7 @@ export class DataBackupService {
     }
     const data = backup.data as Partial<BackupData['data']>;
     for (const entity of BACKUP_ENTITIES) {
+      if (entity === 'savedItems' && data[entity] === undefined) continue;
       if (!Array.isArray(data[entity])) throw new ValidationError(`Backup is missing ${entity}`);
     }
     return data as BackupData['data'];
