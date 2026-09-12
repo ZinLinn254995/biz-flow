@@ -6,7 +6,9 @@ BizFlow — offline-first business and personal finance management application.
 
 ## CURRENT MILESTONE
 
-P4.1 — Sync-Ready Domain Contracts — COMPLETE
+P-BP1 — BizFlow Product Blueprint & Implementation Roadmap — COMPLETE
+
+The Product Blueprint is recorded in `docs/ai/BIZFLOW_PRODUCT_BLUEPRINT.md`. This was a documentation-only milestone; P5.1 is conceptual, not started, and not authorized.
 
 ## LAST COMPLETED TASK
 

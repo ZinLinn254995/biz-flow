@@ -7,10 +7,10 @@
 
 | Field | Value |
 |-------|-------|
-| Current milestone | P4.1 — Sync-Ready Domain Contracts |
-| Last completed task | P4.1 — Sync-Ready Domain Contracts |
+| Current milestone | P-BP1 — BizFlow Product Blueprint & Implementation Roadmap |
+| Last completed task | P-BP1 — BizFlow Product Blueprint & Implementation Roadmap |
 | Status | COMPLETE |
-| Next milestone | P4.2 — Account + Device Foundation (not started; explicit authorization required) |
+| Next milestone | P5.1 — Product & Domain Foundation (not started; explicit authorization required) |
 | Development status | PAUSED_AWAITING_INSTRUCTIONS |
 | Implementation status | P2P1-P2P28 and P3.1-P3.7 are complete; no implementation task is active |
 
