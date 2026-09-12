@@ -1,0 +1,20 @@
+P-BP1 verification log
+Date: 2026-09-12
+Scope: documentation-only Product Blueprint and continuity updates.
+
+Pre-commit checks:
+- npm run typecheck: PASS
+- npm run test: PASS (51 files, 572 tests)
+- npm run build: PASS (non-blocking Browserslist and bundle-size warnings)
+- npm run verify:imports: PASS
+- npm run verify:locked: PASS
+
+Expected publication checks after commit:
+- npm run verify:git-freshness: PASS on clean committed tree
+- npm run verify:ai: PASS with P-BP1 evidence
+- npm run verify: PASS
+
+Source/dependency boundary:
+- src/: unchanged
+- package.json/package-lock.json: unchanged
+- no secrets, force-push, or history rewrite

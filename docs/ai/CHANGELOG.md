@@ -2,6 +2,19 @@
 
 > Future AI agents must append to this file. Do not rewrite history.
 
+---
+
+## P-BP1 — 2026-09-12
+
+### Added
+- `docs/ai/BIZFLOW_PRODUCT_BLUEPRINT.md` defining BizFlow product identity, domain vocabulary, business and personal finance modules, bills/budgets/reserves, reporting direction, offline-first architecture rules, dependency-aware P5 roadmap, and safe AI continuation/publication rules.
+
+### Scope
+- Documentation-only. No application source, dependencies, runtime behavior, account, cloud, sync, Supabase/Firebase, Capacitor, or P5.1 implementation was started.
+
+### Status
+- Complete locally pending verification and normal GitHub publication. Project remains paused and P5.1 requires explicit authorization.
+
 ## P3.2 — 2026-09-09
 
 ### Added

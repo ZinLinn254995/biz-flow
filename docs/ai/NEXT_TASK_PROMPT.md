@@ -2,7 +2,7 @@
 
 # Next Task
 
-No implementation task is authorized. P4.1 is complete and the project is paused. P4.2 is the next roadmap milestone, but it is not started or authorized.
+No implementation task is authorized. P-BP1 is complete and the project is paused. P5.1 is the next conceptual milestone in `docs/ai/BIZFLOW_PRODUCT_BLUEPRINT.md`, but it is not started or authorized.
 
 ## Current State
 
