@@ -9,4 +9,19 @@ export class DexieSavedItemRepository extends DexieRepository<SavedItem> impleme
   getByScope(scope: SavedItem['scope']): Promise<SavedItem[]> { return this.table.where('scope').equals(scope).toArray(); }
   getByKind(kind: SavedItem['kind']): Promise<SavedItem[]> { return this.table.where('kind').equals(kind).toArray(); }
   getByCategoryId(categoryId: EntityId): Promise<SavedItem[]> { return this.table.where('categoryId').equals(categoryId).toArray(); }
+  async getFavorites(): Promise<SavedItem[]> {
+    const items = await this.table.toArray();
+    return items
+      .filter((item) => item.favoriteOrder !== undefined)
+      .sort((a, b) => (a.favoriteOrder ?? 0) - (b.favoriteOrder ?? 0));
+  }
+  async setFavorite(id: EntityId, favoriteOrder?: number): Promise<SavedItem> {
+    const item = await this.getById(id);
+    if (!item) throw new Error(`Saved item not found: ${id}`);
+    if (favoriteOrder === undefined) {
+      const { favoriteOrder: _favoriteOrder, ...withoutFavorite } = item;
+      return this.update(id, withoutFavorite);
+    }
+    return this.update(id, { favoriteOrder });
+  }
 }

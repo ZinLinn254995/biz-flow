@@ -6,4 +6,6 @@ export interface SavedItemRepository extends Repository<SavedItem> {
   getByScope(scope: SavedItem['scope']): Promise<SavedItem[]>;
   getByKind(kind: SavedItem['kind']): Promise<SavedItem[]>;
   getByCategoryId(categoryId: EntityId): Promise<SavedItem[]>;
+  getFavorites(): Promise<SavedItem[]>;
+  setFavorite(id: EntityId, favoriteOrder?: number): Promise<SavedItem>;
 }

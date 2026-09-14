@@ -9,6 +9,7 @@ import { CategoryService } from '@/services/categories/CategoryService';
 import { BudgetService } from '@/services/budgets/BudgetService';
 import { AccountService } from '@/services/accounts/AccountService';
 import { SavedItemService } from '@/services/items/SavedItemService';
+import { QuickAddService } from '@/services/items/QuickAddService';
 
 import {
   businessRepository,
@@ -46,6 +47,7 @@ export interface ServiceContainer {
   budgetService: BudgetService;
   accountService: AccountService;
   savedItemService?: SavedItemService;
+  quickAddService?: QuickAddService;
   dataBackupService?: DataBackupService;
 }
 
@@ -62,6 +64,7 @@ export function createServiceContainer(): ServiceContainer {
     budgetService: new BudgetService(budgetRepository, businessExpenseRepository, personalExpenseRepository),
     accountService: new AccountService(accountRepository),
     savedItemService: new SavedItemService(savedItemRepository),
+    quickAddService: new QuickAddService(new SavedItemService(savedItemRepository)),
     dataBackupService: new DataBackupService(dataBackupRepository),
   };
 }

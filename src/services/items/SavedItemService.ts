@@ -13,7 +13,18 @@ export class SavedItemService {
   }
 
   getAll(): Promise<SavedItem[]> { return this.repository.getAll(); }
+  async getById(id: EntityId): Promise<SavedItem | undefined> { return (await this.repository.getById(id)) ?? undefined; }
   getByScope(scope: SavedItem['scope']): Promise<SavedItem[]> { return this.repository.getByScope(scope); }
+  getFavorites(): Promise<SavedItem[]> { return this.repository.getFavorites(); }
+  async favorite(id: EntityId): Promise<SavedItem> {
+    const favorites = await this.repository.getFavorites();
+    const nextOrder = favorites.reduce((max, item) => Math.max(max, item.favoriteOrder ?? -1), -1) + 1;
+    return this.repository.setFavorite(id, nextOrder);
+  }
+  unfavorite(id: EntityId): Promise<SavedItem> { return this.repository.setFavorite(id); }
+  reorderFavorites(orderedIds: EntityId[]): Promise<SavedItem[]> {
+    return Promise.all(orderedIds.map((id, index) => this.repository.setFavorite(id, index)));
+  }
   getByKind(kind: SavedItem['kind']): Promise<SavedItem[]> { return this.repository.getByKind(kind); }
   getByCategoryId(categoryId: EntityId): Promise<SavedItem[]> { return this.repository.getByCategoryId(categoryId); }
   update(id: EntityId, changes: Partial<SavedItem>): Promise<SavedItem> {

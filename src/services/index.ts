@@ -9,6 +9,7 @@ export { CategoryService } from '@/services/categories/CategoryService';
 export { BudgetService } from '@/services/budgets/BudgetService';
 export { AccountService } from '@/services/accounts/AccountService';
 export { SavedItemService } from '@/services/items/SavedItemService';
+export { QuickAddService } from '@/services/items/QuickAddService';
 
 export { ValidationError, NotFoundError } from '@/services/common/errors';
 

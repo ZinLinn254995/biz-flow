@@ -44,9 +44,9 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.3",
-    "name": "Saved Items — Persisted reusable item foundations",
-    "status": "COMPLETE"
+    "id": "P5.4",
+    "name": "Favorites and Quick Add",
+    "status": "IN_PROGRESS"
   },
   "lastCompletedTask": {
     "id": "P5.3",
@@ -56,7 +56,15 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P5.4",
+    "name": "Favorites and Quick Add",
+    "status": "IN_PROGRESS",
+    "confidence": "high",
+    "needsHumanReview": false,
+    "ownerAuthorization": "AUTHORIZED",
+    "lockedFileOverrideReason": "P5.4 requires extending the protected SavedItem domain and repository contracts to persist favorite ordering while preserving compatibility; no locked UI or database schema files are changed."
+  },
   "lockedFileOverrideReason": null,
   "nextTask": {
     "id": "P5.4",
@@ -80,8 +88,8 @@
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 589,
-      "files": 55,
+      "count": 592,
+      "files": 56,
       "framework": "Vitest 4.1.11",
       "verifiedDate": "2026-09-13"
     },

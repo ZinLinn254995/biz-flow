@@ -15,3 +15,4 @@ export * from '@/hooks/personalFinance';
 export * from '@/hooks/categories';
 export * from '@/hooks/budgets';
 export * from '@/hooks/accounts';
+export * from '@/hooks/items';

@@ -1,4 +1,4 @@
-# DEC-P5.4-001 — Favorites and Quick Add Authorization
+# DEC-P5.4-001 — Favorites and Quick Add
 
 ## DECISION ID
 DEC-P5.4-001
@@ -7,16 +7,25 @@ DEC-P5.4-001
 P5.4 — Favorites and Quick Add
 
 ## DECISION
-P5.4 is explicitly authorized for implementation, but implementation has not started. The approved boundary is persisted SavedItem favorites with deterministic ordering and preparation-only Quick Add. No implicit financial transaction creation is authorized.
+Persist Saved Item favorites as an optional `favoriteOrder` field. Implement deterministic favorite lookup and a preparation-only Quick Add service; do not create financial records from Quick Add.
 
 ## CONTEXT / PROBLEM
-P5.3 established the persisted SavedItem foundation but did not add a fast-access or preparation workflow. P5.4 must extend that foundation without changing InventoryItem, sales, stock, category, backup, or offline contracts.
+P5.3 provides persisted reusable items but no fast reuse primitive. P5.4 must add favorites and preparation while preserving offline-first behavior, existing validation, and inventory-specific stock rules.
 
 ## RATIONALE
-An optional non-indexed favorite order on SavedItem preserves the existing entity and avoids a new relation or migration. Preparation-only Quick Add keeps financial validation and persistence owned by existing domain services and prevents accidental transaction creation.
+Using optional metadata on SavedItem avoids a new relation or table. Sorting in the repository/service layer avoids a new Dexie index or migration. Quick Add remains an orchestration boundary so existing financial services remain authoritative.
 
 ## CONSEQUENCES / TRADE-OFFS
-Favorites are limited to Saved Items. Quick Add may prepare validated input but may not create sales, expenses, purchases, stock movements, or other financial records. Dexie remains version 2 unless implementation evidence proves a migration is required; such evidence is a stop condition requiring review. Historical P5.2 and P5.3 records remain unchanged.
+Favorite ordering is persisted but non-indexed. Existing version-2 records remain compatible with an absent field. Quick Add can prepare reusable input but cannot create sales, expenses, purchases, stock movements, or other financial records.
 
 ## STATUS
 CURRENT
+
+## Verification
+P5.4 implementation typecheck passed and 592 tests across 56 files passed. Final verification is recorded in `docs/ai/verification-logs/P5.4.log`.
+
+## Migration
+No Dexie schema migration is required; the database remains version 2 because no table or index changed.
+
+## Scope exclusions
+No visible workflow UI, transaction creation, InventoryItem replacement, stock behavior changes, backup-version change, networking, cloud persistence, P5.5 work, or unrelated refactors.

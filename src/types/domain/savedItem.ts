@@ -11,6 +11,8 @@ export interface SavedItem extends BaseEntity {
   unit?: string;
   amount?: Money;
   note?: string;
+  /** Lower values appear first; absent means the item is not favorited. */
+  favoriteOrder?: number;
 }
 
 export type SavedItemInput = Omit<SavedItem, 'id' | 'createdAt' | 'updatedAt'>;
