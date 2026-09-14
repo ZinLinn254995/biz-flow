@@ -4,7 +4,7 @@ BizFlow is an offline-first React, TypeScript, Vite, Dexie, and IndexedDB applic
 
 ## Current state
 
-P5.2 and P5.3 are complete. P5.4 — Favorites and Quick Add — is owner-authorized but not started. The project is ready for the authorized implementation session; no P5.4 implementation has started. Current database version is 2. Verified P5.3 provenance is recorded in `docs/ai/verification-logs/P5.3.log`.
+P5.2, P5.3, and P5.4 are complete. P5.4 added persisted Saved Item favorites and preparation-only Quick Add without financial or stock mutation. The project is paused with no next task authorized; P5.5 is not started. Current database version is 2, and final P5.4 verification is recorded in `docs/ai/verification-logs/P5.4.log`.
 
 ## Rules
 
