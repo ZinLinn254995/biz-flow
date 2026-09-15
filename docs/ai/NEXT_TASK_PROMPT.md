@@ -6,7 +6,7 @@ None. P5.4 — Favorites and Quick Add — is complete.
 
 ## STATUS
 
-Development is paused. No next task is authorized. P5.5 is NOT_STARTED.
+Development is paused awaiting instructions. No next task is authorized. P5.5 is NOT_STARTED and NOT_AUTHORIZED.
 
 ## OBJECTIVE
 

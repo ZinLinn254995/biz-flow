@@ -91,7 +91,7 @@
       "runAt": "2026-09-15T00:00:00Z",
       "runBy": "P5.4 final verification",
       "evidence": "docs/ai/verification-logs/P5.4.log",
-      "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c",
+      "commitSha": "d351c332c48414c6dc7adf646fdbca646171c21f",
       "environment": "clean working tree on v0/p-bp1-product-blueprint; P5.4 implementation verification completed before governance finalization",
       "results": [
         { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },

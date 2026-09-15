@@ -31,7 +31,7 @@ None. Development is paused awaiting instructions.
 Do not add financial transaction creation to Quick Add, change InventoryItem or sales contracts, add a Dexie migration or backup-version change, introduce networking, or begin P5.5 without authorization.
 
 ## GIT STATE
-P5.4 implementation commit: `221abb1d8b9523a476f19ed77eb2dd08aa08283c`. Final merged commit and remote `main` are recorded by the final integration verification.
+P5.4 final merged commit: `d351c332c48414c6dc7adf646fdbca646171c21f`. Final verification was run at this commit and remote `main` points to the same SHA.
 
 ## DECISION
 See `docs/ai/task-decisions/DEC-P5.4-001.md`.

@@ -13,8 +13,8 @@
 ## Provenance
 
 - Branch: `v0/p-bp1-product-blueprint`
-- P5.4 implementation commit: `221abb1d8b9523a476f19ed77eb2dd08aa08283c`
-- Final merged commit: recorded after the authorized fast-forward integration.
+- P5.4 final merged commit: `d351c332c48414c6dc7adf646fdbca646171c21f`
+- Final verification commit: `d351c332c48414c6dc7adf646fdbca646171c21f`.
 - Database version: 2.
 - Remote `main`: recorded in the final verification evidence.
 
