@@ -7,8 +7,8 @@ P5.2, P5.3, and P5.4 are complete. Development is paused with no current or next
 ## Verified provenance
 
 - Branch: `v0/p-bp1-product-blueprint`
-- P5.4 implementation commit: `221abb1d8b9523a476f19ed77eb2dd08aa08283c`
-- Final merged commit: recorded in `docs/ai/verification-logs/P5.4.log`
+- P5.4 final merged commit: `d351c332c48414c6dc7adf646fdbca646171c21f`
+- Final verification commit: `d351c332c48414c6dc7adf646fdbca646171c21f` recorded in `docs/ai/verification-logs/P5.4.log`
 - Database version: 2.
 - Final verification evidence: `docs/ai/verification-logs/P5.4.log`.
 
