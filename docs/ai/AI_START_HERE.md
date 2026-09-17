@@ -4,7 +4,7 @@ BizFlow is an offline-first React, TypeScript, Vite, Dexie, and IndexedDB applic
 
 ## Current state
 
-P5.2, P5.3, and P5.4 are complete. P5.4 added persisted Saved Item favorites and preparation-only Quick Add without financial or stock mutation. The project is paused with no next task authorized; P5.5 is not started. Current database version is 2, and final P5.4 verification is recorded in `docs/ai/verification-logs/P5.4.log`.
+P5.2, P5.3, P5.4, and P5.5 are complete. P5.5 added a read-only sale detail page, browser receipt printing, and Sales UI navigation without changing financial or stock behavior. The project is paused awaiting instructions; P5.6 is not authorized. Current database version is 2.
 
 ## Rules
 

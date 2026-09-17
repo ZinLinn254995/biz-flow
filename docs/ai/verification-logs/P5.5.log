@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "taskId": "P5.5",
+  "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de",
+  "branch": "v0/p5-5-sale-detail-receipt",
+  "startedAt": "2026-09-17T14:54:23.223Z",
+  "finishedAt": "2026-09-17T14:56:34.758Z",
+  "status": "PASS",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 typecheck\n> tsc --noEmit -p tsconfig.app.json\n\n",
+      "stderr": ""
+    },
+    {
+      "name": "test",
+      "command": "npm run test",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 test\n> vitest run\n\n\n RUN  v4.1.11 /workspaces/biz-flow\n\n\n Test Files  58 passed (58)\n      Tests  597 passed (597)\n   Start at  14:54:31\n   Duration  48.51s (transform 1.69s, setup 6.58s, import 5.35s, tests 14.93s, environment 12.84s)\n\n",
+      "stderr": ""
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 build\n> vite build\n\nvite v5.4.8 building for production...\ntransforming...\n✓ 1709 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/manifest.webmanifest                          0.70 kB\ndist/index.html                                    1.26 kB │ gzip:   0.55 kB\ndist/assets/index-DdDVG0rM.css                    22.50 kB │ gzip:   4.99 kB\ndist/assets/workbox-window.prod.es5-BqEJf4Xk.js    5.71 kB │ gzip:   2.34 kB\ndist/assets/index-T5hL4bGl.js                    549.99 kB │ gzip: 130.26 kB\n✓ built in 4.73s\n\nPWA v1.3.0\nmode      generateSW\nprecache  15 entries (784.36 KiB)\nfiles generated\n  dist/sw.js\n  dist/workbox-9c191d2f.js\n",
+      "stderr": "\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n"
+    },
+    {
+      "name": "verify:imports",
+      "command": "npm run verify:imports",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:imports\n> node scripts/check-dangling-imports.mjs\n\nDangling import check PASSED (all relative imports resolve).\n",
+      "stderr": ""
+    },
+    {
+      "name": "verify:locked",
+      "command": "npm run verify:locked",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:locked\n> node scripts/verify-locked-areas.mjs\n\nLocked-area guard PASSED (15 changed path(s) inspected).\n",
+      "stderr": ""
+    },
+    {
+      "name": "verify:git-freshness",
+      "command": "npm run verify:git-freshness",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:git-freshness\n> node scripts/git-freshness.mjs\n\n{\n  \"state\": \"FRESH\",\n  \"safe\": true,\n  \"reason\": \"Feature branch is based on current origin/main.\",\n  \"branch\": \"v0/p5-5-sale-detail-receipt\",\n  \"head\": \"24bc6427b73103b81179f80f392bca3c5425a8de\",\n  \"originMain\": \"ae90b8127c5d905f66065deec28079643ba53a1c\",\n  \"mergeBase\": \"ae90b8127c5d905f66065deec28079643ba53a1c\",\n  \"fetched\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "verify:ai",
+      "command": "npm run verify:ai",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify:ai\n> node scripts/verify-ai-state.mjs\n\nAI state validation PASSED (17 docs checked, 0 warning(s)).\n",
+      "stderr": ""
+    },
+    {
+      "name": "verify",
+      "command": "npm run verify",
+      "exitCode": 0,
+      "stdout": "\n> vite-react-typescript-starter@0.0.0 verify\n> npm run typecheck && npm run test && npm run build && npm run verify:imports && npm run verify:locked && npm run verify:git-freshness && npm run verify:ai\n\n\n> vite-react-typescript-starter@0.0.0 typecheck\n> tsc --noEmit -p tsconfig.app.json\n\n\n> vite-react-typescript-starter@0.0.0 test\n> vitest run\n\n\n RUN  v4.1.11 /workspaces/biz-flow\n\n\n Test Files  58 passed (58)\n      Tests  597 passed (597)\n   Start at  14:55:36\n   Duration  48.42s (transform 1.63s, setup 6.72s, import 4.96s, tests 14.93s, environment 12.91s)\n\n\n> vite-react-typescript-starter@0.0.0 build\n> vite build\n\nvite v5.4.8 building for production...\ntransforming...\n✓ 1709 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/manifest.webmanifest                          0.70 kB\ndist/index.html                                    1.26 kB │ gzip:   0.55 kB\ndist/assets/index-DdDVG0rM.css                    22.50 kB │ gzip:   4.99 kB\ndist/assets/workbox-window.prod.es5-BqEJf4Xk.js    5.71 kB │ gzip:   2.34 kB\ndist/assets/index-T5hL4bGl.js                    549.99 kB │ gzip: 130.26 kB\n✓ built in 5.59s\n\nPWA v1.3.0\nmode      generateSW\nprecache  15 entries (784.36 KiB)\nfiles generated\n  dist/sw.js\n  dist/workbox-9c191d2f.js\n\n> vite-react-typescript-starter@0.0.0 verify:imports\n> node scripts/check-dangling-imports.mjs\n\nDangling import check PASSED (all relative imports resolve).\n\n> vite-react-typescript-starter@0.0.0 verify:locked\n> node scripts/verify-locked-areas.mjs\n\nLocked-area guard PASSED (15 changed path(s) inspected).\n\n> vite-react-typescript-starter@0.0.0 verify:git-freshness\n> node scripts/git-freshness.mjs\n\n{\n  \"state\": \"FRESH\",\n  \"safe\": true,\n  \"reason\": \"Feature branch is based on current origin/main.\",\n  \"branch\": \"v0/p5-5-sale-detail-receipt\",\n  \"head\": \"24bc6427b73103b81179f80f392bca3c5425a8de\",\n  \"originMain\": \"ae90b8127c5d905f66065deec28079643ba53a1c\",\n  \"mergeBase\": \"ae90b8127c5d905f66065deec28079643ba53a1c\",\n  \"fetched\": true\n}\n\n> vite-react-typescript-starter@0.0.0 verify:ai\n> node scripts/verify-ai-state.mjs\n\nAI state validation PASSED (17 docs checked, 0 warning(s)).\n",
+      "stderr": "\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n"
+    }
+  ]
+}

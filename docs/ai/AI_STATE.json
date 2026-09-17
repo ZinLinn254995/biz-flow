@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.4 is complete and verified; no next task is authorized. P5.5 remains unstarted.",
+  "pauseNote": "P5.5 recovery is complete and verified; P5.6 remains unauthorized.",
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -44,14 +44,14 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.4",
-    "name": "Favorites and Quick Add",
+    "id": "P5.5",
+    "name": "Sale Detail and Receipt",
     "status": "COMPLETE"
   },
   "lastCompletedTask": {
-    "id": "P5.4",
-    "name": "Favorites and Quick Add",
-    "completedDate": "2026-09-15",
+    "id": "P5.5",
+    "name": "Sale Detail and Receipt",
+    "completedDate": "2026-09-17",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
@@ -61,47 +61,47 @@
   "nextTask": null,
   "progress": {
     "completedMilestones": [
-      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7",       "P4.1",       "P5.1", "P5.2", "P5.3", "P5.4"
+      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7",       "P4.1",       "P5.1", "P5.2", "P5.3", "P5.4", "P5.5"
     ],
     "remainingMilestones": ["P4.2", "P4.3", "P4.4", "P4.5"],
-    "totalCompleted": 38,
+    "totalCompleted": 39,
     "totalRemaining": 4,
-    "percentage": 90
+    "percentage": 91
   },
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 592,
-      "files": 56,
+      "count": 597,
+      "files": 58,
       "framework": "Vitest 4.1.11",
-      "verifiedDate": "2026-09-13"
+      "verifiedDate": "2026-09-17"
     },
     "typescript": {
       "status": "passing",
       "command": "npm run typecheck",
-      "verifiedDate": "2026-09-13"
+      "verifiedDate": "2026-09-17"
     },
     "productionBuild": {
       "status": "passing",
       "command": "npm run build",
-      "verifiedDate": "2026-09-13"
+      "verifiedDate": "2026-09-17"
     },
 "verificationRun": {
       "type": "captured",
-      "runAt": "2026-09-15T00:00:00Z",
-      "runBy": "P5.4 final verification",
-      "evidence": "docs/ai/verification-logs/P5.4.log",
-      "commitSha": "d351c332c48414c6dc7adf646fdbca646171c21f",
-      "environment": "clean working tree on v0/p-bp1-product-blueprint; P5.4 implementation verification completed before governance finalization",
+      "runAt": "2026-09-17T14:54:00Z",
+      "runBy": "P5.5 recovery verification",
+      "evidence": "docs/ai/verification-logs/P5.5.log",
+      "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de",
+      "environment": "clean working tree except the preserved pre-existing package-lock.json change; P5.5 branch v0/p5-5-sale-detail-receipt",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.4.log", "commitSha": "221abb1d8b9523a476f19ed77eb2dd08aa08283c" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" }
       ]
     },
     "qualityGates": {
@@ -279,27 +279,30 @@
     ]
   },
   "lastTaskFilesChanged": {
-    "task": "P4.1 Sync-Ready Domain Contracts",
-    "created": [],
+    "task": "P5.5 Sale Detail and Receipt",
+    "created": [
+      "src/pages/SaleDetailPage.tsx",
+      "src/components/sales/SaleReceipt.tsx",
+      "src/test/hooks/saleDetailPage.test.tsx",
+      "src/test/hooks/saleDetailUiConstraints.test.ts",
+      "docs/ai/task-decisions/DEC-P5.5-001.md",
+      "docs/ai/handoffs/p5-5-handoff.md",
+      "docs/ai/verification-logs/P5.5.log"
+    ],
     "modified": [
-      "src/pages/CategoriesPage.tsx",
-      "src/pages/AccountsPage.tsx",
-      "src/services/sales/SalesService.ts",
-      "src/test/hooks/categoryPage.test.tsx",
-      "src/test/hooks/accountPage.test.tsx",
-      "src/test/services/salesService.test.ts",
-      "src/test/services/salesStockLogic.test.ts",
+      "src/components/sales/SaleCard.tsx",
+      "src/routes/AppRoutes.tsx",
       "docs/ai/AI_STATE.json",
+      "docs/ai/AI_START_HERE.md",
       "docs/ai/CURRENT_STATE.md",
       "docs/ai/AI_HANDOFF.md",
       "docs/ai/NEXT_TASK_PROMPT.md",
       "docs/ai/CHANGELOG.md",
-      "docs/ai/KNOWN_ISSUES.md",
       "docs/ai/ROADMAP.md"
     ],
     "deleted": [],
     "applicationSourceChanged": true,
-    "designNote": "Sale total validation lives in a module-level validateSaleTotal() helper in SalesService, called before any stock movement in both createSale and updateSale so a rejected sale never touches inventory. Fixtures in salesStockLogic.test.ts previously declared totals that did not match their line items; they now derive the total with a sumTotal() helper. No assertion was removed."
+    "designNote": "Sale detail reuses useSale and existing read services. Receipt printing calls the browser print API only; no sale, payment, account, stock, database, or dependency behavior changed."
   },
   "lockedAreas": [
     {
@@ -508,6 +511,6 @@
       "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
     ]
   },
-  "lastUpdated": "2026-09-13",
-  "lastUpdatedBy": "P5.3 governance reconciliation; P5.4 owner authorization recorded"
+  "lastUpdated": "2026-09-17",
+  "lastUpdatedBy": "P5.5 recovery implementation"
 }
