@@ -1,4 +1,5 @@
-import { Pencil, Trash2, ShoppingCart } from 'lucide-react';
+import { Eye, Pencil, Trash2, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import type { Sale } from '@/types/domain/sale';
 import type { EntityId } from '@/types/common/base';
 
@@ -84,6 +85,14 @@ export function SaleCard({ sale, businessName, customerName, onEdit, onDelete }:
       )}
 
       <div className="flex items-center gap-2 pt-1">
+        <Link
+          to={`/sales/${sale.id}`}
+          aria-label={`View sale ${formatDate(sale.date)}`}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+        >
+          <Eye className="w-3.5 h-3.5" strokeWidth={2} />
+          View
+        </Link>
         <button
           onClick={() => onEdit(sale)}
           aria-label={`Edit sale ${formatDate(sale.date)}`}

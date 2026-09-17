@@ -5,14 +5,14 @@
 - P5.2 — Generic Item Compatibility Foundation: COMPLETE.
 - P5.3 — Saved Items Foundation: COMPLETE.
 - P5.4 — Favorites and Quick Add: COMPLETE.
-- Development status: PAUSED_AWAITING_INSTRUCTIONS.
-- Current task: none.
-- Next task: none; no further task is authorized.
-- P5.5: NOT_STARTED.
+- Development status: ACTIVE for owner-authorized P5.5 recovery.
+- Current task: P5.5 — Sale Detail and Receipt.
+- Next task: none; P5.6 is not authorized.
+- P5.5: IN_PROGRESS.
 
 ## Provenance
 
-- Branch: `v0/p-bp1-product-blueprint`
+- Branch: `v0/p5-5-sale-detail-receipt`
 - P5.4 final merged commit: `d351c332c48414c6dc7adf646fdbca646171c21f`
 - Final verification commit: `d351c332c48414c6dc7adf646fdbca646171c21f`.
 - Database version: 2.
@@ -28,4 +28,4 @@ Final verification is captured in `docs/ai/verification-logs/P5.4.log` and must 
 
 ## Handoff
 
-P5.4 is complete. The repository is paused with no active or next task. Do not start P5.5 without explicit authorization.
+P5.5 recovery is implementing a read-only detail view and browser receipt printing. No sale, payment, inventory, account, tax, discount, shipping, PDF, cloud, or migration behavior is included.

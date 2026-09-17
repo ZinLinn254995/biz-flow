@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.4 is complete and verified; no next task is authorized. P5.5 remains unstarted.",
+  "developmentStatus": "ACTIVE",
+  "pauseNote": "P5.5 recovery implementation is owner-authorized; P5.6 remains unauthorized.",
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -44,9 +44,9 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.4",
-    "name": "Favorites and Quick Add",
-    "status": "COMPLETE"
+    "id": "P5.5",
+    "name": "Sale Detail and Receipt",
+    "status": "IN_PROGRESS"
   },
   "lastCompletedTask": {
     "id": "P5.4",
@@ -56,7 +56,23 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P5.5",
+    "name": "Sale Detail and Receipt",
+    "status": "IN_PROGRESS",
+    "confidence": "high",
+    "needsHumanReview": false,
+    "lockedFileOverrideReason": "AppRoutes.tsx is PROTECTED but P5.5 explicitly authorizes adding the new /sales/:saleId route without changing existing routes.",
+    "remainingWork": "Run full verification, capture evidence, finalize governance, commit, and push the dedicated branch.",
+    "filesTouched": [
+      "src/pages/SaleDetailPage.tsx",
+      "src/components/sales/SaleReceipt.tsx",
+      "src/components/sales/SaleCard.tsx",
+      "src/routes/AppRoutes.tsx",
+      "src/test/hooks/saleDetailPage.test.tsx",
+      "src/test/hooks/saleDetailUiConstraints.test.ts"
+    ]
+  },
   "lockedFileOverrideReason": null,
   "nextTask": null,
   "progress": {
@@ -508,6 +524,6 @@
       "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
     ]
   },
-  "lastUpdated": "2026-09-13",
-  "lastUpdatedBy": "P5.3 governance reconciliation; P5.4 owner authorization recorded"
+  "lastUpdated": "2026-09-17",
+  "lastUpdatedBy": "P5.5 recovery implementation"
 }

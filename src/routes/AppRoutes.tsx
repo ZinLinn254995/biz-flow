@@ -4,6 +4,7 @@ import DashboardPage from '@/pages/DashboardPage';
 import BusinessPage from '@/pages/BusinessPage';
 import InventoryPage from '@/pages/InventoryPage';
 import SalesPage from '@/pages/SalesPage';
+import SaleDetailPage from '@/pages/SaleDetailPage';
 import CustomersPage from '@/pages/CustomersPage';
 import BusinessExpensesPage from '@/pages/BusinessExpensesPage';
 import PersonalFinancePage from '@/pages/PersonalFinancePage';
@@ -23,6 +24,7 @@ function AppRoutes() {
         <Route path="/business" element={<BusinessPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
         <Route path="/sales" element={<SalesPage />} />
+        <Route path="/sales/:saleId" element={<SaleDetailPage />} />
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/business-expenses" element={<BusinessExpensesPage />} />
         <Route path="/personal" element={<PersonalFinancePage />} />

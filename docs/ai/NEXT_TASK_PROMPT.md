@@ -2,33 +2,31 @@
 
 ## NEXT TASK
 
-None. P5.4 — Favorites and Quick Add — is complete.
+P5.5 — Sale Detail and Receipt recovery finalization.
 
 ## STATUS
 
-Development is paused awaiting instructions. No next task is authorized. P5.5 is NOT_STARTED and NOT_AUTHORIZED.
+Owner-authorized implementation is in progress on `v0/p5-5-sale-detail-receipt`. P5.6 is not authorized.
 
 ## OBJECTIVE
 
-Implement the approved offline-first Saved Item workflow: persisted favorites with deterministic ordering and preparation-only Quick Add. Keep financial transaction creation, stock behavior, and existing validation boundaries unchanged.
+Complete the recovered offline-first Sale Detail workflow: a read-only sale detail page, browser receipt view/printing, and navigation from the existing Sales UI. Keep financial transaction creation, stock behavior, and existing validation boundaries unchanged.
 
 ## SCOPE
 
-- Add optional `favoriteOrder` to SavedItem.
-- Add repository and service operations for favorite lookup, toggling, and ordering.
-- Add preparation-only Quick Add orchestration.
-- Reuse existing categoryId and existing services.
-- Add focused persistence, backup compatibility, service, and architecture tests.
-- Keep Dexie at version 2 unless implementation evidence proves an indexed migration is necessary; stop for review before adding one.
+- Add a parameterized `/sales/:saleId` route and read-only detail page.
+- Add a presentational receipt with browser `window.print()` behavior.
+- Add navigation from existing sale cards.
+- Add focused behavior and UI architecture tests.
+- Keep Dexie at version 2 and reuse existing hooks/services.
 
 ## ACCEPTANCE CRITERIA
 
-- Existing InventoryItem, sales, categories, backup compatibility, and offline behavior remain intact.
-- No separate favorite table is introduced.
-- Quick Add does not create sales, expenses, purchases, stock movements, or other financial records.
-- Existing service validation remains authoritative.
-- No visible workflow beyond the approved minimal Saved Item/favorite preparation surface.
-- No P5.5 or unrelated refactors.
+- Existing sale, InventoryItem, stock, money, backup, and offline behavior remain intact.
+- The detail view is read-only and displays persisted sale values without mutation.
+- Printing uses the browser print API; no PDF generation is added.
+- No payment history, refunds, tax, discounts, shipping, account balance, cloud, migration, or P5.6 work.
+- `npm run verify` passes end to end.
 
 ## VERIFICATION COMMANDS
 
@@ -43,4 +41,4 @@ Implement the approved offline-first Saved Item workflow: persisted favorites wi
 
 ## STOP CONDITIONS
 
-Stop and request review if repository state becomes contradictory, a Dexie migration is required, backup versioning must change, a locked file must change, Quick Add needs a financial transaction target, or the work exceeds the protected source-file limit.
+Stop and request review if repository state becomes contradictory, a Dexie migration is required, backup versioning must change, a locked file must change, or the work exceeds the protected source-file limit.
