@@ -5,10 +5,10 @@
 - P5.2 — Generic Item Compatibility Foundation: COMPLETE.
 - P5.3 — Saved Items Foundation: COMPLETE.
 - P5.4 — Favorites and Quick Add: COMPLETE.
-- Development status: ACTIVE for owner-authorized P5.5 recovery.
-- Current task: P5.5 — Sale Detail and Receipt.
+- Development status: PAUSED_AWAITING_INSTRUCTIONS.
+- Current task: none.
 - Next task: none; P5.6 is not authorized.
-- P5.5: IN_PROGRESS.
+- P5.5: COMPLETE.
 
 ## Provenance
 
@@ -28,4 +28,4 @@ Final verification is captured in `docs/ai/verification-logs/P5.4.log` and must 
 
 ## Handoff
 
-P5.5 recovery is implementing a read-only detail view and browser receipt printing. No sale, payment, inventory, account, tax, discount, shipping, PDF, cloud, or migration behavior is included.
+P5.5 added a read-only detail view and browser receipt printing. No sale, payment, inventory, account, tax, discount, shipping, PDF, cloud, or migration behavior was added.

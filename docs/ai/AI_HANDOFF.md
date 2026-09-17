@@ -2,7 +2,7 @@
 
 ## Current status
 
-P5.2, P5.3, and P5.4 are complete. Owner-authorized P5.5 recovery is in progress on `v0/p5-5-sale-detail-receipt`; P5.6 is not authorized.
+P5.2, P5.3, P5.4, and P5.5 are complete. Development is paused awaiting instructions; P5.6 is not authorized.
 
 ## Verified provenance
 
@@ -18,4 +18,4 @@ The recovery adds a read-only `/sales/:saleId` detail route, a browser-printable
 
 ## Current handoff
 
-Focused tests pass. Full verification, captured evidence, final governance state, commit, and branch publication remain.
+Focused tests and full verification pass. Captured evidence is in `docs/ai/verification-logs/P5.5.log`; the dedicated branch is ready to publish and must not be merged in this task.

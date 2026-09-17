@@ -18,13 +18,13 @@ Added `/sales/:saleId`, a read-only sale detail page using existing hooks, a pre
 The existing `useSale` hook and `SalesService.getSaleById` provide the read-only data path. Native browser printing avoids PDF generation and dependency changes.
 
 ## VERIFICATION
-Focused tests pass: 2 files and 5 tests. Full `npm run verify`, captured evidence, and branch publication are pending.
+Focused tests pass: 2 files and 5 tests. Full `npm run verify` passed and captured evidence is in `docs/ai/verification-logs/P5.5.log`. The dedicated branch is ready for publication and is not merged.
 
 ## KNOWN ISSUES
 No new application issue identified. The pre-existing `package-lock.json` modification remains outside this task.
 
 ## REMAINING WORK
-Run the required full verification commands, capture `P5.5.log`, finalize AI state, commit the tested P5.5 work, and push `v0/p5-5-sale-detail-receipt` to origin without merging.
+Push `v0/p5-5-sale-detail-receipt` to origin without merging. P5.6 remains unauthorized.
 
 ## NEXT TASK
 P5.6 is not authorized. After P5.5 publication, pause for owner instructions.

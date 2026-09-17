@@ -2,15 +2,15 @@
 
 ## NEXT TASK
 
-P5.5 — Sale Detail and Receipt recovery finalization.
+None. P5.5 — Sale Detail and Receipt — is complete.
 
 ## STATUS
 
-Owner-authorized implementation is in progress on `v0/p5-5-sale-detail-receipt`. P5.6 is not authorized.
+Development is paused awaiting instructions. P5.5 is COMPLETE. P5.6 is not authorized.
 
 ## OBJECTIVE
 
-Complete the recovered offline-first Sale Detail workflow: a read-only sale detail page, browser receipt view/printing, and navigation from the existing Sales UI. Keep financial transaction creation, stock behavior, and existing validation boundaries unchanged.
+No next implementation task is authorized. P5.5 completed the recovered offline-first Sale Detail workflow: a read-only sale detail page, browser receipt view/printing, and navigation from the existing Sales UI.
 
 ## SCOPE
 
