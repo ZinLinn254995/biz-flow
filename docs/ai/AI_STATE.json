@@ -60,21 +60,37 @@
     "id": "P5.6a",
     "name": "Purchase domain, persistence, and stock logic",
     "status": "IN_PROGRESS",
-    "objective": "Add the purchase aggregate, Dexie v3 persistence, backup-compatible repository wiring, and atomic inventory stock increases/reversals.",
+    "objective": "Complete the purchase contract, migration, repository wiring, and stock logic while keeping the version 1 schema unchanged.",
     "filesTouched": [
-      "docs/ai/SESSION_LOCK.json",
+      "src/db/database.ts",
+      "src/types/domain/purchase.ts",
+      "src/types/repositories/purchaseRepository.ts",
+      "src/repositories/dexiePurchaseRepository.ts",
+      "src/services/purchases/PurchaseService.ts",
+      "src/services/container.ts",
+      "src/test/purchasePersistence.test.ts",
+      "src/test/services/purchaseService.test.ts",
       "docs/ai/AI_STATE.json"
     ],
-    "remainingWork": "Implement the P5.6a domain, database, repository, service, and stock tests.",
-    "lockedFileOverrideReason": "Required additive P5.6 database migration and repository contracts; no locked v1 schema is modified.",
-    "confidence": "medium",
+    "remainingWork": "Create a clean checkpoint, capture fresh P5.6a verification evidence, then complete final governance verification and handoff.",
+    "lockedFileOverrideReason": "Required additive P5.6 database migration and repository contracts; no locked v1 schema was modified. The change adds the version 3 purchases table and purchase interface types while preserving the protected v1 schema and architecture boundaries.",
+    "confidence": "high",
     "needsHumanReview": false
   },
   "lockedFileOverrideReason": null,
   "nextTask": {
     "id": "P5.6a",
     "name": "Purchase domain, persistence, and stock logic",
-    "status": "IN_PROGRESS"
+    "status": "IN_PROGRESS",
+    "objective": "Complete the purchase contract, migration, repository wiring, and stock logic while keeping the version 1 schema unchanged.",
+    "scope": [
+      "src/pages",
+      "src/components",
+      "src/hooks",
+      "src/services",
+      "src/repositories"
+    ],
+    "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
   },
   "progress": {
     "completedMilestones": [
@@ -88,28 +104,28 @@
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 597,
-      "files": 58,
+      "count": 603,
+      "files": 60,
       "framework": "Vitest 4.1.11",
-      "verifiedDate": "2026-09-17"
+      "verifiedDate": "2026-09-18"
     },
     "typescript": {
       "status": "passing",
       "command": "npm run typecheck",
-      "verifiedDate": "2026-09-17"
+      "verifiedDate": "2026-09-18"
     },
     "productionBuild": {
       "status": "passing",
       "command": "npm run build",
-      "verifiedDate": "2026-09-17"
+      "verifiedDate": "2026-09-18"
     },
-"verificationRun": {
+    "verificationRun": {
       "type": "captured",
-      "runAt": "2026-09-17T14:54:00Z",
-      "runBy": "P5.5 recovery verification",
+      "runAt": "2026-09-18T19:51:15Z",
+      "runBy": "P5.6a verification",
       "evidence": "docs/ai/verification-logs/P5.5.log",
       "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de",
-      "environment": "clean working tree except the preserved pre-existing package-lock.json change; P5.5 branch v0/p5-5-sale-detail-receipt",
+      "environment": "Baseline verification from the last completed P5.5 task; P5.6a remains in progress pending fresh evidence.",
       "results": [
         { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
         { "command": "npm run test", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
@@ -144,8 +160,8 @@
     ],
     "database": "Dexie/IndexedDB",
     "databaseName": "BizFlowDB",
-    "databaseVersion": 2,
-    "tables": 10,
+    "databaseVersion": 3,
+    "tables": 12,
     "network": false,
     "dependencyInjection": "constructor + ServiceProvider context",
     "globalStateLibrary": false
@@ -168,13 +184,16 @@
     "InventoryItem",
     "Sale",
     "SaleItem",
+    "Purchase",
+    "PurchaseItem",
     "Customer",
     "BusinessExpense",
     "PersonalIncome",
     "PersonalExpense",
     "Category",
     "Budget",
-    "Account"
+    "Account",
+    "SavedItem"
   ],
   "routes": [
     {
@@ -528,6 +547,6 @@
       "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
     ]
   },
-  "lastUpdated": "2026-09-17",
-  "lastUpdatedBy": "P5.5 recovery implementation"
+  "lastUpdated": "2026-09-18",
+  "lastUpdatedBy": "P5.6a governance repair"
 }

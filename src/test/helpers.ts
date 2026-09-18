@@ -2,6 +2,7 @@ import { BizFlowDB } from '@/db/database';
 import { DexieBusinessRepository } from '@/repositories/dexieBusinessRepository';
 import { DexieInventoryRepository } from '@/repositories/dexieInventoryRepository';
 import { DexieSaleRepository } from '@/repositories/dexieSaleRepository';
+import { DexiePurchaseRepository } from '@/repositories/dexiePurchaseRepository';
 import { DexieCustomerRepository } from '@/repositories/dexieCustomerRepository';
 import { DexieBusinessExpenseRepository } from '@/repositories/dexieBusinessExpenseRepository';
 import { DexiePersonalIncomeRepository } from '@/repositories/dexiePersonalIncomeRepository';
@@ -24,6 +25,7 @@ export function createTestContext() {
     businessRepository: new DexieBusinessRepository(database),
     inventoryRepository: new DexieInventoryRepository(database),
     saleRepository: new DexieSaleRepository(database),
+    purchaseRepository: new DexiePurchaseRepository(database),
     customerRepository: new DexieCustomerRepository(database),
     businessExpenseRepository: new DexieBusinessExpenseRepository(database),
     personalIncomeRepository: new DexiePersonalIncomeRepository(database),

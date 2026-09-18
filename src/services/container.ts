@@ -1,6 +1,7 @@
 import { BusinessService } from '@/services/business/BusinessService';
 import { InventoryService } from '@/services/inventory/InventoryService';
 import { SalesService } from '@/services/sales/SalesService';
+import { PurchaseService } from '@/services/purchases/PurchaseService';
 import { CustomerService } from '@/services/customers/CustomerService';
 import { BusinessExpenseService } from '@/services/businessExpenses/BusinessExpenseService';
 import { PersonalIncomeService } from '@/services/personalFinance/PersonalIncomeService';
@@ -15,6 +16,7 @@ import {
   businessRepository,
   inventoryRepository,
   saleRepository,
+  purchaseRepository,
   customerRepository,
   businessExpenseRepository,
   personalIncomeRepository,
@@ -25,6 +27,7 @@ import {
   savedItemRepository,
   dataBackupRepository,
   salesTransactionRunner,
+  purchaseTransactionRunner,
   financeTransactionRunner,
 } from '@/repositories';
 import { DataBackupService } from '@/services/dataBackup/DataBackupService';
@@ -39,6 +42,7 @@ export interface ServiceContainer {
   businessService: BusinessService;
   inventoryService: InventoryService;
   salesService: SalesService;
+  purchaseService?: PurchaseService;
   customerService: CustomerService;
   businessExpenseService: BusinessExpenseService;
   personalIncomeService: PersonalIncomeService;
@@ -56,6 +60,7 @@ export function createServiceContainer(): ServiceContainer {
     businessService: new BusinessService(businessRepository),
     inventoryService: new InventoryService(inventoryRepository),
     salesService: new SalesService(saleRepository, inventoryRepository, salesTransactionRunner),
+    purchaseService: new PurchaseService(purchaseRepository, inventoryRepository, purchaseTransactionRunner),
     customerService: new CustomerService(customerRepository),
     businessExpenseService: new BusinessExpenseService(businessExpenseRepository, new AccountService(accountRepository), financeTransactionRunner),
     personalIncomeService: new PersonalIncomeService(personalIncomeRepository, new AccountService(accountRepository), financeTransactionRunner),

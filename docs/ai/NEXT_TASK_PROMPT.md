@@ -6,40 +6,35 @@ P5.6a — Purchase domain, persistence, and stock logic
 
 ## STATUS
 
-P5.6a is IN_PROGRESS. Continue only this subtask. Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
+P5.6a is IN_PROGRESS. Continue only this governance repair and final verification. Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
 
 ## OBJECTIVE
 
-Add the purchase aggregate, Dexie v3 persistence, backup-compatible repository wiring, and atomic inventory stock increases and reversals.
+Complete governance repair and verification for the already-existing purchase domain, persistence, repository, and stock implementation.
 
 ## SCOPE
 
-- Add the Purchase and PurchaseItem domain contracts.
-- Add the version 3 purchases table without modifying the existing version 1 schema.
-- Add purchase repository interfaces and Dexie repository wiring.
-- Add purchase service validation and stock adjustment behavior.
-- Add focused domain, persistence, repository, service, and stock tests.
+- Preserve the existing P5.6a source implementation.
+- Reconcile active P5.6a state and session-lock metadata.
+- Capture fresh P5.6a verification evidence from the clean checkpoint commit.
 - Preserve offline-first behavior, integer minor-unit money, and single-currency validation.
 
 ## EXCLUSIONS
 
-- Do not implement P5.6b or P5.6c.
-- Do not add UI, hooks, routes, navigation, supplier entities, purchase returns, payment tracking, payables, account balance updates, purchase orders, cloud sync, authentication, multi-device support, or P5.7 work.
+- Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
+- Do not modify purchase source code, dependencies, or unrelated application files.
 
 ## ACCEPTANCE CRITERIA
 
-- Purchase and purchase-line domain contracts validate integer minor-unit money and one currency per purchase.
-- The version 3 purchases table persists purchase records without changing existing version 1 schema declarations.
-- Purchase create increases inventory atomically with purchase persistence.
-- Purchase edit reverses old stock and applies new stock safely.
-- Purchase delete reverses stock safely.
-- Backup-compatible repository wiring remains offline-first.
-- Focused P5.6a tests pass.
+- The invalid P5.6b evidence is preserved byte-for-byte under its task-consistent historical filename.
+- Active state remains P5.6a and IN_PROGRESS until fresh PASS evidence exists.
+- Fresh P5.6a evidence records the exact verified commit SHA and all required commands pass.
+- Full verification passes before P5.6a is finalized.
 
 ## VERIFICATION
 
-Run focused P5.6a tests and `npm run verify:ai` before proceeding to any later subtask.
+Run `VERIFICATION_TASK_ID=P5.6a node scripts/capture-verification.mjs`, then `npm run verify` after the clean checkpoint and evidence/state updates.
 
 ## VERIFICATION COMMANDS
 
-`npm run verify:ai`
+`npm run verify`
