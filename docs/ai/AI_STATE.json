@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.5 recovery is complete and verified; P5.6 remains unauthorized.",
+  "developmentStatus": "ACTIVE",
+  "pauseNote": null,
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -44,9 +44,9 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.5",
-    "name": "Sale Detail and Receipt",
-    "status": "COMPLETE"
+    "id": "P5.6",
+    "name": "Purchases",
+    "status": "IN_PROGRESS"
   },
   "lastCompletedTask": {
     "id": "P5.5",
@@ -56,9 +56,26 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P5.6a",
+    "name": "Purchase domain, persistence, and stock logic",
+    "status": "IN_PROGRESS",
+    "objective": "Add the purchase aggregate, Dexie v3 persistence, backup-compatible repository wiring, and atomic inventory stock increases/reversals.",
+    "filesTouched": [
+      "docs/ai/SESSION_LOCK.json",
+      "docs/ai/AI_STATE.json"
+    ],
+    "remainingWork": "Implement the P5.6a domain, database, repository, service, and stock tests.",
+    "lockedFileOverrideReason": "Required additive P5.6 database migration and repository contracts; no locked v1 schema is modified.",
+    "confidence": "medium",
+    "needsHumanReview": false
+  },
   "lockedFileOverrideReason": null,
-  "nextTask": null,
+  "nextTask": {
+    "id": "P5.6a",
+    "name": "Purchase domain, persistence, and stock logic",
+    "status": "IN_PROGRESS"
+  },
   "progress": {
     "completedMilestones": [
       "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7",       "P4.1",       "P5.1", "P5.2", "P5.3", "P5.4", "P5.5"
