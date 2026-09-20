@@ -121,6 +121,7 @@
     },
     "verificationRun": {
       "type": "captured",
+      "taskId": "P5.6a",
       "runAt": "2026-09-18T20:12:47.740Z",
       "runBy": "P5.6a verification",
       "evidence": "docs/ai/verification-logs/P5.6a.log",
