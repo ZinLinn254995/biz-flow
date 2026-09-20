@@ -1,3 +1,9 @@
+## 2026-09-20 — P5.6a Complete on Local Main
+
+- Reconciled canonical AI state with the already-merged P5.6a finalization commit `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`.
+- Final `npm run verify` passed on local `main` with 603 tests passing; P5.6b remains not started.
+- Development is paused pending explicit owner authorization. The expired historical session lock and all verification logs remain unchanged.
+
 ## 2026-09-18 — P5.6a Purchase Domain, Persistence, and Stock Logic In Progress
 
 - Added the purchase aggregate, Dexie v3 `purchases` table, purchase repository wiring, and inventory stock increase/reversal logic.

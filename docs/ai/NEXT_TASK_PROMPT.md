@@ -2,22 +2,20 @@
 
 ## NEXT TASK
 
-P5.6a — Purchase domain, persistence, and stock logic
+Awaiting explicit owner authorization
 
 ## STATUS
 
-P5.6a is IN_PROGRESS. Continue only this governance repair and final verification. Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
+P5.6a is COMPLETE. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
 
 ## OBJECTIVE
 
-Complete governance repair and verification for the already-existing purchase domain, persistence, repository, and stock implementation.
+Wait for explicit owner authorization before selecting or starting the next task.
 
 ## SCOPE
 
-- Preserve the existing P5.6a source implementation.
-- Reconcile active P5.6a state and session-lock metadata.
-- Capture fresh P5.6a verification evidence from the clean checkpoint commit.
-- Preserve offline-first behavior, integer minor-unit money, and single-currency validation.
+- Preserve the completed P5.6a implementation and canonical state.
+- Do not modify the expired historical session lock without explicit governance direction.
 
 ## EXCLUSIONS
 
@@ -26,15 +24,14 @@ Complete governance repair and verification for the already-existing purchase do
 
 ## ACCEPTANCE CRITERIA
 
-- The invalid P5.6b evidence is preserved byte-for-byte under its task-consistent historical filename.
-- Active state remains P5.6a and IN_PROGRESS until fresh PASS evidence exists.
-- Fresh P5.6a evidence records the exact verified commit SHA and all required commands pass.
-- Full verification passes before P5.6a is finalized.
+- P5.6a remains COMPLETE and P5.6b remains NOT_STARTED.
+- Development remains paused until explicit owner authorization is provided.
+- No implementation work begins from this prompt alone.
 
 ## VERIFICATION
 
-Run `VERIFICATION_TASK_ID=P5.6a node scripts/capture-verification.mjs`, then `npm run verify` after the clean checkpoint and evidence/state updates.
+Do not run implementation verification or begin a task until the owner authorizes the next task.
 
 ## VERIFICATION COMMANDS
 
-`npm run verify`
+None while paused.

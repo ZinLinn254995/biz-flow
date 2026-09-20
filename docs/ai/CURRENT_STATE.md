@@ -6,19 +6,20 @@
 - P5.3 — Saved Items Foundation: COMPLETE.
 - P5.4 — Favorites and Quick Add: COMPLETE.
 - P5.5 — Sale Detail and Receipt: COMPLETE.
-- P5.6a — Purchase domain, persistence, and stock logic: IN_PROGRESS.
-- Development status: ACTIVE for the owner-authorized P5.6a repair and verification.
-- Current task: P5.6a only.
+- P5.6a — Purchase domain, persistence, and stock logic: COMPLETE.
+- Development status: PAUSED_AWAITING_INSTRUCTIONS.
+- Current task: None; awaiting explicit owner authorization.
 - P5.6b and later purchase work remain unauthorized.
 
 ## Provenance
 
-- Branch: `v0/p5-6-purchases`
+- Branch: `main`
 - P5.4 final merged commit: `d351c332c48414c6dc7adf646fdbca646171c21f`
 - P5.6a implementation checkpoint: `fe38fb807237f57f16a52620723dc45794140814`.
 - P5.6a evidence-record commit: `bd5b4d921f86482e220cf7b98b55eddcd2c6daf1`.
 - Database version: 3 in the committed P5.6a implementation checkpoint.
 - P5.6a verification evidence is captured and reports PASS.
+- P5.6a final local main merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`.
 
 ## Persistence and compatibility
 
@@ -30,4 +31,4 @@ The historical P5.5 verification remains captured in `docs/ai/verification-logs/
 
 ## Handoff
 
-P5.6a source implementation and fresh PASS evidence exist, but the task remains IN_PROGRESS until final governance verification and handoff are complete. No P5.6b work may begin.
+P5.6a source implementation is merged into local `main`, and final verification passed on `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`. P5.6b has not started. Development is paused pending explicit owner authorization.
