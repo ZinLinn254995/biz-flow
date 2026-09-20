@@ -3,6 +3,7 @@ import type { EntityId } from '@/types/common/base';
 import type { Business } from '@/types/domain/business';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { Sale } from '@/types/domain/sale';
+import type { Purchase } from '@/types/domain/purchase';
 import type { Customer } from '@/types/domain/customer';
 import type { BusinessExpense } from '@/types/domain/businessExpense';
 import type { PersonalIncome, PersonalExpense } from '@/types/domain/personalFinance';
@@ -22,6 +23,7 @@ export class BizFlowDB extends Dexie {
   businesses!: Table<Business, EntityId>;
   inventoryItems!: Table<InventoryItem, EntityId>;
   sales!: Table<Sale, EntityId>;
+  purchases!: Table<Purchase, EntityId>;
   customers!: Table<Customer, EntityId>;
   businessExpenses!: Table<BusinessExpense, EntityId>;
   personalIncomes!: Table<PersonalIncome, EntityId>;
@@ -59,6 +61,10 @@ export class BizFlowDB extends Dexie {
 
     this.version(2).stores({
       savedItems: 'id, scope, kind, categoryId, businessId',
+    });
+
+    this.version(3).stores({
+      purchases: 'id, businessId, date',
     });
   }
 }

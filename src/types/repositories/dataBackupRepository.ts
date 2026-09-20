@@ -6,6 +6,7 @@ import type { Category } from '@/types/domain/category';
 import type { Customer } from '@/types/domain/customer';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { PersonalExpense, PersonalIncome } from '@/types/domain/personalFinance';
+import type { Purchase } from '@/types/domain/purchase';
 import type { Sale } from '@/types/domain/sale';
 import type { SavedItem } from '@/types/domain/savedItem';
 
@@ -18,6 +19,7 @@ export interface BackupData {
     businesses: Business[];
     inventoryItems: InventoryItem[];
     sales: Sale[];
+    purchases?: Purchase[];
     customers: Customer[];
     businessExpenses: BusinessExpense[];
     personalIncomes: PersonalIncome[];
@@ -40,6 +42,7 @@ export const BACKUP_ENTITIES: BackupEntity[] = [
   'businesses',
   'inventoryItems',
   'sales',
+  'purchases',
   'customers',
   'businessExpenses',
   'personalIncomes',

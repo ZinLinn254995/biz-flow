@@ -14,6 +14,12 @@ export const salesTransactionRunner: TransactionRunner = {
   },
 };
 
+export const purchaseTransactionRunner: TransactionRunner = {
+  run<T>(work: () => Promise<T>): Promise<T> {
+    return db.transaction('rw', [db.purchases, db.inventoryItems], work);
+  },
+};
+
 /** Covers account-linked income and expense writes atomically. */
 export function createBusinessCascadeTransactionRunner(database: BizFlowDB): TransactionRunner {
   return {

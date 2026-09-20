@@ -2,43 +2,39 @@
 
 ## NEXT TASK
 
-None. P5.5 — Sale Detail and Receipt — is complete.
+P5.6a — Purchase domain, persistence, and stock logic
 
 ## STATUS
 
-Development is paused awaiting instructions. P5.5 is COMPLETE. P5.6 is not authorized.
+P5.6a is IN_PROGRESS. Continue only this governance repair and final verification. Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
 
 ## OBJECTIVE
 
-No next implementation task is authorized. P5.5 completed the recovered offline-first Sale Detail workflow: a read-only sale detail page, browser receipt view/printing, and navigation from the existing Sales UI.
+Complete governance repair and verification for the already-existing purchase domain, persistence, repository, and stock implementation.
 
 ## SCOPE
 
-- Add a parameterized `/sales/:saleId` route and read-only detail page.
-- Add a presentational receipt with browser `window.print()` behavior.
-- Add navigation from existing sale cards.
-- Add focused behavior and UI architecture tests.
-- Keep Dexie at version 2 and reuse existing hooks/services.
+- Preserve the existing P5.6a source implementation.
+- Reconcile active P5.6a state and session-lock metadata.
+- Capture fresh P5.6a verification evidence from the clean checkpoint commit.
+- Preserve offline-first behavior, integer minor-unit money, and single-currency validation.
+
+## EXCLUSIONS
+
+- Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
+- Do not modify purchase source code, dependencies, or unrelated application files.
 
 ## ACCEPTANCE CRITERIA
 
-- Existing sale, InventoryItem, stock, money, backup, and offline behavior remain intact.
-- The detail view is read-only and displays persisted sale values without mutation.
-- Printing uses the browser print API; no PDF generation is added.
-- No payment history, refunds, tax, discounts, shipping, account balance, cloud, migration, or P5.6 work.
-- `npm run verify` passes end to end.
+- The invalid P5.6b evidence is preserved byte-for-byte under its task-consistent historical filename.
+- Active state remains P5.6a and IN_PROGRESS until fresh PASS evidence exists.
+- Fresh P5.6a evidence records the exact verified commit SHA and all required commands pass.
+- Full verification passes before P5.6a is finalized.
+
+## VERIFICATION
+
+Run `VERIFICATION_TASK_ID=P5.6a node scripts/capture-verification.mjs`, then `npm run verify` after the clean checkpoint and evidence/state updates.
 
 ## VERIFICATION COMMANDS
 
-`npm run typecheck`
-`npm run test`
-`npm run build`
-`npm run verify:imports`
-`npm run verify:locked`
-`npm run verify:git-freshness`
-`npm run verify:ai`
 `npm run verify`
-
-## STOP CONDITIONS
-
-Stop and request review if repository state becomes contradictory, a Dexie migration is required, backup versioning must change, a locked file must change, or the work exceeds the protected source-file limit.

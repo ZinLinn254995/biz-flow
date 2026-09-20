@@ -1,6 +1,7 @@
 import { DexieBusinessRepository } from '@/repositories/dexieBusinessRepository';
 import { DexieInventoryRepository } from '@/repositories/dexieInventoryRepository';
 import { DexieSaleRepository } from '@/repositories/dexieSaleRepository';
+import { DexiePurchaseRepository } from '@/repositories/dexiePurchaseRepository';
 import { DexieCustomerRepository } from '@/repositories/dexieCustomerRepository';
 import { DexieBusinessExpenseRepository } from '@/repositories/dexieBusinessExpenseRepository';
 import { DexiePersonalIncomeRepository } from '@/repositories/dexiePersonalIncomeRepository';
@@ -15,6 +16,7 @@ export type {
   BusinessRepository,
   InventoryRepository,
   SaleRepository,
+  PurchaseRepository,
   CustomerRepository,
   BusinessExpenseRepository,
   PersonalIncomeRepository,
@@ -32,12 +34,14 @@ export {
   businessCascadeTransactionRunner,
   financeTransactionRunner,
   salesTransactionRunner,
+  purchaseTransactionRunner,
 } from '@/repositories/salesTransactionRunner';
 
 export {
   DexieBusinessRepository,
   DexieInventoryRepository,
   DexieSaleRepository,
+  DexiePurchaseRepository,
   DexieCustomerRepository,
   DexieBusinessExpenseRepository,
   DexiePersonalIncomeRepository,
@@ -56,6 +60,7 @@ export {
 export const businessRepository = new DexieBusinessRepository();
 export const inventoryRepository = new DexieInventoryRepository();
 export const saleRepository = new DexieSaleRepository();
+export const purchaseRepository = new DexiePurchaseRepository();
 export const customerRepository = new DexieCustomerRepository();
 export const businessExpenseRepository = new DexieBusinessExpenseRepository();
 export const personalIncomeRepository = new DexiePersonalIncomeRepository();

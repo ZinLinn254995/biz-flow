@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.5 recovery is complete and verified; P5.6 remains unauthorized.",
+  "developmentStatus": "ACTIVE",
+  "pauseNote": null,
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -44,9 +44,9 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.5",
-    "name": "Sale Detail and Receipt",
-    "status": "COMPLETE"
+    "id": "P5.6",
+    "name": "Purchases",
+    "status": "IN_PROGRESS"
   },
   "lastCompletedTask": {
     "id": "P5.5",
@@ -56,9 +56,42 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P5.6a",
+    "name": "Purchase domain, persistence, and stock logic",
+    "status": "IN_PROGRESS",
+    "objective": "Complete the purchase contract, migration, repository wiring, and stock logic while keeping the version 1 schema unchanged.",
+    "filesTouched": [
+      "src/db/database.ts",
+      "src/types/domain/purchase.ts",
+      "src/types/repositories/purchaseRepository.ts",
+      "src/repositories/dexiePurchaseRepository.ts",
+      "src/services/purchases/PurchaseService.ts",
+      "src/services/container.ts",
+      "src/test/purchasePersistence.test.ts",
+      "src/test/services/purchaseService.test.ts",
+      "docs/ai/AI_STATE.json"
+    ],
+    "remainingWork": "Complete final governance verification and handoff for the captured P5.6a evidence. Do not begin P5.6b.",
+    "lockedFileOverrideReason": "Required additive P5.6 database migration and repository contracts; no locked v1 schema was modified. The change adds the version 3 purchases table and purchase interface types while preserving the protected v1 schema and architecture boundaries.",
+    "confidence": "high",
+    "needsHumanReview": false
+  },
   "lockedFileOverrideReason": null,
-  "nextTask": null,
+  "nextTask": {
+    "id": "P5.6a",
+    "name": "Purchase domain, persistence, and stock logic",
+    "status": "IN_PROGRESS",
+    "objective": "Complete the purchase contract, migration, repository wiring, and stock logic while keeping the version 1 schema unchanged.",
+    "scope": [
+      "src/pages",
+      "src/components",
+      "src/hooks",
+      "src/services",
+      "src/repositories"
+    ],
+    "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
+  },
   "progress": {
     "completedMilestones": [
       "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7",       "P4.1",       "P5.1", "P5.2", "P5.3", "P5.4", "P5.5"
@@ -71,37 +104,39 @@
   "quality": {
     "tests": {
       "status": "passing",
-      "count": 597,
-      "files": 58,
+      "count": 603,
+      "files": 60,
       "framework": "Vitest 4.1.11",
-      "verifiedDate": "2026-09-17"
+      "verifiedDate": "2026-09-18"
     },
     "typescript": {
       "status": "passing",
       "command": "npm run typecheck",
-      "verifiedDate": "2026-09-17"
+      "verifiedDate": "2026-09-18"
     },
     "productionBuild": {
       "status": "passing",
       "command": "npm run build",
-      "verifiedDate": "2026-09-17"
+      "verifiedDate": "2026-09-18"
     },
-"verificationRun": {
+    "verificationRun": {
       "type": "captured",
-      "runAt": "2026-09-17T14:54:00Z",
-      "runBy": "P5.5 recovery verification",
-      "evidence": "docs/ai/verification-logs/P5.5.log",
-      "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de",
-      "environment": "clean working tree except the preserved pre-existing package-lock.json change; P5.5 branch v0/p5-5-sale-detail-receipt",
+      "taskId": "P5.6a",
+      "runAt": "2026-09-18T20:12:47.740Z",
+      "runBy": "P5.6a verification",
+      "evidence": "docs/ai/verification-logs/P5.6a.log",
+      "commitSha": "fe38fb807237f57f16a52620723dc45794140814",
+      "evidenceCommitSha": "bd5b4d921f86482e220cf7b98b55eddcd2c6daf1",
+      "environment": "Fresh P5.6a verification captured on the clean implementation checkpoint; evidence was recorded in the following commit.",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.5.log", "commitSha": "24bc6427b73103b81179f80f392bca3c5425a8de" }
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run verify:ai", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" },
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.6a.log", "commitSha": "fe38fb807237f57f16a52620723dc45794140814" }
       ]
     },
     "qualityGates": {
@@ -127,8 +162,8 @@
     ],
     "database": "Dexie/IndexedDB",
     "databaseName": "BizFlowDB",
-    "databaseVersion": 2,
-    "tables": 10,
+    "databaseVersion": 3,
+    "tables": 12,
     "network": false,
     "dependencyInjection": "constructor + ServiceProvider context",
     "globalStateLibrary": false
@@ -151,13 +186,16 @@
     "InventoryItem",
     "Sale",
     "SaleItem",
+    "Purchase",
+    "PurchaseItem",
     "Customer",
     "BusinessExpense",
     "PersonalIncome",
     "PersonalExpense",
     "Category",
     "Budget",
-    "Account"
+    "Account",
+    "SavedItem"
   ],
   "routes": [
     {
@@ -511,6 +549,6 @@
       "Commit and push to GitHub following docs/ai/GITHUB_SYNC.md"
     ]
   },
-  "lastUpdated": "2026-09-17",
-  "lastUpdatedBy": "P5.5 recovery implementation"
+  "lastUpdated": "2026-09-18",
+  "lastUpdatedBy": "P5.6a governance repair"
 }

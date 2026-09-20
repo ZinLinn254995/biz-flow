@@ -2,6 +2,7 @@ export type { Repository } from '@/types/repositories/repository';
 export type { BusinessRepository } from '@/types/repositories/businessRepository';
 export type { InventoryRepository } from '@/types/repositories/inventoryRepository';
 export type { SaleRepository } from '@/types/repositories/saleRepository';
+export type { PurchaseRepository } from '@/types/repositories/purchaseRepository';
 export type { CustomerRepository } from '@/types/repositories/customerRepository';
 export type { BusinessExpenseRepository } from '@/types/repositories/businessExpenseRepository';
 export type { PersonalIncomeRepository } from '@/types/repositories/personalIncomeRepository';

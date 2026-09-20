@@ -1,6 +1,7 @@
 export type { Business } from '@/types/domain/business';
 export type { InventoryItem } from '@/types/domain/inventory';
 export type { Sale, SaleItem } from '@/types/domain/sale';
+export type { Purchase, PurchaseItem } from '@/types/domain/purchase';
 export type { Customer } from '@/types/domain/customer';
 export type { BusinessExpense } from '@/types/domain/businessExpense';
 export type { PersonalIncome, PersonalExpense } from '@/types/domain/personalFinance';

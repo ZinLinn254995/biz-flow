@@ -21,15 +21,15 @@ describe('SavedItem persistence and schema compatibility', () => {
     databases.length = 0;
   });
 
-  it('creates the version 2 savedItems table without changing existing tables', async () => {
+  it('keeps the savedItems schema compatible with the current database version without changing existing tables', async () => {
     const database = new BizFlowDB(createName());
     databases.push(database);
 
     await database.open();
 
-    expect(database.verno).toBe(2);
+    expect(database.verno).toBe(3);
     expect(database.tables.map((table) => table.name)).toEqual(expect.arrayContaining([
-      'inventoryItems', 'categories', 'savedItems',
+      'inventoryItems', 'categories', 'savedItems', 'purchases',
     ]));
     expect(database.inventoryItems.schema.primKey.name).toBe('id');
     expect(database.categories.schema.primKey.name).toBe('id');

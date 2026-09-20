@@ -139,12 +139,13 @@ if (need('currentMilestone.status') === 'COMPLETE' && !allGreen) {
 
 const verificationResults = quality.verificationRun?.results ?? [];
 const validatingCapturedEvidence = process.env.CAPTURING_VERIFICATION !== '1';
+const verificationTaskId = quality.verificationRun?.taskId ?? currentTask?.id ?? need('lastCompletedTask.id');
 for (const result of verificationResults) {
   if (!validatingCapturedEvidence) continue;
   const evidencePath = typeof result?.result === 'string' ? result.result : '';
   if (!evidencePath || !has(evidencePath) || !isCapturedVerificationEvidence(read(evidencePath))) continue;
   const evidenceErrors = validateVerificationEvidence({
-    taskId: need('lastCompletedTask.id'),
+    taskId: verificationTaskId,
     commitSha: undefined,
     text: read(evidencePath),
   });
