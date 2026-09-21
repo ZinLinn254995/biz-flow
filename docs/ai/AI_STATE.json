@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
-  "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.6a is complete on local main. Do not begin P5.6b without explicit owner authorization.",
+  "developmentStatus": "ACTIVE",
+  "pauseNote": null,
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -56,9 +56,48 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P5.6b",
+    "name": "Purchase workflow integration and UI",
+    "status": "IN_PROGRESS",
+    "objective": "Integrate the existing purchase domain into a complete purchase list, create, detail, edit, and delete workflow without changing P5.6a stock or financial rules.",
+    "filesTouched": [
+      "src/hooks/purchases/index.ts",
+      "src/hooks/purchases/usePurchases.ts",
+      "src/hooks/purchases/usePurchaseMutations.ts",
+      "src/hooks/index.ts",
+      "src/types/domain/purchase.ts",
+      "src/services/purchases/PurchaseService.ts",
+      "src/components/purchases/PurchaseCard.tsx",
+      "src/components/purchases/PurchaseForm.tsx",
+      "src/components/purchases/DeletePurchaseDialog.tsx",
+      "src/pages/PurchasesPage.tsx",
+      "src/pages/PurchaseDetailPage.tsx",
+      "src/routes/AppRoutes.tsx",
+      "src/config/navigationItems.ts",
+      "src/test/purchaseWorkflow.test.tsx",
+      "src/test/purchaseWorkflowUiConstraints.test.ts"
+    ],
+    "remainingWork": "Implement the approved purchase list, create, detail, edit, delete, routing, navigation, focused tests, verification evidence, and final handoff. Do not begin P5.6c.",
+    "lockedFileOverrideReason": "P5.6b requires additive changes to the protected Purchase domain contract for the approved supplierName field, protected route registration, protected navigation configuration, and new workflow tests. No locked files are modified; all protected changes are additive and preserve P5.6a contracts and architecture.",
+    "confidence": "high",
+    "needsHumanReview": false
+  },
   "lockedFileOverrideReason": null,
-  "nextTask": null,
+  "nextTask": {
+    "id": "P5.6b",
+    "name": "Purchase workflow integration and UI",
+    "status": "IN_PROGRESS",
+    "objective": "Integrate the existing purchase domain into a complete purchase list, create, detail, edit, and delete workflow without changing P5.6a stock or financial rules.",
+    "scope": [
+      "src/pages",
+      "src/components",
+      "src/hooks",
+      "src/routes/AppRoutes.tsx",
+      "src/config/navigationItems.ts"
+    ],
+    "instructionsFile": "docs/ai/NEXT_TASK_PROMPT.md"
+  },
   "progress": {
     "completedMilestones": [
       "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1", "P5.1", "P5.2", "P5.3", "P5.4", "P5.5", "P5.6a"

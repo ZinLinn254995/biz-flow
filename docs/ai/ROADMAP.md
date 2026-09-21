@@ -4,4 +4,4 @@ COMPLETE. The purchase aggregate, Dexie v3 `purchases` table, backup-compatible 
 
 ## P5.6b — Purchase workflow integration and UI
 
-Planned and unauthorized. Development is paused; this slice must not begin without explicit owner authorization. It remains distinct from P5.6c and from later account, cloud, authentication, or multi-device work.
+IN_PROGRESS. Owner-authorized P5.6b adds the purchase list, create, detail, edit, delete, routing, navigation, and focused workflow tests on top of the completed P5.6a domain. It remains distinct from P5.6c and from later account, cloud, authentication, or multi-device work.

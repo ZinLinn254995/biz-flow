@@ -2,20 +2,20 @@
 
 ## NEXT TASK
 
-Awaiting explicit owner authorization
+P5.6b — Purchase workflow integration and UI
 
 ## STATUS
 
-P5.6a is COMPLETE. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6b, P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
+P5.6a is COMPLETE. P5.6b is ACTIVE under explicit owner authorization. Do not begin P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
 
 ## OBJECTIVE
 
-Wait for explicit owner authorization before selecting or starting the next task.
+Implement the approved purchase-facing workflow using the existing P5.6a domain, PurchaseService, ServiceProvider architecture, and neighboring Sales/Inventory UI patterns.
 
 ## SCOPE
 
-- Preserve the completed P5.6a implementation and canonical state.
-- Do not modify the expired historical session lock without explicit governance direction.
+- Add purchase hooks, list/create/detail/edit/delete UI, approved routes/navigation, focused tests, verification evidence, and final handoff.
+- Preserve the completed P5.6a implementation and canonical state semantics.
 
 ## EXCLUSIONS
 
@@ -24,14 +24,14 @@ Wait for explicit owner authorization before selecting or starting the next task
 
 ## ACCEPTANCE CRITERIA
 
-- P5.6a remains COMPLETE and P5.6b remains NOT_STARTED.
-- Development remains paused until explicit owner authorization is provided.
-- No implementation work begins from this prompt alone.
+- Purchase workflow covers the owner-approved list, creation, detail, editing, and deletion behavior.
+- P5.6a stock and financial rules remain unchanged.
+- Full verification passes before P5.6b is finalized and development is paused again.
 
 ## VERIFICATION
 
-Do not run implementation verification or begin a task until the owner authorizes the next task.
+Run focused tests during implementation and `npm run verify` before completion.
 
 ## VERIFICATION COMMANDS
 
-None while paused.
+`npm run verify`

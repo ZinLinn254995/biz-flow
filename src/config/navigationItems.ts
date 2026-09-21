@@ -38,6 +38,7 @@ export const navigationGroups: NavigationGroup[] = [
       { label: 'Business', path: '/business', icon: BriefcaseBusiness },
       { label: 'Inventory', path: '/inventory', icon: Package },
       { label: 'Sales', path: '/sales', icon: ShoppingCart },
+      { label: 'Purchases', path: '/purchases', icon: Package },
       { label: 'Customers', path: '/customers', icon: Users },
       { label: 'Business Expenses', path: '/business-expenses', icon: Receipt },
     ],

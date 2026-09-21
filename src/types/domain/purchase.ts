@@ -21,5 +21,6 @@ export interface Purchase extends BaseEntity {
   date: string;
   items: PurchaseItem[];
   totalAmount: Money;
+  supplierName?: string;
   notes?: string;
 }

@@ -5,6 +5,8 @@ import BusinessPage from '@/pages/BusinessPage';
 import InventoryPage from '@/pages/InventoryPage';
 import SalesPage from '@/pages/SalesPage';
 import SaleDetailPage from '@/pages/SaleDetailPage';
+import PurchasesPage from '@/pages/PurchasesPage';
+import PurchaseDetailPage from '@/pages/PurchaseDetailPage';
 import CustomersPage from '@/pages/CustomersPage';
 import BusinessExpensesPage from '@/pages/BusinessExpensesPage';
 import PersonalFinancePage from '@/pages/PersonalFinancePage';
@@ -25,6 +27,8 @@ function AppRoutes() {
         <Route path="/inventory" element={<InventoryPage />} />
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/sales/:saleId" element={<SaleDetailPage />} />
+        <Route path="/purchases" element={<PurchasesPage />} />
+        <Route path="/purchases/:purchaseId" element={<PurchaseDetailPage />} />
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/business-expenses" element={<BusinessExpensesPage />} />
         <Route path="/personal" element={<PersonalFinancePage />} />
