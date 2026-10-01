@@ -52,8 +52,33 @@ describe('Git freshness safety checks', () => {
     expect(evaluateGitFreshness({ branch: 'main', head: originMain, originMain: '', mergeBase: originMain })).toMatchObject({ state: 'UNKNOWN', safe: false });
   });
 
-  it('blocks detached HEAD and unknown base state', () => {
+  it('recognizes a verified GitHub Actions pull_request merge checkout', () => {
+    const mergeCommit = sha('b');
+    const result = evaluateGitFreshness({
+      branch: '',
+      detached: true,
+      head: mergeCommit,
+      originMain,
+      mergeBase: originMain,
+      githubActions: true,
+      githubEventName: 'pull_request',
+      githubSha: mergeCommit,
+      githubBaseSha: originMain,
+    });
+    expect(result).toMatchObject({ state: 'FRESH', safe: true });
+  });
+
+  it('blocks detached HEAD without authoritative pull request context', () => {
     expect(evaluateGitFreshness({ branch: '', detached: true, head: originMain, originMain, mergeBase: originMain })).toMatchObject({ state: 'UNKNOWN', safe: false });
+    expect(evaluateGitFreshness({ branch: '', detached: true, head: sha('b'), originMain, mergeBase: originMain, githubActions: true, githubEventName: 'pull_request', githubSha: sha('c'), githubBaseSha: originMain })).toMatchObject({ state: 'UNKNOWN', safe: false });
     expect(evaluateGitFreshness({ branch: 'main', head: sha('b'), originMain, mergeBase: '' })).toMatchObject({ state: 'UNKNOWN', safe: false });
+  });
+
+  it('rejects a pull request checkout whose base or merge relationship is invalid', () => {
+    const mergeCommit = sha('b');
+    expect(evaluateGitFreshness({
+      branch: '', detached: true, head: mergeCommit, originMain, mergeBase: sha('c'),
+      githubActions: true, githubEventName: 'pull_request', githubSha: mergeCommit, githubBaseSha: originMain,
+    })).toMatchObject({ state: 'UNKNOWN', safe: false });
   });
 });
