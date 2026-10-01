@@ -88,7 +88,7 @@
     },
     "verificationRun": {
       "type": "captured",
-      "taskId": "P5.6b-repair",
+      "taskId": "P5.6b",
       "runAt": "2026-10-01T10:13:19Z",
       "runBy": "P5.6b repository consistency repair verification",
       "evidence": "docs/ai/verification-logs/P5.6b-repair.log",
