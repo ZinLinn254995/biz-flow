@@ -7,13 +7,13 @@
 - P5.4 — Favorites and Quick Add: COMPLETE.
 - P5.5 — Sale Detail and Receipt: COMPLETE.
 - P5.6a — Purchase domain, persistence, and stock logic: COMPLETE.
-- P5.6b — Purchase workflow integration and UI: implementation complete, finalization IN_PROGRESS.
-- Development status: ACTIVE for P5.6b finalization.
-- Current task: P5.6b final verification and main integration.
+- P5.6b — Purchase workflow integration and UI: COMPLETE.
+- Development status: PAUSED_AWAITING_INSTRUCTIONS.
+- Current task: None; awaiting explicit owner authorization for P5.6c.
 
 ## Provenance
 
-- Branch: `main` after finalization; implementation branch: `v0/p5-6b-purchase-workflow-ui`.
+- Branch: `main`.
 - P5.4 final merged commit: `d351c332c48414c6dc7adf646fdbca646171c21f`
 - P5.6a implementation checkpoint: `fe38fb807237f57f16a52620723dc45794140814`.
 - P5.6a evidence-record commit: `bd5b4d921f86482e220cf7b98b55eddcd2c6daf1`.
@@ -31,4 +31,4 @@ The historical P5.5 verification remains captured in `docs/ai/verification-logs/
 
 ## Handoff
 
-P5.6a source implementation is synchronized on `main`. P5.6b workflow implementation and checkpoint verification are complete on the feature branch; final main integration and remote synchronization remain. The historical failed P5.6b log remains unchanged, and PASS evidence is recorded at `docs/ai/verification-logs/P5.6b-final.log`.
+P5.6a source implementation is synchronized on `main`. P5.6b workflow implementation and final-main verification are complete. The historical failed P5.6b log remains unchanged, the feature-checkpoint PASS evidence is at `docs/ai/verification-logs/P5.6b-final.log`, and merged-main PASS evidence is at `docs/ai/verification-logs/P5.6b-final-main.log`. Development is paused pending explicit owner authorization for P5.6c.

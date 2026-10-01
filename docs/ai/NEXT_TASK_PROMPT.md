@@ -2,20 +2,20 @@
 
 ## NEXT TASK
 
-P5.6b — Purchase workflow integration and UI finalization
+Awaiting explicit owner authorization
 
 ## STATUS
 
-P5.6b implementation is complete, but finalization is IN_PROGRESS. Do not begin P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features.
+P5.6b is COMPLETE. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
 
 ## OBJECTIVE
 
-Run final verification on the clean branch, integrate into main, push main, verify remote equality, then pause.
+Wait for explicit owner authorization before selecting or starting the next task.
 
 ## SCOPE
 
-- Preserve the completed P5.6a and P5.6b implementation and historical evidence.
-- Complete final governance integration without starting P5.6c.
+- Preserve the completed P5.6a and P5.6b implementation, final-main evidence, and historical evidence.
+- Do not modify the completed workflow or begin P5.6c without explicit authorization.
 
 ## EXCLUSIONS
 
@@ -24,13 +24,13 @@ Run final verification on the clean branch, integrate into main, push main, veri
 
 ## ACCEPTANCE CRITERIA
 
-- Final main verification passes and P5.6b is recorded COMPLETE.
-- P5.6c remains NOT_STARTED and development is paused after finalization.
+- P5.6b remains COMPLETE and P5.6c remains NOT_STARTED.
+- Development remains paused until explicit owner authorization is provided.
 
 ## VERIFICATION
 
-Run `npm run verify` on the final clean state before completion.
+Do not run implementation verification or begin a task until the owner authorizes the next task.
 
 ## VERIFICATION COMMANDS
 
-`npm run verify`
+None while paused.

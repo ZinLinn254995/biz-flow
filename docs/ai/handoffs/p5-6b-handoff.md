@@ -70,7 +70,7 @@ The workflow follows established Sales and Inventory patterns and keeps the UI d
 
 ## REMAINING WORK
 
-No P5.6b implementation work remains. Final branch integration, remote synchronization, final main verification, and milestone tagging remain part of finalization. Do not begin P5.6c.
+No P5.6b implementation or finalization work remains. Do not begin P5.6c.
 
 ## NEXT TASK
 
@@ -83,5 +83,6 @@ Do not start P5.6c, add supplier management, implement returns/payment status/pa
 ## GIT STATE
 
 - Implementation branch: `v0/p5-6b-purchase-workflow-ui`
-- Implementation checkpoint: `5bd6d6ee5db535f199340f10144d521b9ed1bee6`
-- Final main integration and remote synchronization: pending finalization.
+- Final local main integration commit: `cd571505b4819a0bc9c63f68482df68fc4eed9fa`
+- Final merged-main evidence: `docs/ai/verification-logs/P5.6b-final-main.log`
+- Remote synchronization: pending final push.

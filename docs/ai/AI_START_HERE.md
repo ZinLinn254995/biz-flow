@@ -4,7 +4,7 @@ BizFlow is an offline-first React, TypeScript, Vite, Dexie, and IndexedDB applic
 
 ## Current state
 
-P5.2, P5.3, P5.4, P5.5, and P5.6a are complete. P5.6b implementation is complete on its feature branch, while final main integration and verification are in progress. Current database version is 3.
+P5.2, P5.3, P5.4, P5.5, P5.6a, and P5.6b are complete. P5.6b added the purchase list, create/edit form, detail view, deletion confirmation, hooks, routing, navigation, supplier/notes fields, and focused tests. The project is paused awaiting explicit owner authorization for P5.6c. Current database version is 3.
 
 ## Rules
 

@@ -3,7 +3,7 @@
 - Added the purchase hooks, list, create/edit workflow, detail view, delete confirmation, purchase navigation, and focused tests.
 - Preserved P5.6a stock and financial behavior; supplier name was added as an optional persisted purchase field without a schema migration.
 - Checkpoint verification passed with 610 tests. Historical failed `P5.6b.log` remains preserved; checkpoint PASS evidence is in `P5.6b-final.log`.
-- Final main integration, remote synchronization, and final-main verification remain before P5.6b is marked complete.
+- Final main integration and merged-main verification completed with 610 tests; P5.6b is complete and development is paused pending explicit authorization for P5.6c.
 
 ## 2026-09-20 — P5.6a Complete on Local Main
 
