@@ -1,8 +1,8 @@
-# DEC-P5.6b-001 — Purchase Workflow Integration and UI
+# DEC-P5.6B-001 — Purchase Workflow Integration and UI
 
 ## DECISION ID
 
-DEC-P5.6b-001
+DEC-P5.6B-001
 
 ## TASK / MILESTONE
 
