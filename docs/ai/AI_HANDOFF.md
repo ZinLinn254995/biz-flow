@@ -13,7 +13,7 @@ P5.6b is COMPLETE on local `main`. The purchase workflow, UI, focused tests, fin
 - Evidence-record commit: `bd5b4d921f86482e220cf7b98b55eddcd2c6daf1`
 - Final local main merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`
 - Database version: 3 with the additive `purchases` table, while the version 1 schema declarations remain untouched.
-- Final P5.6b verification: `npm run verify` passed on merged main with 610 tests passing; evidence is in `docs/ai/verification-logs/P5.6b-final-main.log`.
+- Final P5.6b verification: `npm run verify` passed on synchronized main at `b77eff3fc5973cd1145c1640c110eeb48a44508e` with 610 tests passing; evidence is in `docs/ai/verification-logs/P5.6b-final-synchronized.log`.
 - Task state: `P5.6b` is COMPLETE in `docs/ai/AI_STATE.json`.
 
 ## P5.6a completion scope

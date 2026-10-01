@@ -84,5 +84,6 @@ Do not start P5.6c, add supplier management, implement returns/payment status/pa
 
 - Implementation branch: `v0/p5-6b-purchase-workflow-ui`
 - Final local main integration commit: `cd571505b4819a0bc9c63f68482df68fc4eed9fa`
-- Final merged-main evidence: `docs/ai/verification-logs/P5.6b-final-main.log`
-- Remote synchronization: pending final push.
+- Final synchronized-main commit: `b77eff3fc5973cd1145c1640c110eeb48a44508e`
+- Final synchronized-main evidence: `docs/ai/verification-logs/P5.6b-final-synchronized.log`
+- Remote synchronization: `main == origin/main`.
