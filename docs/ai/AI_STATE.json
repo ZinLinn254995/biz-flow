@@ -93,7 +93,7 @@
       "runBy": "P5.6b repository consistency repair verification",
       "evidence": "docs/ai/verification-logs/P5.6b-repair.log",
       "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c",
-      "evidenceCommitSha": "PENDING_REPAIR_EVIDENCE_COMMIT",
+      "evidenceCommitSha": "3a845d3",
       "environment": "P5.6b consistency repair verified on feature branch v0/p5-6b-repair at 694aec720bb8c6bdce81515aa2b4fe2154b2666c. The evidence-record commit is recorded separately after the repair evidence is committed; historical P5.6b evidence remains preserved.",
       "results": [
         { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.6b-final-synchronized.log", "commitSha": "b77eff3fc5973cd1145c1640c110eeb48a44508e" },
