@@ -10,7 +10,7 @@ Repair the two audited P5.6b consistency issues without starting P5.6c.
 - Added repair verification evidence at `docs/ai/verification-logs/P5.6b-repair.log`.
 
 ## Verification
-The historical repair verification recorded in `P5.6b-repair.log` passed on verification-run commit `694aec720bb8c6bdce81515aa2b4fe2154b2666c` with 611 tests. A fresh verification after this reconciliation is required before finalization.
+The historical repair verification recorded in `P5.6b-repair.log` passed on verification-run commit `694aec720bb8c6bdce81515aa2b4fe2154b2666c` with 611 tests. Fresh `npm run verify` passed after this reconciliation on commit `c43222cdedd16198f05c9eebe84fe4ae54f2a299`: typecheck passed, 62 test files and 611 tests passed, build passed, imports passed, locked-area passed, Git freshness passed, and AI-state validation passed.
 
 ## Provenance reconciliation
 - `694aec720bb8c6bdce81515aa2b4fe2154b2666c`: application/repair implementation commit and the commit checked out for the recorded 611-test run.

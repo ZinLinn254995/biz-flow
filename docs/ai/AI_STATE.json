@@ -95,21 +95,21 @@
     "verificationRun": {
       "type": "captured",
       "taskId": "P5.6b",
-      "runAt": "2026-10-01T10:13:19Z",
+      "runAt": "2026-10-01T10:22:44Z",
       "runBy": "P5.6b repository consistency repair verification",
       "evidence": "docs/ai/verification-logs/P5.6b-repair.log",
-      "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c",
+      "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299",
       "evidenceCommitSha": "3a845d3fbeb2266aee26819c12c66b77d3bb2405",
-      "environment": "P5.6b repair verification ran on feature branch v0/p5-6b-repair at 694aec720bb8c6bdce81515aa2b4fe2154b2666c. Evidence was recorded later at 3a845d3fbeb2266aee26819c12c66b77d3bb2405; d7990252b13017eb903a358c8ed656c49e5cb089 only reconciled metadata and is not the verification-run commit. Historical P5.6b evidence remains preserved.",
+      "environment": "Fresh P5.6b repair verification ran on feature branch v0/p5-6b-repair at c43222cdedd16198f05c9eebe84fe4ae54f2a299. The earlier 611-test run remains auditable at verification-run commit 694aec720bb8c6bdce81515aa2b4fe2154b2666c; evidence was recorded at 3a845d3fbeb2266aee26819c12c66b77d3bb2405, and d7990252b13017eb903a358c8ed656c49e5cb089 only reconciled metadata. Historical P5.6b evidence remains preserved.",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" },
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
         { "command": "npm run verify:ai", "result": "docs/ai/P5.6b-repair-provenance-reconciliation.md", "commitSha": "d7990252b13017eb903a358c8ed656c49e5cb089" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "694aec720bb8c6bdce81515aa2b4fe2154b2666c" }
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" }
       ]
     },
     "qualityGates": {
