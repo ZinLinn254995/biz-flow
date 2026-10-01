@@ -26,7 +26,7 @@ export function createBusinessCascadeTransactionRunner(database: BizFlowDB): Tra
     run<T>(work: () => Promise<T>): Promise<T> {
       return database.transaction(
         'rw',
-        [database.businesses, database.inventoryItems, database.sales, database.customers, database.businessExpenses],
+        [database.businesses, database.inventoryItems, database.sales, database.purchases, database.customers, database.businessExpenses],
         work,
       );
     },

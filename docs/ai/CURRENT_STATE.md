@@ -7,7 +7,8 @@
 - P5.4 — Favorites and Quick Add: COMPLETE.
 - P5.5 — Sale Detail and Receipt: COMPLETE.
 - P5.6a — Purchase domain, persistence, and stock logic: COMPLETE.
-- P5.6b — Purchase workflow integration and UI: COMPLETE.
+- P5.6b — Purchase workflow integration and UI repair: VERIFIED_ON_REPAIR_BRANCH_PENDING_FINALIZATION.
+- P5.6c — NOT_STARTED.
 - Development status: PAUSED_AWAITING_INSTRUCTIONS.
 - Current task: None; awaiting explicit owner authorization for P5.6c.
 

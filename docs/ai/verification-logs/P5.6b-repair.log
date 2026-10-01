@@ -1,0 +1,24 @@
+BIZFLOW P5.6b repository consistency repair verification
+
+Verification run started: 2026-10-01T10:13:19Z
+Verification run commit: 694aec720bb8c6bdce81515aa2b4fe2154b2666c
+Evidence-record commit: recorded in AI_STATE.json after this evidence file was committed
+
+Commands:
+- npm run typecheck: PASS
+- npm run test: PASS (62 files, 611 tests)
+- npm run build: PASS (existing large chunk warning only)
+- npm run verify:imports: PASS
+- npm run verify:locked: PASS
+- npm run verify:git-freshness: PASS (feature branch based on current origin/main)
+- npm run verify:ai: PASS
+- npm run verify: PASS
+
+Repair coverage:
+- Business cascade transaction includes purchases.
+- Business cascade deletes purchases for the selected business.
+- Purchases for another business remain.
+- Cascade failure rolls back child deletion.
+
+Historical P5.6b evidence was not rewritten.
+P5.6c was not started.

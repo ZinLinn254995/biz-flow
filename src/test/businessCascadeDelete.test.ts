@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createTestContext } from '@/test/helpers';
 import type { EntityId } from '@/types/common/base';
 
@@ -26,7 +26,9 @@ describe('business cascade deletion', () => {
     await ctx.inventoryRepository.create({ businessId: target.id, name: 'Target Item', quantity: 1, unit: 'each', costPrice: { amountMinor: 100, currency: 'USD' }, salePrice: { amountMinor: 200, currency: 'USD' }, reorderThreshold: 1, stockStatus: 'in_stock' });
     await ctx.customerRepository.create({ businessId: target.id, name: 'Target Customer' });
     await ctx.businessExpenseRepository.create({ businessId: target.id, amount: { amountMinor: 500, currency: 'USD' }, title: 'Supplies', date: '2026-01-01', notes: 'Target expense' });
+    await ctx.purchaseRepository.create({ businessId: target.id, date: '2026-01-01', items: [], totalAmount: { amountMinor: 0, currency: 'USD' } });
     await ctx.inventoryRepository.create({ businessId: other.id, name: 'Other Item', quantity: 1, unit: 'each', costPrice: { amountMinor: 100, currency: 'USD' }, salePrice: { amountMinor: 200, currency: 'USD' }, reorderThreshold: 1, stockStatus: 'in_stock' });
+    const otherPurchase = await ctx.purchaseRepository.create({ businessId: other.id, date: '2026-01-01', items: [], totalAmount: { amountMinor: 0, currency: 'USD' } });
     await ctx.personalIncomeRepository.create({ amount: { amountMinor: 1000, currency: 'USD' }, source: 'Personal', date: '2026-01-01' });
 
     await ctx.businessRepository.removeCascade(target.id);
@@ -35,13 +37,32 @@ describe('business cascade deletion', () => {
     expect(await ctx.inventoryRepository.getByBusinessId(target.id)).toEqual([]);
     expect(await ctx.customerRepository.getByBusinessId(target.id)).toEqual([]);
     expect(await ctx.businessExpenseRepository.getByBusinessId(target.id)).toEqual([]);
+    expect(await ctx.purchaseRepository.getByBusinessId(target.id)).toEqual([]);
     expect(await ctx.businessRepository.getById(other.id)).not.toBeNull();
     expect(await ctx.inventoryRepository.getByBusinessId(other.id)).toHaveLength(1);
+    expect(await ctx.purchaseRepository.getById(otherPurchase.id)).not.toBeNull();
     expect(await ctx.personalIncomeRepository.getAll()).toHaveLength(1);
   });
 
   it('does nothing for a missing business ID', async () => {
     await expect(ctx.businessRepository.removeCascade('missing-business' as EntityId)).resolves.toBeUndefined();
     expect(await ctx.businessRepository.getAll()).toEqual([]);
+  });
+
+  it('rolls back child deletion when the business delete fails', async () => {
+    const target = await ctx.businessRepository.create(businessInput);
+    const purchase = await ctx.purchaseRepository.create({
+      businessId: target.id,
+      date: '2026-01-01',
+      items: [],
+      totalAmount: { amountMinor: 0, currency: 'USD' },
+    });
+    const deleteBusiness = vi.spyOn(ctx.db.businesses, 'delete').mockRejectedValueOnce(new Error('delete failed'));
+
+    await expect(ctx.businessRepository.removeCascade(target.id)).rejects.toThrow('delete failed');
+    expect(await ctx.businessRepository.getById(target.id)).not.toBeNull();
+    expect(await ctx.purchaseRepository.getById(purchase.id)).not.toBeNull();
+
+    deleteBusiness.mockRestore();
   });
 });

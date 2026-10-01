@@ -2,7 +2,7 @@
 
 ## Current status
 
-P5.6b is COMPLETE on local `main`. The purchase workflow, UI, focused tests, final-main verification, and governance handoff are complete. Development is paused pending explicit owner authorization for P5.6c.
+P5.6b repair is verified on `v0/p5-6b-repair` but is not finalized on authoritative `main`. The purchase cascade repair, regression coverage, provenance reconciliation, and fresh verification are pending finalization. Development is paused pending explicit owner authorization for P5.6c.
 
 ## Verified provenance
 
