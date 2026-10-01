@@ -1,3 +1,10 @@
+## 2026-09-21 — P5.6b Purchase Workflow Implementation
+
+- Added the purchase hooks, list, create/edit workflow, detail view, delete confirmation, purchase navigation, and focused tests.
+- Preserved P5.6a stock and financial behavior; supplier name was added as an optional persisted purchase field without a schema migration.
+- Checkpoint verification passed with 610 tests. Historical failed `P5.6b.log` remains preserved; checkpoint PASS evidence is in `P5.6b-final.log`.
+- Final main integration, remote synchronization, and final-main verification remain before P5.6b is marked complete.
+
 ## 2026-09-20 — P5.6a Complete on Local Main
 
 - Reconciled canonical AI state with the already-merged P5.6a finalization commit `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`.

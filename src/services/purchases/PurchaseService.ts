@@ -1,7 +1,6 @@
 import type { PurchaseRepository } from '@/types/repositories/purchaseRepository';
 import type { InventoryRepository } from '@/types/repositories/inventoryRepository';
 import type { Purchase, PurchaseItem } from '@/types/domain/purchase';
-import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull, ValidationError } from '@/services/common';
@@ -71,6 +70,7 @@ export class PurchaseService {
     date: string;
     items: PurchaseItem[];
     totalAmount: Money;
+    supplierName?: string;
     notes?: string;
   }): Promise<Purchase> {
     requireNonEmptyString(input.businessId, 'businessId');
@@ -90,12 +90,13 @@ export class PurchaseService {
     validateMoney(input.totalAmount, 'totalAmount');
     validatePurchaseTotal(input.items, input.totalAmount);
 
+    const supplierName = trimToNull(input.supplierName) ?? undefined;
     const notes = trimToNull(input.notes) ?? undefined;
 
     return this.runAtomic(async () => {
       await this.increaseStock(input.items);
       try {
-        return await this.repository.create({ ...input, date, notes });
+        return await this.repository.create({ ...input, date, supplierName, notes });
       } catch (error) {
         await this.reverseStock(input.items);
         throw error;
@@ -121,6 +122,10 @@ export class PurchaseService {
     if (changes.totalAmount !== undefined) {
       validateMoney(changes.totalAmount, 'totalAmount');
     }
+
+    const normalizedChanges = changes.supplierName !== undefined
+      ? { ...changes, supplierName: trimToNull(changes.supplierName) ?? undefined }
+      : changes;
 
     if (changes.items !== undefined && changes.totalAmount !== undefined) {
       validatePurchaseTotal(changes.items, changes.totalAmount);
@@ -148,7 +153,7 @@ export class PurchaseService {
         }
 
         try {
-          return await this.repository.update(id, changes);
+          return await this.repository.update(id, normalizedChanges);
         } catch (error) {
           await this.reverseStock(newItems);
           await this.increaseStock(oldPurchase.items);
@@ -157,7 +162,7 @@ export class PurchaseService {
       });
     }
 
-    return this.repository.update(id, changes);
+    return this.repository.update(id, normalizedChanges);
   }
 
   async deletePurchase(id: EntityId): Promise<void> {

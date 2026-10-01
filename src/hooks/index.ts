@@ -9,6 +9,7 @@ export type { AsyncState, AsyncResult, MutationState } from '@/hooks/common';
 export * from '@/hooks/business';
 export * from '@/hooks/inventory';
 export * from '@/hooks/sales';
+export * from '@/hooks/purchases';
 export * from '@/hooks/customers';
 export * from '@/hooks/businessExpenses';
 export * from '@/hooks/personalFinance';
