@@ -25,6 +25,7 @@ export class DexieBusinessRepository
 
       await this.database.inventoryItems.where('businessId').equals(id).delete();
       await this.database.sales.where('businessId').equals(id).delete();
+      await this.database.purchases.where('businessId').equals(id).delete();
       await this.database.customers.where('businessId').equals(id).delete();
       await this.database.businessExpenses.where('businessId').equals(id).delete();
       await this.database.businesses.delete(id);
