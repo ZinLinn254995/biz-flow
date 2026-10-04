@@ -2,7 +2,7 @@
 
 ## Current status
 
-P5.6b repair is verified on `v0/p5-6b-repair` but is not finalized on authoritative `main`. The purchase cascade repair, regression coverage, provenance reconciliation, and fresh verification are pending finalization. Development is paused pending explicit owner authorization for P5.6c.
+P5.6b is COMPLETE on authoritative `main`. The purchase cascade repair, regression coverage, provenance reconciliation, and post-merge GitHub Actions verification are complete. Development is paused pending explicit owner authorization for P5.6c.
 
 ## Verified provenance
 
@@ -13,8 +13,8 @@ P5.6b repair is verified on `v0/p5-6b-repair` but is not finalized on authoritat
 - Evidence-record commit: `bd5b4d921f86482e220cf7b98b55eddcd2c6daf1`
 - Final local main merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`
 - Database version: 3 with the additive `purchases` table, while the version 1 schema declarations remain untouched.
-- Final P5.6b verification: `npm run verify` passed on synchronized main at `b77eff3fc5973cd1145c1640c110eeb48a44508e` with 610 tests passing; evidence is in `docs/ai/verification-logs/P5.6b-final-synchronized.log`.
-- Task state: `P5.6b` is COMPLETE in `docs/ai/AI_STATE.json`.
+  - P5.6b post-merge verification: GitHub Actions AI Verification Gate #51 succeeded for merge commit `17ac7894253e44f5e1826a37d33ed787291e8420`; local verification recorded 62 test files and 613 tests passing.
+  - Task state: `P5.6b` is COMPLETE in `docs/ai/AI_STATE.json`; P5.6c remains NOT_STARTED.
 
 ## P5.6a completion scope
 

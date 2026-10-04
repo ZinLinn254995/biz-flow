@@ -7,7 +7,7 @@
 - P5.4 — Favorites and Quick Add: COMPLETE.
 - P5.5 — Sale Detail and Receipt: COMPLETE.
 - P5.6a — Purchase domain, persistence, and stock logic: COMPLETE.
-- P5.6b — Purchase workflow integration and UI repair: VERIFIED_ON_REPAIR_BRANCH_PENDING_FINALIZATION.
+- P5.6b — Purchase workflow integration and UI repair: COMPLETE.
 - P5.6c — NOT_STARTED.
 - Development status: PAUSED_AWAITING_INSTRUCTIONS.
 - Current task: None; awaiting explicit owner authorization for P5.6c.
@@ -21,6 +21,8 @@
 - Database version: 3 in the committed P5.6a implementation checkpoint.
 - P5.6a verification evidence is captured and reports PASS.
 - P5.6a final local main merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`.
+- P5.6b verified merge commit on authoritative `main`: `17ac7894253e44f5e1826a37d33ed787291e8420`.
+- GitHub Actions AI Verification Gate #51: SUCCESS for merge commit `17ac7894253e44f5e1826a37d33ed787291e8420`.
 
 ## Persistence and compatibility
 
