@@ -6,7 +6,7 @@ DEC-P5.7-001
 
 ## TASK / MILESTONE
 
-P5.6c — boundary record for the future P5.7 Shared Stock & Cost Foundation
+P5.6c — boundary record for the future shared Stock and Cost Foundation
 
 ## STATUS
 
