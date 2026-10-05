@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.6b is complete on authoritative main. Do not begin P5.6c without explicit owner authorization.",
+  "pauseNote": "P5.6b is complete on authoritative main. P5.7 is authorized as a future architecture direction, but readiness is blocked; do not implement P5.7 or begin P5.6c until the documented blockers and applicable authorization are resolved.",
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -57,6 +57,19 @@
     "needsHumanReview": false
   },
   "currentTask": null,
+  "p5_7": {
+    "status": "AUTHORIZED_DIRECTION",
+    "implementationStatus": "NOT_STARTED",
+    "readinessStatus": "BLOCKED",
+    "readinessBlockers": [
+      "GIT_FRESHNESS_UNKNOWN",
+      "MIGRATION_SAFETY_UNPROVEN",
+      "UNKNOWN_COST_REPRESENTATION_GAP",
+      "STOCK_MOVEMENT_SCHEMA_OPEN",
+      "TRANSACTION_TABLE_SCOPE_OPEN"
+    ],
+    "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-001.md"
+  },
   "lockedFileOverrideReason": null,
   "nextTask": null,
   "progress": {
@@ -500,10 +513,10 @@
     ],
     "verifyCommand": "npm run verify",
     "humanPromptRequired": true,
-    "note": "P5.6b is complete. Development is paused and the human must explicitly authorize P5.6c before work resumes."
+    "note": "P5.6b is complete. P5.7 is authorized as a future architecture direction but readiness is blocked. Development remains paused until the documented blockers are resolved and the next implementation task is explicitly authorized."
   },
   "nextAIInstructions": {
-    "summary": "P5.6b is complete. Preserve the paused state and wait for explicit owner authorization before beginning P5.6c.",
+    "summary": "P5.6b is complete. P5.7 is authorized as a future direction but readiness is blocked; preserve the paused state and resolve blockers before implementation.",
     "beforeStarting": [
       "npm ci",
       "npm run verify to confirm the documented baseline is real"

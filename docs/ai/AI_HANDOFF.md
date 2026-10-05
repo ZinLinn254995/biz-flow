@@ -22,4 +22,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-Development is paused. Do not begin P5.6c until the project owner explicitly authorizes it.
+Development is paused. P5.7 is authorized as a future architecture direction, but readiness is blocked by unresolved Git freshness, migration safety, unknown-cost representation, StockMovement schema, and transaction/table-scope decisions. Do not implement P5.7 or begin P5.6c until those blockers and the applicable implementation authorization are resolved.

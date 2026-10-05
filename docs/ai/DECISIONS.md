@@ -120,6 +120,16 @@
 
 ---
 
+## Decision 14: P5.7 Shared Stock and Cost Foundation
+
+**Decision:** P5.7 is authorized as a future provider-neutral, offline-first Stock + Cost + Item foundation. `StockMovement` is the append-oriented historical stock-change foundation while `InventoryItem.quantity` remains the operational quantity cache; controlled stock mutation, negative-stock rejection, atomicity, immutable correction history, sale-time cost snapshots, and future cost provenance are locked principles.
+
+**Open decisions:** The exact movement schema, transaction scope, migration boundary and opening-balance semantics, unknown-cost/provenance representation, item roles, units, fractional quantities, price optionality, and non-stock purchase model remain unresolved. No costing algorithm is selected.
+
+**Consequence:** P5.7 implementation is not started. Readiness remains blocked pending Git freshness, migration-safety proof, unknown-cost representation, StockMovement schema, and transaction/table-scope decisions. The detailed record is `docs/ai/task-decisions/DEC-P5.7-001.md`; it does not authorize P5.6c, P5.8, cloud/account/sync, or AI implementation.
+
+---
+
 ## Decision 12: Branded EntityId Type
 
 **Decision:** `EntityId` is a branded string type (`string & { readonly [__entityIdBrand]: true }`).
