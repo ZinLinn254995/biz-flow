@@ -110,6 +110,16 @@
 
 ---
 
+## Decision 13: P5.6c Domain Foundation Boundary
+
+**Decision:** P5.6c is not an open-ended Purchase enhancement milestone. Negative stock is blocked as a domain rule; StockMovement L1, sale-time cost/provenance, role-capable `InventoryItem`, and existing-data preservation are approved future architecture directions. Recipe/BOM, costing algorithms, and the broader Stock + Cost + Item foundation remain deferred or separately scoped. AI, account, ownership, cloud sync, multi-device, and admin dashboard work remain future constraints only.
+
+**Reason:** Purchase-specific workflow completion is distinct from shared stock, costing, and item foundations. Recording the boundary prevents broad domain work from being hidden inside P5.6c while preserving the architectural rationale and open decisions.
+
+**Consequence:** P5.6c remains NOT_STARTED and no implementation is authorized by this record. The detailed decision, non-goals, and open questions are recorded in `docs/ai/task-decisions/DEC-P5.6c-001.md`.
+
+---
+
 ## Decision 12: Branded EntityId Type
 
 **Decision:** `EntityId` is a branded string type (`string & { readonly [__entityIdBrand]: true }`).
