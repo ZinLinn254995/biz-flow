@@ -130,6 +130,14 @@
 
 ---
 
+## Decision 15: P5.7 Final Approved Architecture
+
+**Decision:** P5.7 architecture is APPROVED. StockMovement, StockMutationService authority, negative-stock prevention, real production transaction scope, controlled InventoryService quantity operations, idempotent migration baseline, explicit legacy restore baseline, sale-time cost snapshots, KnownCost/UnknownCost semantics, retained InventoryItem boundary, integer quantities, and deferred non-stock Purchase semantics are accepted. Exact implementation details remain open to Coding AI selection.
+
+**Consequence:** P5.7 implementation remains NOT_STARTED and development remains PAUSED; the next gate is final implementation-readiness check and explicit implementation authorization. Details are in `docs/ai/task-decisions/DEC-P5.7-002.md`.
+
+---
+
 ## Decision 12: Branded EntityId Type
 
 **Decision:** `EntityId` is a branded string type (`string & { readonly [__entityIdBrand]: true }`).

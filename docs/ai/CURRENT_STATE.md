@@ -10,8 +10,8 @@
 - P5.6b — Purchase workflow integration and UI repair: COMPLETE.
 - P5.6c — NOT_STARTED; scope boundary recorded in `docs/ai/task-decisions/DEC-P5.6c-001.md`.
 - Development status: PAUSED_AWAITING_INSTRUCTIONS.
-- P5.7 — AUTHORIZED DIRECTION; implementation NOT_STARTED; readiness BLOCKED pending Git freshness, migration-safety proof, unknown-cost representation, StockMovement schema, and transaction/table-scope decisions.
-- Current task: None; implementation remains paused pending resolution of P5.7 readiness blockers and separately scoped implementation authorization.
+- P5.7 — ARCHITECTURE APPROVED; implementation NOT_STARTED; implementation authorization READY FOR NEXT GATE.
+- Current task: None; development remains paused pending final implementation-readiness check and explicit implementation authorization.
 
 ## Provenance
 

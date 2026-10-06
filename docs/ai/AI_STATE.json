@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.6b is complete on authoritative main. P5.7 is authorized as a future architecture direction, but readiness is blocked; do not implement P5.7 or begin P5.6c until the documented blockers and applicable authorization are resolved.",
+  "pauseNote": "P5.6b is complete on authoritative main. P5.7 architecture is approved and ready for the next implementation-readiness gate, but implementation remains paused until explicit authorization. Do not begin P5.6c.",
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -58,17 +58,12 @@
   },
   "currentTask": null,
   "p5_7": {
-    "status": "AUTHORIZED_DIRECTION",
+    "status": "ARCHITECTURE_APPROVED",
     "implementationStatus": "NOT_STARTED",
-    "readinessStatus": "BLOCKED",
-    "readinessBlockers": [
-      "GIT_FRESHNESS_UNKNOWN",
-      "MIGRATION_SAFETY_UNPROVEN",
-      "UNKNOWN_COST_REPRESENTATION_GAP",
-      "STOCK_MOVEMENT_SCHEMA_OPEN",
-      "TRANSACTION_TABLE_SCOPE_OPEN"
-    ],
-    "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-001.md"
+    "implementationAuthorization": "READY_FOR_NEXT_GATE",
+    "readinessStatus": "READY_FOR_FINAL_CHECK",
+    "readinessBlockers": [],
+    "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-002.md"
   },
   "lockedFileOverrideReason": null,
   "nextTask": null,

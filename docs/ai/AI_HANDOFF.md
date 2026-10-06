@@ -22,4 +22,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-Development is paused. P5.7 is authorized as a future architecture direction, but readiness is blocked by unresolved Git freshness, migration safety, unknown-cost representation, StockMovement schema, and transaction/table-scope decisions. Do not implement P5.7 or begin P5.6c until those blockers and the applicable implementation authorization are resolved.
+Development is paused. P5.7 architecture is APPROVED in `docs/ai/task-decisions/DEC-P5.7-002.md`; implementation remains NOT_STARTED and is READY FOR NEXT GATE. Do not implement P5.7 until the final implementation-readiness check and explicit implementation authorization. Do not begin P5.6c.
