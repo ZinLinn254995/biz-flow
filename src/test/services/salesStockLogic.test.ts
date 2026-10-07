@@ -5,6 +5,8 @@ import type { InventoryRepository } from '@/types/repositories/inventoryReposito
 import type { Sale, SaleItem } from '@/types/domain/sale';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId } from '@/types/common/base';
+import { StockMutationService } from '@/services/inventory/StockMutationService';
+import type { StockMovementRepository } from '@/types/repositories/stockMovementRepository';
 
 function createMockSaleRepo(): SaleRepository {
   return {
@@ -15,6 +17,11 @@ function createMockSaleRepo(): SaleRepository {
     update: vi.fn(),
     remove: vi.fn(),
   };
+}
+
+function createTestStockMutationService(inventory: InventoryRepository): StockMutationService {
+  const movements: StockMovementRepository = { create: vi.fn(), getById: vi.fn(), getAll: vi.fn(), getByInventoryItemId: vi.fn() };
+  return new StockMutationService(inventory, movements);
 }
 
 function createMockInventoryRepo(items: InventoryItem[] = []): InventoryRepository {
@@ -94,7 +101,7 @@ describe('SalesService — stock deduction on create', () => {
     const invRepo = createMockInventoryRepo([mkInventoryItem('inv-1', 50)]);
     const saleRepo = createMockSaleRepo();
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(mkSale('s1', validInput.items));
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.createSale(validInput);
 
@@ -106,7 +113,7 @@ describe('SalesService — stock deduction on create', () => {
     const invRepo = createMockInventoryRepo([mkInventoryItem('inv-1', 5, 10)]);
     const saleRepo = createMockSaleRepo();
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(mkSale('s1', validInput.items));
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 2)], totalAmount: sumTotal([mkSaleItem('inv-1', 2)]) });
 
@@ -118,7 +125,7 @@ describe('SalesService — stock deduction on create', () => {
     const invRepo = createMockInventoryRepo([mkInventoryItem('inv-1', 2)]);
     const saleRepo = createMockSaleRepo();
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(mkSale('s1', validInput.items));
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 2)], totalAmount: sumTotal([mkSaleItem('inv-1', 2)]) });
 
@@ -132,7 +139,7 @@ describe('SalesService — insufficient stock rejection', () => {
   it('rejects sale when stock is insufficient', async () => {
     const invRepo = createMockInventoryRepo([mkInventoryItem('inv-1', 1)]);
     const saleRepo = createMockSaleRepo();
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await expect(
       service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 5)], totalAmount: sumTotal([mkSaleItem('inv-1', 5)]) }),
@@ -144,7 +151,7 @@ describe('SalesService — insufficient stock rejection', () => {
   it('rejects sale when inventory item not found', async () => {
     const invRepo = createMockInventoryRepo([]);
     const saleRepo = createMockSaleRepo();
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await expect(service.createSale(validInput)).rejects.toThrow(/not found/);
     expect(saleRepo.create).not.toHaveBeenCalled();
@@ -156,7 +163,7 @@ describe('SalesService — insufficient stock rejection', () => {
       mkInventoryItem('inv-2', 1),
     ]);
     const saleRepo = createMockSaleRepo();
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await expect(
       service.createSale({
@@ -181,7 +188,7 @@ describe('SalesService — sale deletion restores stock', () => {
     const sale = mkSale('s1', [mkSaleItem('inv-1', 2)]);
     (saleRepo.getById as ReturnType<typeof vi.fn>).mockResolvedValue(sale);
     (saleRepo.remove as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.deleteSale('s1' as EntityId);
 
@@ -199,7 +206,7 @@ describe('SalesService — sale update adjusts stock', () => {
     (saleRepo.update as ReturnType<typeof vi.fn>).mockResolvedValue(
       mkSale('s1', [mkSaleItem('inv-1', 3)]),
     );
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.updateSale('s1' as EntityId, {
       items: [mkSaleItem('inv-1', 3)],
@@ -216,7 +223,7 @@ describe('SalesService — sale update adjusts stock', () => {
     const saleRepo = createMockSaleRepo();
     const oldSale = mkSale('s1', [mkSaleItem('inv-1', 2)]);
     (saleRepo.getById as ReturnType<typeof vi.fn>).mockResolvedValue(oldSale);
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await expect(
       service.updateSale('s1' as EntityId, {
@@ -225,9 +232,9 @@ describe('SalesService — sale update adjusts stock', () => {
       }),
     ).rejects.toThrow(/Insufficient stock/);
 
-    // Stock should be restored to original
+    // A failed atomic update rolls back the reversal as well as the attempted deduction.
     const updated = await invRepo.getById('inv-1' as EntityId);
-    expect(updated?.quantity).toBe(48);
+    expect(updated?.quantity).toBe(50);
   });
 });
 
@@ -241,7 +248,7 @@ describe('SalesService — multiple items', () => {
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(
       mkSale('s1', [mkSaleItem('inv-1', 5), mkSaleItem('inv-2', 3)]),
     );
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.createSale({
       ...validInput,
@@ -261,7 +268,7 @@ describe('SalesService — multiple items', () => {
     (saleRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(
       mkSale('s1', [mkSaleItem('inv-1', 3), mkSaleItem('inv-1', 4)]),
     );
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await service.createSale({
       ...validInput,
@@ -278,7 +285,7 @@ describe('SalesService — no negative inventory', () => {
   it('never allows inventory to go negative', async () => {
     const invRepo = createMockInventoryRepo([mkInventoryItem('inv-1', 0)]);
     const saleRepo = createMockSaleRepo();
-    const service = new SalesService(saleRepo, invRepo);
+    const service = new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await expect(
       service.createSale({ ...validInput, items: [mkSaleItem('inv-1', 1)], totalAmount: sumTotal([mkSaleItem('inv-1', 1)]) }),
@@ -290,7 +297,7 @@ describe('SalesService — no negative inventory', () => {
 });
 
 describe('SalesService — atomic stock operations (P2P19)', () => {
-  function makeRunner() {
+  function makeRunner(onRollback?: () => Promise<void>) {
     const calls: string[] = [];
     return {
       calls,
@@ -302,6 +309,7 @@ describe('SalesService — atomic stock operations (P2P19)', () => {
             calls.push('commit');
             return result;
           } catch (error) {
+            await onRollback?.();
             calls.push('rollback');
             throw error;
           }
@@ -315,7 +323,7 @@ describe('SalesService — atomic stock operations (P2P19)', () => {
     (saleRepo.create as ReturnType<typeof vi.fn>).mockImplementation(async (s: Sale) => s);
     const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 10)]);
     const { calls, runner } = makeRunner();
-    const service = new SalesService(saleRepo, invRepo, runner);
+    const service = new SalesService(saleRepo, invRepo, runner, createTestStockMutationService(invRepo));
 
     await service.createSale({
       businessId: 'biz-1' as EntityId,
@@ -333,8 +341,10 @@ describe('SalesService — atomic stock operations (P2P19)', () => {
     const saleRepo = createMockSaleRepo();
     (saleRepo.create as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('write failed'));
     const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 10)]);
-    const { calls, runner } = makeRunner();
-    const service = new SalesService(saleRepo, invRepo, runner);
+    const { calls, runner } = makeRunner(async () => {
+      await invRepo.update('item-1' as EntityId, { quantity: 10, stockStatus: 'in_stock' });
+    });
+    const service = new SalesService(saleRepo, invRepo, runner, createTestStockMutationService(invRepo));
 
     await expect(
       service.createSale({
@@ -360,7 +370,7 @@ describe('SalesService — atomic stock operations (P2P19)', () => {
     (saleRepo.remove as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
     const invRepo = createMockInventoryRepo([mkInventoryItem('item-1', 6)]);
     const { calls, runner } = makeRunner();
-    const service = new SalesService(saleRepo, invRepo, runner);
+    const service = new SalesService(saleRepo, invRepo, runner, createTestStockMutationService(invRepo));
 
     await service.deleteSale('sale-1' as EntityId);
 
