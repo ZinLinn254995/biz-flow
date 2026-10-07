@@ -10,13 +10,13 @@ import type { BizFlowDB } from '@/db/database';
  */
 export const salesTransactionRunner: TransactionRunner = {
   run<T>(work: () => Promise<T>): Promise<T> {
-    return db.transaction('rw', [db.sales, db.inventoryItems], work);
+    return db.transaction('rw', [db.sales, db.inventoryItems, db.stockMovements], work);
   },
 };
 
 export const purchaseTransactionRunner: TransactionRunner = {
   run<T>(work: () => Promise<T>): Promise<T> {
-    return db.transaction('rw', [db.purchases, db.inventoryItems], work);
+    return db.transaction('rw', [db.purchases, db.inventoryItems, db.stockMovements], work);
   },
 };
 

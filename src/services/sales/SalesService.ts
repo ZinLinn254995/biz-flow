@@ -6,6 +6,7 @@ import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull, ValidationError } from '@/services/common';
 import { directTransactionRunner, type TransactionRunner } from '@/services/common/transaction';
+import type { StockMutationService } from '@/services/inventory/StockMutationService';
 
 /**
  * Verifies that every line total shares one currency and that their sum
@@ -50,6 +51,7 @@ export class SalesService {
     private readonly repository: SaleRepository,
     private readonly inventoryRepository?: InventoryRepository,
     private readonly transactionRunner: TransactionRunner = directTransactionRunner,
+    private readonly stockMutationService?: StockMutationService,
   ) {}
 
   /**
@@ -101,9 +103,25 @@ export class SalesService {
     const notes = trimToNull(input.notes) ?? undefined;
 
     return this.runAtomic(async () => {
-      await this.deductStock(input.items);
+      const items = await Promise.all(input.items.map(async (item) => {
+        if (item.costAtSale || !this.inventoryRepository) return item;
+        const inventoryItem = await this.inventoryRepository.getById(item.inventoryItemId);
+        return inventoryItem
+          ? { ...item, costAtSale: { kind: 'known' as const, value: inventoryItem.costPrice, provenance: 'inventory-item-cost' } }
+          : { ...item, costAtSale: { kind: 'unknown' as const, reason: 'inventory-item-not-found' } };
+      }));
+      const saleInput = { ...input, items };
+      if (this.stockMutationService) {
+        await this.stockMutationService.apply(
+          items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+          `sale-${Date.now()}` as EntityId,
+          'sale',
+        );
+      } else {
+        await this.deductStock(input.items);
+      }
       try {
-        return await this.repository.create({ ...input, date, notes });
+        return await this.repository.create({ ...saleInput, date, notes });
       } catch (err) {
         await this.restoreStock(input.items);
         throw err;

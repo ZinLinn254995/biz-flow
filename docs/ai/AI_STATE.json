@@ -56,16 +56,26 @@
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": null,
+  "currentTask": {
+    "id": "P5.7",
+    "name": "Shared Stock and Cost Foundation",
+    "status": "IN_PROGRESS",
+    "startedDate": "2026-10-07",
+    "ownerAuthorization": "GRANTED",
+    "confidence": "high",
+    "needsHumanReview": false,
+    "lockedFileOverrideReason": "P5.7 implementation is explicitly authorized. Database schema, SaleItem cost snapshot, backup contract, and repository type exports must change to establish the approved stock movement and cost foundation while preserving existing boundaries.",
+    "scope": "Implement only the approved P5.7 stock movement, stock mutation, transaction, migration, backup/restore, quantity, and sale-cost foundation."
+  },
   "p5_7": {
     "status": "ARCHITECTURE_APPROVED",
-    "implementationStatus": "NOT_STARTED",
-    "implementationAuthorization": "READY_FOR_NEXT_GATE",
-    "readinessStatus": "READY_FOR_FINAL_CHECK",
+    "implementationStatus": "IN_PROGRESS",
+    "implementationAuthorization": "GRANTED",
+    "readinessStatus": "IMPLEMENTATION_IN_PROGRESS",
     "readinessBlockers": [],
     "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-002.md"
   },
-  "lockedFileOverrideReason": null,
+  "lockedFileOverrideReason": "P5.7 implementation is explicitly authorized. Database schema, SaleItem cost snapshot, backup contract, and repository type exports must change to establish the approved stock movement and cost foundation while preserving existing boundaries.",
   "nextTask": null,
   "progress": {
     "completedMilestones": [

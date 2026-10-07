@@ -5,6 +5,7 @@ import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull, ValidationError } from '@/services/common';
 import { directTransactionRunner, type TransactionRunner } from '@/services/common/transaction';
+import type { StockMutationService } from '@/services/inventory/StockMutationService';
 
 function validatePurchaseTotal(items: PurchaseItem[], totalAmount: Money): void {
   if (items.length === 0) {
@@ -47,6 +48,7 @@ export class PurchaseService {
     private readonly repository: PurchaseRepository,
     private readonly inventoryRepository?: InventoryRepository,
     private readonly transactionRunner: TransactionRunner = directTransactionRunner,
+    private readonly stockMutationService?: StockMutationService,
   ) {}
 
   private runAtomic<T>(work: () => Promise<T>): Promise<T> {
@@ -94,7 +96,15 @@ export class PurchaseService {
     const notes = trimToNull(input.notes) ?? undefined;
 
     return this.runAtomic(async () => {
-      await this.increaseStock(input.items);
+      if (this.stockMutationService) {
+        await this.stockMutationService.apply(
+          input.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+          `purchase-${Date.now()}` as EntityId,
+          'purchase',
+        );
+      } else {
+        await this.increaseStock(input.items);
+      }
       try {
         return await this.repository.create({ ...input, date, supplierName, notes });
       } catch (error) {

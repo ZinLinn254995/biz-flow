@@ -29,8 +29,10 @@ import {
   salesTransactionRunner,
   purchaseTransactionRunner,
   financeTransactionRunner,
+  stockMovementRepository,
 } from '@/repositories';
 import { DataBackupService } from '@/services/dataBackup/DataBackupService';
+import { StockMutationService } from '@/services/inventory/StockMutationService';
 
 /**
  * Bundles all application services so they can be provided to the
@@ -56,11 +58,12 @@ export interface ServiceContainer {
 }
 
 export function createServiceContainer(): ServiceContainer {
+  const stockMutationService = new StockMutationService(inventoryRepository, stockMovementRepository, purchaseTransactionRunner);
   return {
     businessService: new BusinessService(businessRepository),
     inventoryService: new InventoryService(inventoryRepository),
-    salesService: new SalesService(saleRepository, inventoryRepository, salesTransactionRunner),
-    purchaseService: new PurchaseService(purchaseRepository, inventoryRepository, purchaseTransactionRunner),
+    salesService: new SalesService(saleRepository, inventoryRepository, salesTransactionRunner, stockMutationService),
+    purchaseService: new PurchaseService(purchaseRepository, inventoryRepository, purchaseTransactionRunner, stockMutationService),
     customerService: new CustomerService(customerRepository),
     businessExpenseService: new BusinessExpenseService(businessExpenseRepository, new AccountService(accountRepository), financeTransactionRunner),
     personalIncomeService: new PersonalIncomeService(personalIncomeRepository, new AccountService(accountRepository), financeTransactionRunner),

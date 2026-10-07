@@ -9,6 +9,7 @@ import type { PersonalExpense, PersonalIncome } from '@/types/domain/personalFin
 import type { Purchase } from '@/types/domain/purchase';
 import type { Sale } from '@/types/domain/sale';
 import type { SavedItem } from '@/types/domain/savedItem';
+import type { StockMovement } from '@/types/domain/stockMovement';
 
 export const BACKUP_VERSION = 1 as const;
 
@@ -28,6 +29,7 @@ export interface BackupData {
     budgets: Budget[];
     accounts: Account[];
     savedItems?: SavedItem[];
+    stockMovements?: StockMovement[];
   };
 }
 
@@ -51,4 +53,5 @@ export const BACKUP_ENTITIES: BackupEntity[] = [
   'budgets',
   'accounts',
   'savedItems',
+  'stockMovements',
 ];
