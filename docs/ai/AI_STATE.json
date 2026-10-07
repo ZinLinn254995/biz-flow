@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.6b is complete on authoritative main. Do not begin P5.6c without explicit owner authorization.",
+  "pauseNote": "P5.6b is complete on authoritative main. P5.7 architecture is approved and ready for the next implementation-readiness gate, but implementation remains paused until explicit authorization. Do not begin P5.6c.",
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -57,6 +57,14 @@
     "needsHumanReview": false
   },
   "currentTask": null,
+  "p5_7": {
+    "status": "ARCHITECTURE_APPROVED",
+    "implementationStatus": "NOT_STARTED",
+    "implementationAuthorization": "READY_FOR_NEXT_GATE",
+    "readinessStatus": "READY_FOR_FINAL_CHECK",
+    "readinessBlockers": [],
+    "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-002.md"
+  },
   "lockedFileOverrideReason": null,
   "nextTask": null,
   "progress": {
@@ -500,10 +508,10 @@
     ],
     "verifyCommand": "npm run verify",
     "humanPromptRequired": true,
-    "note": "P5.6b is complete. Development is paused and the human must explicitly authorize P5.6c before work resumes."
+    "note": "P5.6b is complete. P5.7 is authorized as a future architecture direction but readiness is blocked. Development remains paused until the documented blockers are resolved and the next implementation task is explicitly authorized."
   },
   "nextAIInstructions": {
-    "summary": "P5.6b is complete. Preserve the paused state and wait for explicit owner authorization before beginning P5.6c.",
+    "summary": "P5.6b is complete. P5.7 is authorized as a future direction but readiness is blocked; preserve the paused state and resolve blockers before implementation.",
     "beforeStarting": [
       "npm ci",
       "npm run verify to confirm the documented baseline is real"

@@ -8,9 +8,10 @@
 - P5.5 — Sale Detail and Receipt: COMPLETE.
 - P5.6a — Purchase domain, persistence, and stock logic: COMPLETE.
 - P5.6b — Purchase workflow integration and UI repair: COMPLETE.
-- P5.6c — NOT_STARTED.
+- P5.6c — NOT_STARTED; scope boundary recorded in `docs/ai/task-decisions/DEC-P5.6c-001.md`.
 - Development status: PAUSED_AWAITING_INSTRUCTIONS.
-- Current task: None; awaiting explicit owner authorization for P5.6c.
+- P5.7 — ARCHITECTURE APPROVED; implementation NOT_STARTED; implementation authorization READY FOR NEXT GATE.
+- Current task: None; development remains paused pending final implementation-readiness check and explicit implementation authorization.
 
 ## Provenance
 

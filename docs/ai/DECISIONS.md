@@ -110,6 +110,34 @@
 
 ---
 
+## Decision 13: P5.6c Domain Foundation Boundary
+
+**Decision:** P5.6c is not an open-ended Purchase enhancement milestone. Negative stock is blocked as a domain rule; StockMovement L1, sale-time cost/provenance, role-capable `InventoryItem`, and existing-data preservation are approved future architecture directions. Recipe/BOM, costing algorithms, and the broader Stock + Cost + Item foundation remain deferred or separately scoped. AI, account, ownership, cloud sync, multi-device, and admin dashboard work remain future constraints only.
+
+**Reason:** Purchase-specific workflow completion is distinct from shared stock, costing, and item foundations. Recording the boundary prevents broad domain work from being hidden inside P5.6c while preserving the architectural rationale and open decisions.
+
+**Consequence:** P5.6c remains NOT_STARTED and no implementation is authorized by this record. The detailed decision, non-goals, and open questions are recorded in `docs/ai/task-decisions/DEC-P5.6c-001.md`.
+
+---
+
+## Decision 14: P5.7 Shared Stock and Cost Foundation
+
+**Decision:** P5.7 is authorized as a future provider-neutral, offline-first Stock + Cost + Item foundation. `StockMovement` is the append-oriented historical stock-change foundation while `InventoryItem.quantity` remains the operational quantity cache; controlled stock mutation, negative-stock rejection, atomicity, immutable correction history, sale-time cost snapshots, and future cost provenance are locked principles.
+
+**Open decisions:** The exact movement schema, transaction scope, migration boundary and opening-balance semantics, unknown-cost/provenance representation, item roles, units, fractional quantities, price optionality, and non-stock purchase model remain unresolved. No costing algorithm is selected.
+
+**Consequence:** P5.7 implementation is not started. Readiness remains blocked pending Git freshness, migration-safety proof, unknown-cost representation, StockMovement schema, and transaction/table-scope decisions. The detailed record is `docs/ai/task-decisions/DEC-P5.7-001.md`; it does not authorize P5.6c, P5.8, cloud/account/sync, or AI implementation.
+
+---
+
+## Decision 15: P5.7 Final Approved Architecture
+
+**Decision:** P5.7 architecture is APPROVED. StockMovement, StockMutationService authority, negative-stock prevention, real production transaction scope, controlled InventoryService quantity operations, idempotent migration baseline, explicit legacy restore baseline, sale-time cost snapshots, KnownCost/UnknownCost semantics, retained InventoryItem boundary, integer quantities, and deferred non-stock Purchase semantics are accepted. Exact implementation details remain open to Coding AI selection.
+
+**Consequence:** P5.7 implementation remains NOT_STARTED and development remains PAUSED; the next gate is final implementation-readiness check and explicit implementation authorization. Details are in `docs/ai/task-decisions/DEC-P5.7-002.md`.
+
+---
+
 ## Decision 12: Branded EntityId Type
 
 **Decision:** `EntityId` is a branded string type (`string & { readonly [__entityIdBrand]: true }`).

@@ -2,7 +2,7 @@
 
 ## Current status
 
-P5.6b is COMPLETE on authoritative `main`. The purchase cascade repair, regression coverage, provenance reconciliation, and post-merge GitHub Actions verification are complete. Development is paused pending explicit owner authorization for P5.6c.
+P5.6b is COMPLETE on authoritative `main`. The purchase cascade repair, regression coverage, provenance reconciliation, and post-merge GitHub Actions verification are complete. Development remains paused. P5.6c is explicitly authorized for future planning, but its boundary is now documented in `docs/ai/task-decisions/DEC-P5.6c-001.md`; implementation has not started. Any broader Stock + Cost + Item foundation requires separate milestone authorization.
 
 ## Verified provenance
 
@@ -22,4 +22,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-Development is paused. Do not begin P5.6c until the project owner explicitly authorizes it.
+Development is paused. P5.7 architecture is APPROVED in `docs/ai/task-decisions/DEC-P5.7-002.md`; implementation remains NOT_STARTED and is READY FOR NEXT GATE. Do not implement P5.7 until the final implementation-readiness check and explicit implementation authorization. Do not begin P5.6c.
