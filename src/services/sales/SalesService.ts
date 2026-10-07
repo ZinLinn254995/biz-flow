@@ -6,6 +6,7 @@ import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull, ValidationError } from '@/services/common';
 import { directTransactionRunner, type TransactionRunner } from '@/services/common/transaction';
+import type { StockMutationService } from '@/services/inventory/StockMutationService';
 
 /**
  * Verifies that every line total shares one currency and that their sum
@@ -50,6 +51,7 @@ export class SalesService {
     private readonly repository: SaleRepository,
     private readonly inventoryRepository?: InventoryRepository,
     private readonly transactionRunner: TransactionRunner = directTransactionRunner,
+    private readonly stockMutationService?: StockMutationService,
   ) {}
 
   /**
@@ -101,9 +103,25 @@ export class SalesService {
     const notes = trimToNull(input.notes) ?? undefined;
 
     return this.runAtomic(async () => {
-      await this.deductStock(input.items);
+      const items = await Promise.all(input.items.map(async (item) => {
+        if (item.costAtSale || !this.inventoryRepository) return item;
+        const inventoryItem = await this.inventoryRepository.getById(item.inventoryItemId);
+        return inventoryItem
+          ? { ...item, costAtSale: { kind: 'known' as const, value: inventoryItem.costPrice, provenance: 'inventory-item-cost' } }
+          : { ...item, costAtSale: { kind: 'unknown' as const, reason: 'inventory-item-not-found' } };
+      }));
+      const saleInput = { ...input, items };
+      if (this.stockMutationService) {
+        await this.stockMutationService.apply(
+          items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+          `sale-${Date.now()}` as EntityId,
+          'sale',
+        );
+      } else {
+        await this.deductStock(input.items);
+      }
       try {
-        return await this.repository.create({ ...input, date, notes });
+        return await this.repository.create({ ...saleInput, date, notes });
       } catch (err) {
         await this.restoreStock(input.items);
         throw err;
@@ -146,18 +164,56 @@ export class SalesService {
       }
       const newItems = changes.items;
       return this.runAtomic(async () => {
-        await this.restoreStock(oldSale.items);
-        try {
-          await this.deductStock(newItems);
-        } catch (error) {
-          await this.deductStock(oldSale.items);
-          throw error;
+        if (this.stockMutationService) {
+          await this.stockMutationService.apply(
+            oldSale.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+            `sale-reversal-${id}-${Date.now()}` as EntityId,
+            'reversal',
+            id,
+          );
+          try {
+            await this.stockMutationService.apply(
+              newItems.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+              `sale-update-${id}-${Date.now()}` as EntityId,
+              'sale',
+              id,
+            );
+          } catch (error) {
+            await this.stockMutationService.apply(
+              oldSale.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+              `sale-rollback-${id}-${Date.now()}` as EntityId,
+              'sale',
+              id,
+            );
+            throw error;
+          }
+        } else {
+          await this.restoreStock(oldSale.items);
+          try { await this.deductStock(newItems); } catch (error) {
+            await this.deductStock(oldSale.items);
+            throw error;
+          }
         }
         try {
           return await this.repository.update(id, changes);
         } catch (error) {
-          await this.restoreStock(newItems);
-          await this.deductStock(oldSale.items);
+          if (this.stockMutationService) {
+            await this.stockMutationService.apply(
+              newItems.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+              `sale-update-rollback-${id}-${Date.now()}` as EntityId,
+              'reversal',
+              id,
+            );
+            await this.stockMutationService.apply(
+              oldSale.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+              `sale-restore-rollback-${id}-${Date.now()}` as EntityId,
+              'sale',
+              id,
+            );
+          } else {
+            await this.restoreStock(newItems);
+            await this.deductStock(oldSale.items);
+          }
           throw error;
         }
       });
@@ -171,11 +227,29 @@ export class SalesService {
     const sale = await this.repository.getById(id);
     if (!sale) return this.repository.remove(id);
     await this.runAtomic(async () => {
-      await this.restoreStock(sale.items);
+      if (this.stockMutationService) {
+        await this.stockMutationService.apply(
+          sale.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+          `sale-delete-${id}-${Date.now()}` as EntityId,
+          'reversal',
+          id,
+        );
+      } else {
+        await this.restoreStock(sale.items);
+      }
       try {
         await this.repository.remove(id);
       } catch (error) {
-        await this.deductStock(sale.items);
+        if (this.stockMutationService) {
+          await this.stockMutationService.apply(
+            sale.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+            `sale-delete-rollback-${id}-${Date.now()}` as EntityId,
+            'sale',
+            id,
+          );
+        } else {
+          await this.deductStock(sale.items);
+        }
         throw error;
       }
     });

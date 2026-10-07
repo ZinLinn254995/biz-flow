@@ -11,3 +11,4 @@ export type { CategoryRepository } from '@/types/repositories/categoryRepository
 export type { BudgetRepository } from '@/types/repositories/budgetRepository';
 export type { AccountRepository } from '@/types/repositories/accountRepository';
 export type { SavedItemRepository } from '@/types/repositories/savedItemRepository';
+export type { StockMovementRepository } from '@/types/repositories/stockMovementRepository';

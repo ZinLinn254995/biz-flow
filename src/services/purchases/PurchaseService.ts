@@ -5,6 +5,7 @@ import type { EntityId, Money } from '@/types/common/base';
 import type { StockStatus } from '@/types/common/enums';
 import { requireNonEmptyString, validateMoney, validateQuantity, trimToNull, ValidationError } from '@/services/common';
 import { directTransactionRunner, type TransactionRunner } from '@/services/common/transaction';
+import type { StockMutationService } from '@/services/inventory/StockMutationService';
 
 function validatePurchaseTotal(items: PurchaseItem[], totalAmount: Money): void {
   if (items.length === 0) {
@@ -47,6 +48,7 @@ export class PurchaseService {
     private readonly repository: PurchaseRepository,
     private readonly inventoryRepository?: InventoryRepository,
     private readonly transactionRunner: TransactionRunner = directTransactionRunner,
+    private readonly stockMutationService?: StockMutationService,
   ) {}
 
   private runAtomic<T>(work: () => Promise<T>): Promise<T> {
@@ -94,7 +96,15 @@ export class PurchaseService {
     const notes = trimToNull(input.notes) ?? undefined;
 
     return this.runAtomic(async () => {
-      await this.increaseStock(input.items);
+      if (this.stockMutationService) {
+        await this.stockMutationService.apply(
+          input.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+          `purchase-${Date.now()}` as EntityId,
+          'purchase',
+        );
+      } else {
+        await this.increaseStock(input.items);
+      }
       try {
         return await this.repository.create({ ...input, date, supplierName, notes });
       } catch (error) {
@@ -144,19 +154,47 @@ export class PurchaseService {
 
       const newItems = changes.items;
       return this.runAtomic(async () => {
-        await this.reverseStock(oldPurchase.items);
-        try {
-          await this.increaseStock(newItems);
-        } catch (error) {
-          await this.increaseStock(oldPurchase.items);
-          throw error;
+        if (this.stockMutationService) {
+          await this.stockMutationService.apply(
+            oldPurchase.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+            `purchase-reversal-${id}-${Date.now()}` as EntityId,
+            'reversal',
+            id,
+          );
+          await this.stockMutationService.apply(
+            newItems.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+            `purchase-update-${id}-${Date.now()}` as EntityId,
+            'purchase',
+            id,
+          );
+        } else {
+          await this.reverseStock(oldPurchase.items);
+          try { await this.increaseStock(newItems); } catch (error) {
+            await this.increaseStock(oldPurchase.items);
+            throw error;
+          }
         }
 
         try {
           return await this.repository.update(id, normalizedChanges);
         } catch (error) {
-          await this.reverseStock(newItems);
-          await this.increaseStock(oldPurchase.items);
+          if (this.stockMutationService) {
+            await this.stockMutationService.apply(
+              newItems.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+              `purchase-update-rollback-${id}-${Date.now()}` as EntityId,
+              'reversal',
+              id,
+            );
+            await this.stockMutationService.apply(
+              oldPurchase.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+              `purchase-restore-rollback-${id}-${Date.now()}` as EntityId,
+              'purchase',
+              id,
+            );
+          } else {
+            await this.reverseStock(newItems);
+            await this.increaseStock(oldPurchase.items);
+          }
           throw error;
         }
       });
@@ -172,11 +210,29 @@ export class PurchaseService {
     if (!purchase) return this.repository.remove(id);
 
     await this.runAtomic(async () => {
-      await this.reverseStock(purchase.items);
+      if (this.stockMutationService) {
+        await this.stockMutationService.apply(
+          purchase.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: -item.quantity })),
+          `purchase-delete-${id}-${Date.now()}` as EntityId,
+          'reversal',
+          id,
+        );
+      } else {
+        await this.reverseStock(purchase.items);
+      }
       try {
         await this.repository.remove(id);
       } catch (error) {
-        await this.increaseStock(purchase.items);
+        if (this.stockMutationService) {
+          await this.stockMutationService.apply(
+            purchase.items.map((item) => ({ inventoryItemId: item.inventoryItemId, delta: item.quantity })),
+            `purchase-delete-rollback-${id}-${Date.now()}` as EntityId,
+            'purchase',
+            id,
+          );
+        } else {
+          await this.increaseStock(purchase.items);
+        }
         throw error;
       }
     });
