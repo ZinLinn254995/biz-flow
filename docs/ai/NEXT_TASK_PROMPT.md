@@ -2,11 +2,11 @@
 
 ## NEXT TASK
 
-Remain paused after P5.7 completion; await explicit owner authorization for the next milestone
+Remain paused after P5.8 completion; await explicit owner authorization for the next milestone
 
 ## STATUS
 
-P5.7 is COMPLETE on authoritative main. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6c, P5.8, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
+P5.8 is COMPLETE on authoritative main by reconciliation. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6c, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
 
 ## OBJECTIVE
 

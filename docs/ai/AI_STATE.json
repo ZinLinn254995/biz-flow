@@ -44,19 +44,28 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.7",
-    "name": "Shared Stock and Cost Foundation",
+    "id": "P5.8",
+    "name": "Expenses",
     "status": "COMPLETE"
   },
   "lastCompletedTask": {
-    "id": "P5.7",
-    "name": "Shared Stock and Cost Foundation",
+    "id": "P5.8",
+    "name": "Expenses",
     "completedDate": "2026-10-08",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
   },
   "currentTask": null,
+  "p5_8": {
+    "status": "COMPLETE",
+    "implementationStatus": "COMPLETE",
+    "implementationAuthorization": "GRANTED",
+    "readinessStatus": "COMPLETE",
+    "readinessBlockers": [],
+    "implementationCommit": "7701ce1d436df065f066ace8f144b5bcc5e1fc4a",
+    "verificationEvidence": "docs/ai/verification-logs/P5.8-existing-implementation.log"
+  },
   "p5_7": {
     "status": "COMPLETE",
     "implementationStatus": "COMPLETE",
@@ -71,7 +80,7 @@
   "nextTask": null,
   "progress": {
     "completedMilestones": [
-      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1", "P5.1", "P5.2", "P5.3", "P5.4", "P5.5", "P5.6", "P5.6a", "P5.6b", "P5.7"
+      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1", "P5.1", "P5.2", "P5.3", "P5.4", "P5.5", "P5.6", "P5.6a", "P5.6b", "P5.7", "P5.8"
     ],
     "remainingMilestones": ["P4.2", "P4.3", "P4.4", "P4.5"],
     "totalCompleted": 42,
@@ -98,12 +107,12 @@
     },
     "verificationRun": {
       "type": "captured",
-    "taskId": "P5.7",
+    "taskId": "P5.8",
     "runAt": "2026-10-08",
     "runBy": "Local repository verification plus GitHub Actions AI Verification Gate",
-    "evidence": "docs/ai/verification-logs/P5.7-repair.log",
-    "commitSha": "5de416756106be1af1d88bd1492bdd80884a4678",
-    "evidenceCommitSha": "5de416756106be1af1d88bd1492bdd80884a4678",
+    "evidence": "docs/ai/verification-logs/P5.8-existing-implementation.log",
+    "commitSha": "7701ce1d436df065f066ace8f144b5bcc5e1fc4a",
+    "evidenceCommitSha": "7701ce1d436df065f066ace8f144b5bcc5e1fc4a",
     "environment": "Post-merge verification passed on authoritative main at P5.7 repair merge commit 5de416756106be1af1d88bd1492bdd80884a4678.",
       "results": [
         { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
