@@ -2,11 +2,11 @@
 
 ## NEXT TASK
 
-Perform the final P5.7 implementation-readiness check; implementation remains paused until explicit authorization
+Remain paused after P5.7 completion; await explicit owner authorization for the next milestone
 
 ## STATUS
 
-P5.6b is COMPLETE on authoritative main. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6c, P5.7, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
+P5.7 is COMPLETE on authoritative main. Development is PAUSED_AWAITING_INSTRUCTIONS. Do not begin P5.6c, P5.8, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
 
 ## OBJECTIVE
 
@@ -14,8 +14,8 @@ Wait for explicit owner authorization before selecting or starting the next task
 
 ## SCOPE
 
-- Preserve the completed P5.6a and P5.6b implementation, final-main evidence, and historical evidence.
-- Do not modify the completed workflow or begin P5.6c without explicit authorization.
+- Preserve the completed P5.6a, P5.6b, and P5.7 implementation, repair, final-main evidence, and historical evidence.
+- Do not modify completed workflows or begin P5.6c/P5.8 without explicit authorization.
 
 ## EXCLUSIONS
 

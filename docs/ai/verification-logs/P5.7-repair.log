@@ -1,0 +1,25 @@
+P5.7 repair verification record
+Date: 2026-10-08
+Authoritative merge commit: 5de416756106be1af1d88bd1492bdd80884a4678
+Pull request: #9
+
+Scope verified:
+- StockMutationService no longer opens a nested transaction.
+- PurchaseService and SalesService no longer contain legacy direct stock mutation bypasses.
+- Sale cost snapshots are preserved during updates.
+- Legacy backup restore creates an identified opening baseline.
+- Focused stock-boundary and transaction regression tests pass.
+
+Verification:
+- npm run verify: PASS
+- Typecheck: PASS
+- Tests: PASS (63 files / 616 tests)
+- Build: PASS (existing chunk-size warning only)
+- Import verification: PASS
+- Locked-area verification: PASS
+- Git freshness: PASS
+- AI-state validation: PASS after this record is finalized
+- P5.8: NOT_STARTED
+- P5.6c: NOT_STARTED
+
+Final status: P5.7 COMPLETE; development remains paused awaiting explicit authorization for the next milestone.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0.0",
   "developmentStatus": "PAUSED_AWAITING_INSTRUCTIONS",
-  "pauseNote": "P5.6b is complete on authoritative main. P5.7 architecture is approved and ready for the next implementation-readiness gate, but implementation remains paused until explicit authorization. Do not begin P5.6c.",
+  "pauseNote": "P5.7 implementation and repair are complete on authoritative main. P5.8 and P5.6c remain not started; do not begin either without explicit authorization.",
   "phase3": {
     "status": "P3.7_COMPLETE",
     "implementationStarted": true,
@@ -44,45 +44,37 @@
     "repository": "https://github.com/ZinLinn254995/biz-flow"
   },
   "currentMilestone": {
-    "id": "P5.6",
-    "name": "Purchases",
-    "status": "IN_PROGRESS"
+    "id": "P5.7",
+    "name": "Shared Stock and Cost Foundation",
+    "status": "COMPLETE"
   },
   "lastCompletedTask": {
-    "id": "P5.6b",
-    "name": "Purchase workflow integration and UI repair",
-    "completedDate": "2026-10-04",
+    "id": "P5.7",
+    "name": "Shared Stock and Cost Foundation",
+    "completedDate": "2026-10-08",
     "status": "COMPLETE",
     "confidence": "high",
     "needsHumanReview": false
   },
-  "currentTask": {
-    "id": "P5.7",
-    "name": "Shared Stock and Cost Foundation",
-    "status": "IN_PROGRESS",
-    "startedDate": "2026-10-07",
-    "ownerAuthorization": "GRANTED",
-    "confidence": "high",
-    "needsHumanReview": false,
-    "lockedFileOverrideReason": "P5.7 implementation is explicitly authorized. Database schema, SaleItem cost snapshot, backup contract, and repository type exports must change to establish the approved stock movement and cost foundation while preserving existing boundaries.",
-    "scope": "Implement only the approved P5.7 stock movement, stock mutation, transaction, migration, backup/restore, quantity, and sale-cost foundation."
-  },
+  "currentTask": null,
   "p5_7": {
-    "status": "ARCHITECTURE_APPROVED",
-    "implementationStatus": "IN_PROGRESS",
+    "status": "COMPLETE",
+    "implementationStatus": "COMPLETE",
     "implementationAuthorization": "GRANTED",
-    "readinessStatus": "IMPLEMENTATION_IN_PROGRESS",
+    "readinessStatus": "COMPLETE",
     "readinessBlockers": [],
-    "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-002.md"
+    "decisionRecord": "docs/ai/task-decisions/DEC-P5.7-002.md",
+    "implementationCommit": "5de416756106be1af1d88bd1492bdd80884a4678",
+    "repairPullRequest": 9
   },
   "lockedFileOverrideReason": "P5.7 implementation is explicitly authorized. Database schema, SaleItem cost snapshot, backup contract, and repository type exports must change to establish the approved stock movement and cost foundation while preserving existing boundaries.",
   "nextTask": null,
   "progress": {
     "completedMilestones": [
-      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1", "P5.1", "P5.2", "P5.3", "P5.4", "P5.5", "P5.6a", "P5.6b"
+      "P2P1", "P2P2", "P2P3", "P2P4", "P2P5", "P2P6", "P2P7", "P2P8", "P2P9", "P2P10", "P2P11", "P2P12", "P2P13", "P2P14", "P2P15", "P2P16", "P2P17", "P2P18", "P2P19", "P2P20", "P2P21", "P2P22", "P2P23", "P2P24", "P2P25", "P2P26", "P2P27", "P2P28", "P3.1", "P3.2", "P3.3", "P3.4", "P3.5", "P3.6", "P3.7", "P4.1", "P5.1", "P5.2", "P5.3", "P5.4", "P5.5", "P5.6a", "P5.6b", "P5.7"
     ],
     "remainingMilestones": ["P4.2", "P4.3", "P4.4", "P4.5"],
-    "totalCompleted": 41,
+    "totalCompleted": 42,
     "totalRemaining": 4,
     "percentage": 91
   },
@@ -106,22 +98,22 @@
     },
     "verificationRun": {
       "type": "captured",
-      "taskId": "P5.6b",
-      "runAt": "2026-10-04",
-      "runBy": "GitHub Actions AI Verification Gate #51",
-      "evidence": "GitHub Actions AI Verification Gate #51",
-      "commitSha": "17ac7894253e44f5e1826a37d33ed787291e8420",
-      "evidenceCommitSha": "17ac7894253e44f5e1826a37d33ed787291e8420",
-      "environment": "Post-merge verification passed on authoritative main at merge commit 17ac7894253e44f5e1826a37d33ed787291e8420. Historical P5.6b repair evidence remains preserved and auditable.",
+    "taskId": "P5.7",
+    "runAt": "2026-10-08",
+    "runBy": "Local repository verification plus GitHub Actions AI Verification Gate",
+    "evidence": "docs/ai/verification-logs/P5.7-repair.log",
+    "commitSha": "5de416756106be1af1d88bd1492bdd80884a4678",
+    "evidenceCommitSha": "5de416756106be1af1d88bd1492bdd80884a4678",
+    "environment": "Post-merge verification passed on authoritative main at P5.7 repair merge commit 5de416756106be1af1d88bd1492bdd80884a4678.",
       "results": [
-        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
-        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
-        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
-        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
-        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
-        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run typecheck", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run test", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run build", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run verify:imports", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run verify:locked", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
+        { "command": "npm run verify:git-freshness", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" },
         { "command": "npm run verify:ai", "result": "docs/ai/P5.6b-repair-provenance-reconciliation.md", "commitSha": "d7990252b13017eb903a358c8ed656c49e5cb089" },
-        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.6b-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" }
+        { "command": "npm run verify", "result": "docs/ai/verification-logs/P5.7-repair.log", "commitSha": "c43222cdedd16198f05c9eebe84fe4ae54f2a299" }
       ]
     },
     "qualityGates": {

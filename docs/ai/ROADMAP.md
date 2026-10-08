@@ -4,4 +4,8 @@ COMPLETE. The purchase aggregate, Dexie v3 `purchases` table, backup-compatible 
 
 ## P5.6b — Purchase workflow integration and UI
 
-COMPLETE. P5.6b adds the purchase list, create, detail, edit, delete, routing, navigation, supplier/notes fields, and focused workflow tests on top of the completed P5.6a domain. P5.6c remains unauthorized.
+COMPLETE. P5.6b adds the purchase list, create, detail, edit, delete, routing, navigation, supplier/notes fields, and focused workflow tests on top of the completed P5.6a domain. P5.6c remains not started.
+
+## P5.7 — Shared Stock and Cost Foundation
+
+COMPLETE on authoritative `main` at merge commit `5de416756106be1af1d88bd1492bdd80884a4678` via PR #9. Includes StockMovement persistence, centralized stock mutation, transaction-boundary repair, sale-time cost snapshot preservation, legacy restore baselines, and regression verification. P5.8 and P5.6c remain not started.
