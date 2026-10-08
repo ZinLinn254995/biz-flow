@@ -10,7 +10,7 @@ P5.6c — Shared Stock and Cost Foundation boundary
 
 ## STATUS
 
-IMPLEMENTED — P5.7 COMPLETE on authoritative main
+CURRENT
 
 ## CONTEXT / PROBLEM
 
