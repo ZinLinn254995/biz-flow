@@ -5,7 +5,6 @@ import type { EntityId } from '@/types/common/base';
 import type { InventoryRepository } from '@/types/repositories/inventoryRepository';
 import type { StockMovementRepository } from '@/types/repositories/stockMovementRepository';
 import type { StockMovement } from '@/types/domain/stockMovement';
-import type { TransactionRunner } from '@/services/common/transaction';
 
 function item(quantity: number): InventoryItem {
   return {
@@ -34,8 +33,7 @@ function setup(quantity = 10) {
   const movement = {
     create: vi.fn(async (value: Omit<StockMovement, 'id' | 'createdAt' | 'updatedAt'>) => value as StockMovement),
   } as unknown as StockMovementRepository;
-  const transaction: TransactionRunner = { run: async (work) => work() };
-  return { service: new StockMutationService(inventory, movement, transaction), inventory, movement };
+  return { service: new StockMutationService(inventory, movement), inventory, movement };
 }
 
 describe('StockMutationService', () => {

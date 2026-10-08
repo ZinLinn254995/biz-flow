@@ -18,6 +18,8 @@ import type { Business } from '@/types/domain/business';
 import type { Customer } from '@/types/domain/customer';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId } from '@/types/common/base';
+import { StockMutationService } from '@/services/inventory/StockMutationService';
+import type { StockMovementRepository } from '@/types/repositories/stockMovementRepository';
 
 function createMockSaleRepo(): SaleRepository {
   return {
@@ -50,6 +52,11 @@ function createMockCustomerRepo(): CustomerRepository {
     update: vi.fn(),
     remove: vi.fn(),
   };
+}
+
+function createTestStockMutationService(inventory: InventoryRepository): StockMutationService {
+  const movements: StockMovementRepository = { create: vi.fn(), getById: vi.fn(), getAll: vi.fn(), getByInventoryItemId: vi.fn() };
+  return new StockMutationService(inventory, movements);
 }
 
 function createMockInventoryRepo(items?: InventoryItem[]): InventoryRepository {
@@ -131,7 +138,7 @@ function createContainer(
   return {
     businessService: new BusinessService(bizRepo),
     inventoryService: new InventoryService(invRepo),
-    salesService: new SalesService(saleRepo, invRepo),
+    salesService: new SalesService(saleRepo, invRepo, undefined, createTestStockMutationService(invRepo)),
     customerService: new CustomerService(custRepo),
     businessExpenseService: {} as never,
     personalIncomeService: {} as never,

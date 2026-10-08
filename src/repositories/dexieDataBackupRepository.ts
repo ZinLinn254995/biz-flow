@@ -1,4 +1,5 @@
 import { db } from '@/db';
+import type { EntityId } from '@/types/common/base';
 import type { BackupData, DataBackupRepository } from '@/types/repositories/dataBackupRepository';
 
 export class DexieDataBackupRepository implements DataBackupRepository {
@@ -12,6 +13,16 @@ export class DexieDataBackupRepository implements DataBackupRepository {
   }
 
   async replaceData(data: BackupData['data']): Promise<void> {
+    const stockMovements = data.stockMovements ?? data.inventoryItems.map((item) => ({
+      id: `restore-opening-${item.id}-${Date.now()}` as EntityId,
+      inventoryItemId: item.id,
+      delta: item.quantity,
+      kind: 'opening' as const,
+      operationId: 'restore-p5-7-legacy-baseline' as EntityId,
+      provenance: 'restore-baseline' as const,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }));
     await db.transaction('rw', [
       db.businesses, db.inventoryItems, db.sales, db.purchases, db.customers, db.businessExpenses,
       db.personalIncomes, db.personalExpenses, db.categories, db.budgets, db.accounts, db.savedItems, db.stockMovements,
@@ -26,7 +37,7 @@ export class DexieDataBackupRepository implements DataBackupRepository {
         db.sales.bulkAdd(data.sales), db.purchases.bulkAdd(data.purchases ?? []), db.customers.bulkAdd(data.customers),
         db.businessExpenses.bulkAdd(data.businessExpenses), db.personalIncomes.bulkAdd(data.personalIncomes),
         db.personalExpenses.bulkAdd(data.personalExpenses), db.categories.bulkAdd(data.categories),
-        db.budgets.bulkAdd(data.budgets), db.accounts.bulkAdd(data.accounts), db.savedItems.bulkAdd(data.savedItems ?? []), db.stockMovements.bulkAdd(data.stockMovements ?? []),
+        db.budgets.bulkAdd(data.budgets), db.accounts.bulkAdd(data.accounts), db.savedItems.bulkAdd(data.savedItems ?? []), db.stockMovements.bulkAdd(stockMovements),
       ]);
     });
   }

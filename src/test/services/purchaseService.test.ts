@@ -5,6 +5,8 @@ import type { InventoryRepository } from '@/types/repositories/inventoryReposito
 import type { Purchase, PurchaseItem } from '@/types/domain/purchase';
 import type { InventoryItem } from '@/types/domain/inventory';
 import type { EntityId } from '@/types/common/base';
+import { StockMutationService } from '@/services/inventory/StockMutationService';
+import type { StockMovementRepository } from '@/types/repositories/stockMovementRepository';
 
 function createMockPurchaseRepo(): PurchaseRepository {
   return {
@@ -15,6 +17,11 @@ function createMockPurchaseRepo(): PurchaseRepository {
     update: vi.fn(),
     remove: vi.fn(),
   };
+}
+
+function createTestStockMutationService(inventory: InventoryRepository): StockMutationService {
+  const movements: StockMovementRepository = { create: vi.fn(), getById: vi.fn(), getAll: vi.fn(), getByInventoryItemId: vi.fn() };
+  return new StockMutationService(inventory, movements);
 }
 
 function createMockInventoryRepo(items: InventoryItem[] = []): InventoryRepository {
@@ -89,7 +96,7 @@ describe('PurchaseService', () => {
     const purchaseRepo = createMockPurchaseRepo();
     (purchaseRepo.create as ReturnType<typeof vi.fn>).mockResolvedValue(mkPurchase('p1', validInput.items));
 
-    const service = new PurchaseService(purchaseRepo, invRepo);
+    const service = new PurchaseService(purchaseRepo, invRepo, undefined, createTestStockMutationService(invRepo));
     await service.createPurchase(validInput);
 
     const updated = await invRepo.getById('inv-1' as EntityId);
@@ -100,7 +107,7 @@ describe('PurchaseService', () => {
   it('rejects mismatched total currency', async () => {
     const invRepo = createMockInventoryRepo([mkInventoryItem('inv-1', 5)]);
     const purchaseRepo = createMockPurchaseRepo();
-    const service = new PurchaseService(purchaseRepo, invRepo);
+    const service = new PurchaseService(purchaseRepo, invRepo, undefined, createTestStockMutationService(invRepo));
 
     await expect(
       service.createPurchase({
@@ -120,7 +127,7 @@ describe('PurchaseService', () => {
       mkPurchase('p1', [mkPurchaseItem('inv-1', 3)]),
     );
 
-    const service = new PurchaseService(purchaseRepo, invRepo);
+    const service = new PurchaseService(purchaseRepo, invRepo, undefined, createTestStockMutationService(invRepo));
     await service.updatePurchase('p1' as EntityId, {
       items: [mkPurchaseItem('inv-1', 3)],
       totalAmount: { amountMinor: 4500, currency: 'USD' },
@@ -137,7 +144,7 @@ describe('PurchaseService', () => {
     (purchaseRepo.getById as ReturnType<typeof vi.fn>).mockResolvedValue(purchase);
     (purchaseRepo.remove as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
 
-    const service = new PurchaseService(purchaseRepo, invRepo);
+    const service = new PurchaseService(purchaseRepo, invRepo, undefined, createTestStockMutationService(invRepo));
     await service.deletePurchase('p1' as EntityId);
 
     const updated = await invRepo.getById('inv-1' as EntityId);

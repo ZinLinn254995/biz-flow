@@ -2,7 +2,6 @@ import type { EntityId } from '@/types/common/base';
 import type { InventoryRepository } from '@/types/repositories/inventoryRepository';
 import type { StockMovementRepository } from '@/types/repositories/stockMovementRepository';
 import type { StockMutation, StockMovementKind } from '@/types/domain/stockMovement';
-import type { TransactionRunner } from '@/services/common/transaction';
 import { validateQuantity, ValidationError } from '@/services/common';
 
 function status(quantity: number, threshold?: number) {
@@ -15,7 +14,6 @@ export class StockMutationService {
   constructor(
     private readonly inventory: InventoryRepository,
     private readonly movements: StockMovementRepository,
-    private readonly transaction: TransactionRunner,
   ) {}
 
   async apply(mutations: StockMutation[], operationId: EntityId, kind: StockMovementKind, sourceId?: EntityId): Promise<void> {
@@ -31,15 +29,13 @@ export class StockMutationService {
       const item = await this.inventory.getById(id);
       if (!item) throw new Error(`Inventory item not found: ${id}`);
       const next = item.quantity + delta;
-      if (next < 0) throw new ValidationError(`Stock cannot become negative for "${item.name}"`);
+      if (next < 0) throw new ValidationError(`Insufficient stock for "${item.name}"`);
       current.set(id, { quantity: next, threshold: item.reorderThreshold });
     }
-    await this.transaction.run(async () => {
-      for (const [id, delta] of aggregated) {
-        const next = current.get(id)!;
-        await this.inventory.update(id, { quantity: next.quantity, stockStatus: status(next.quantity, next.threshold) });
-        await this.movements.create({ inventoryItemId: id, delta, kind, operationId, sourceId, provenance: 'application' });
-      }
-    });
+    for (const [id, delta] of aggregated) {
+      const next = current.get(id)!;
+      await this.inventory.update(id, { quantity: next.quantity, stockStatus: status(next.quantity, next.threshold) });
+      await this.movements.create({ inventoryItemId: id, delta, kind, operationId, sourceId, provenance: 'application' });
+    }
   }
 }

@@ -58,7 +58,7 @@ export interface ServiceContainer {
 }
 
 export function createServiceContainer(): ServiceContainer {
-  const stockMutationService = new StockMutationService(inventoryRepository, stockMovementRepository, purchaseTransactionRunner);
+  const stockMutationService = new StockMutationService(inventoryRepository, stockMovementRepository);
   return {
     businessService: new BusinessService(businessRepository),
     inventoryService: new InventoryService(inventoryRepository),
