@@ -2,11 +2,13 @@
 
 ## Current status
 
-P5.6b is COMPLETE on authoritative `main`. The purchase cascade repair, regression coverage, provenance reconciliation, and post-merge GitHub Actions verification are complete. Development remains paused. P5.6c is explicitly authorized for future planning, but its boundary is now documented in `docs/ai/task-decisions/DEC-P5.6c-001.md`; implementation has not started. Any broader Stock + Cost + Item foundation requires separate milestone authorization.
+P5.7 is COMPLETE on authoritative `main`. The stock movement foundation, shared stock mutation boundary, transaction repair, sale-cost snapshot preservation, legacy restore baseline, regression coverage, and post-merge verification are complete. Development remains paused. P5.6c and P5.8 remain NOT_STARTED and require explicit authorization.
 
 ## Verified provenance
 
-- Branch: `main` after P5.6b integration.
+- Branch: `main` after P5.7 repair integration.
+- P5.7 repair merge commit: `5de416756106be1af1d88bd1492bdd80884a4678`.
+- P5.7 repair PR: #9.
 - Historical failed evidence: `docs/ai/verification-logs/P5.6b.log` (preserved, not reusable)
 - Fresh P5.6a verification evidence: `docs/ai/verification-logs/P5.6a.log` (PASS)
 - Verified implementation checkpoint: `fe38fb807237f57f16a52620723dc45794140814`
@@ -22,4 +24,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-Development is paused. P5.7 architecture is APPROVED in `docs/ai/task-decisions/DEC-P5.7-002.md`; implementation remains NOT_STARTED and is READY FOR NEXT GATE. Do not implement P5.7 until the final implementation-readiness check and explicit implementation authorization. Do not begin P5.6c.
+P5.7 implementation and repair are complete and recorded in `docs/ai/verification-logs/P5.7-repair.log`. Development is paused. Do not begin P5.6c, P5.8, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.

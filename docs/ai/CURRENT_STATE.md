@@ -10,8 +10,8 @@
 - P5.6b — Purchase workflow integration and UI repair: COMPLETE.
 - P5.6c — NOT_STARTED; scope boundary recorded in `docs/ai/task-decisions/DEC-P5.6c-001.md`.
 - Development status: PAUSED_AWAITING_INSTRUCTIONS.
-- P5.7 — ARCHITECTURE APPROVED; implementation NOT_STARTED; implementation authorization READY FOR NEXT GATE.
-- Current task: None; development remains paused pending final implementation-readiness check and explicit implementation authorization.
+- P5.7 — COMPLETE; implementation and repair merged to authoritative `main`.
+- Current task: None; development remains paused pending explicit authorization for the next milestone.
 
 ## Provenance
 
@@ -23,7 +23,8 @@
 - P5.6a verification evidence is captured and reports PASS.
 - P5.6a final local main merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`.
 - P5.6b verified merge commit on authoritative `main`: `17ac7894253e44f5e1826a37d33ed787291e8420`.
-- GitHub Actions AI Verification Gate #51: SUCCESS for merge commit `17ac7894253e44f5e1826a37d33ed787291e8420`.
+- P5.7 repair merge commit on authoritative `main`: `5de416756106be1af1d88bd1492bdd80884a4678`.
+- P5.7 repair PR #9: merged; AI Verification Gate and Vercel checks passed.
 
 ## Persistence and compatibility
 

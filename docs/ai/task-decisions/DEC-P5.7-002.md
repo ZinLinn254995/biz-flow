@@ -18,7 +18,7 @@ DEC-P5.7-001 recorded the future P5.7 boundary but intentionally left semantic a
 
 ## DECISION
 
-P5.7 architecture is APPROVED. Implementation remains NOT_STARTED and development remains PAUSED. The following decisions are accepted and must not be casually reopened during implementation.
+P5.7 architecture was APPROVED and is now IMPLEMENTED. The implementation and repair are merged to authoritative main; development remains PAUSED awaiting the next explicit authorization. The following decisions are accepted and must not be casually reopened during implementation.
 
 ### 1. StockMovement — ACCEPTED
 
@@ -96,8 +96,8 @@ The decisions above establish semantics and invariants. Coding AI may select exa
 ## IMPLEMENTATION STATUS
 
 - Architecture: APPROVED
-- Implementation: NOT_STARTED
-- Implementation authorization: READY FOR NEXT GATE
+- Implementation: COMPLETE
+- Implementation authorization: GRANTED
 - Development status: PAUSED
 - P5.6a/P5.6b: COMPLETE
 - P5.6c: NOT_STARTED

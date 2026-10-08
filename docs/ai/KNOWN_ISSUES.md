@@ -15,7 +15,7 @@ None.
 - **Possible solution:** Wrap `deductStock` + `repository.create` in `db.transaction('rw', [salesTable, inventoryItemsTable], async () => {...})`.
 - **Affected files:** `src/services/sales/SalesService.ts`
 - **Dependencies:** None
-- **Status:** RESOLVED in P2P19 (2026-09-07) — stock movements and sale persistence run inside an injected TransactionRunner backed by `db.transaction('rw', [db.sales, db.inventoryItems], ...)`
+- **Status:** RESOLVED in P5.7 repair (2026-10-08) — Purchase/Sale orchestration owns the Dexie transaction and StockMutationService performs stock and movement writes within that boundary.
 
 ### ISSUE-002: No Concurrency Protection on Stock
 - **ID:** ISSUE-002
@@ -26,7 +26,7 @@ None.
 - **Possible solution:** Dexie transactions with read-write lock on inventory items.
 - **Affected files:** `src/services/sales/SalesService.ts`
 - **Dependencies:** ISSUE-001 (same fix)
-- **Status:** RESOLVED in P2P19 (2026-09-07) — the read-check-write sequence now runs inside a single Dexie read-write transaction
+- **Status:** RESOLVED in P5.7 repair (2026-10-08) — StockMutationService preflights aggregated deltas before writes and runs under the orchestration-owned transaction.
 
 ## Medium
 
