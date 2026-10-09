@@ -26,6 +26,8 @@
 - P5.6b verified merge commit on authoritative `main`: `17ac7894253e44f5e1826a37d33ed787291e8420`.
 - P5.7 repair merge commit on authoritative `main`: `5de416756106be1af1d88bd1492bdd80884a4678`.
 - P5.7 repair PR #9: merged; AI Verification Gate and Vercel checks passed.
+- P5.8 reconciliation merge commit on authoritative `main`: `04e961509a11cc5cb6e15939d2b93123eb7a236e`.
+- P5.8 reconciliation PR #11: merged; AI Verification Gate and Vercel checks passed.
 
 ## Persistence and compatibility
 

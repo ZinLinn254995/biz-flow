@@ -6,9 +6,11 @@ P5.8 is COMPLETE on authoritative `main` by reconciliation. The existing busines
 
 ## Verified provenance
 
-- Branch: `main` after P5.7 repair integration.
+- Branch: `main` after P5.8 reconciliation integration.
 - P5.7 repair merge commit: `5de416756106be1af1d88bd1492bdd80884a4678`.
 - P5.7 repair PR: #9.
+- P5.8 reconciliation merge commit: `04e961509a11cc5cb6e15939d2b93123eb7a236e`.
+- P5.8 reconciliation PR: #11.
 - Historical failed evidence: `docs/ai/verification-logs/P5.6b.log` (preserved, not reusable)
 - Fresh P5.6a verification evidence: `docs/ai/verification-logs/P5.6a.log` (PASS)
 - Verified implementation checkpoint: `fe38fb807237f57f16a52620723dc45794140814`
@@ -24,4 +26,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-P5.7 implementation and repair are complete, and P5.8 existing implementation reconciliation is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`. Development is paused. Do not begin P5.6c, P5.8, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
+P5.7 implementation and repair are complete, and P5.8 existing implementation reconciliation is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`. Development is paused. Do not begin P5.6c, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
