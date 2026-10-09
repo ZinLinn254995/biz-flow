@@ -12,4 +12,4 @@ COMPLETE on authoritative `main` at merge commit `5de416756106be1af1d88bd1492bdd
 
 ## P5.8 — Expenses
 
-COMPLETE by reconciliation on authoritative `main` at `7701ce1d436df065f066ace8f144b5bcc5e1fc4a`. Existing business and personal expense workflows were verified: domain contracts, Dexie persistence, services, hooks, UI, routing, and tests. No source changes were required; full verification is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`.
+COMPLETE by reconciliation on authoritative `main` at merge commit `04e961509a11cc5cb6e15939d2b93123eb7a236e` via PR #11. Existing business and personal expense workflows were verified: domain contracts, Dexie persistence, services, hooks, UI, routing, and tests. No source changes were required; full verification is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`.
