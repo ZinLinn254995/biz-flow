@@ -2,7 +2,7 @@
 
 ## Current status
 
-P5.7 is COMPLETE on authoritative `main`. The stock movement foundation, shared stock mutation boundary, transaction repair, sale-cost snapshot preservation, legacy restore baseline, regression coverage, and post-merge verification are complete. Development remains paused. P5.6c and P5.8 remain NOT_STARTED and require explicit authorization.
+P5.8 is COMPLETE on authoritative `main` by reconciliation. The existing business and personal expense domain, persistence, services, hooks, UI, routing, and tests were verified with the full repository gate. No expense source code changes were required. Development remains paused; P5.6c, P4.2, and future milestones require explicit authorization.
 
 ## Verified provenance
 
@@ -24,4 +24,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-P5.7 implementation and repair are complete and recorded in `docs/ai/verification-logs/P5.7-repair.log`. Development is paused. Do not begin P5.6c, P5.8, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
+P5.7 implementation and repair are complete, and P5.8 existing implementation reconciliation is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`. Development is paused. Do not begin P5.6c, P5.8, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.

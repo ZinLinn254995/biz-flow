@@ -11,6 +11,7 @@
 - P5.6c — NOT_STARTED; scope boundary recorded in `docs/ai/task-decisions/DEC-P5.6c-001.md`.
 - Development status: PAUSED_AWAITING_INSTRUCTIONS.
 - P5.7 — COMPLETE; implementation and repair merged to authoritative `main`.
+- P5.8 — COMPLETE by reconciliation; existing expense workflows verified on authoritative `main`.
 - Current task: None; development remains paused pending explicit authorization for the next milestone.
 
 ## Provenance
