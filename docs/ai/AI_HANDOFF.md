@@ -11,14 +11,14 @@ P5.8 is COMPLETE on authoritative `main` by reconciliation. The existing busines
 - P5.7 repair PR: #9.
 - P5.8 reconciliation merge commit: `04e961509a11cc5cb6e15939d2b93123eb7a236e`.
 - P5.8 reconciliation PR: #11.
-- Historical failed evidence: `docs/ai/verification-logs/P5.6b.log` (preserved, not reusable)
-- Fresh P5.6a verification evidence: `docs/ai/verification-logs/P5.6a.log` (PASS)
-- Verified implementation checkpoint: `fe38fb807237f57f16a52620723dc45794140814`
-- Evidence-record commit: `bd5b4d921f86482e220cf7b98b55eddcd2c6daf1`
-- Final local main merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`
+- Historical P5.6b failed evidence: `docs/ai/verification-logs/P5.6b.log` (preserved, not reusable)
+- Historical P5.6a verification evidence: `docs/ai/verification-logs/P5.6a.log` (PASS)
+- Historical P5.6a implementation checkpoint: `fe38fb807237f57f16a52620723dc45794140814`
+- Historical P5.6a evidence-record commit: `bd5b4d921f86482e220cf7b98b55eddcd2c6daf1`
+- Historical P5.6a finalization merge commit: `b4cf401810404c5ad0dfacd4bb429b3d7134f10d`
 - Database version: 3 with the additive `purchases` table, while the version 1 schema declarations remain untouched.
-  - P5.6b post-merge verification: GitHub Actions AI Verification Gate #51 succeeded for merge commit `17ac7894253e44f5e1826a37d33ed787291e8420`; local verification recorded 62 test files and 613 tests passing.
-  - Task state: `P5.6b` is COMPLETE in `docs/ai/AI_STATE.json`; P5.6c remains NOT_STARTED.
+  - Historical P5.6b post-merge verification: GitHub Actions AI Verification Gate #51 succeeded for merge commit `17ac7894253e44f5e1826a37d33ed787291e8420`; its local verification recorded 62 test files and 613 tests passing.
+  - Current canonical state: P5.6b is COMPLETE and P5.6c remains NOT_STARTED; current repository verification is recorded by P5.8 evidence with 63 test files and 616 tests passing.
 
 ## P5.6a completion scope
 
@@ -26,4 +26,4 @@ The implementation adds purchase contracts, repository wiring, backup compatibil
 
 ## Current handoff
 
-P5.7 implementation and repair are complete, and P5.8 existing implementation reconciliation is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`. Development is paused. Do not begin P5.6c, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
+P5.7 implementation and repair are complete. P5.8 is complete by reconciliation; its verification is recorded in `docs/ai/verification-logs/P5.8-existing-implementation.log`, and the reconciliation merged via PR #11 at `04e961509a11cc5cb6e15939d2b93123eb7a236e`. Development is paused. Do not begin P5.6c, P4.2, cloud sync, authentication, multi-device support, or AI features without explicit owner authorization.
